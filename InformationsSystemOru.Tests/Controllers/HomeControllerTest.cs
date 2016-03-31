@@ -50,5 +50,10 @@ namespace InformationsSystemOru.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
+        public int hej()
+        {
+           var test = 1;
+            return test;
+        }
     }
 }
