@@ -8,6 +8,27 @@
 <div class="well well-lg">
     <div class="form-horizontal" style="margin-left: 25%;">
         <h4>Fyll i din information här</h4>
-        <hr />
+        <hr/>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Firstname, "Förnamn", htmlAttributes: new {@class = "control-label col-md-2"})
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Firstname, new {htmlAttributes = new {@class = "form-control", placeholder = "Förnamn"}})
+            @Html.ValidationMessageFor(model => model.Firstname, "", new {@class = "text-danger"})
+        </div>
     </div>
-</div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Lastname, "Efternamn", htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.Lastname, new {htmlAttributes = new {@class = "form-control", placeholder = "Efternamn"}})
+                @Html.ValidationMessageFor(model => model.Lastname, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, "E-mail", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    </div>
