@@ -1,0 +1,732 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="IsOruDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Access">
+          <Key>
+            <PropertyRef Name="AccessId" />
+          </Key>
+          <Property Name="AccessId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Meeting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Location" Type="nvarchar" MaxLength="50" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Titel" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Category" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="PostingUserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post_PostType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostId" Type="int" Nullable="false" />
+          <Property Name="PostTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User_Access">
+          <Key>
+            <PropertyRef Name="User_PostId" />
+          </Key>
+          <Property Name="User_PostId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="AccessId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User_Meeting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="MeetingId" Type="int" />
+        </EntityType>
+        <EntityType Name="User_Post_Comment">
+          <Key>
+            <PropertyRef Name="UPCId" />
+          </Key>
+          <Property Name="UPCId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CommentId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Account__UserID__1367E606">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Post__PostingUse__4316F928">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="PostingUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Post_Post__PostI__440B1D61">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Post_PostType" Type="Self.Post_PostType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post_PostType">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Post_Post__PostT__37A5467C">
+          <End Role="PostType" Type="Self.PostType" Multiplicity="1" />
+          <End Role="Post_PostType" Type="Self.Post_PostType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post_PostType">
+              <PropertyRef Name="PostTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Acce__Acces__24927208">
+          <End Role="Access" Type="Self.Access" Multiplicity="1" />
+          <End Role="User_Access" Type="Self.User_Access" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Access">
+              <PropertyRef Name="AccessId" />
+            </Principal>
+            <Dependent Role="User_Access">
+              <PropertyRef Name="AccessId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Acce__UserI__239E4DCF">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Access" Type="Self.User_Access" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Access">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Meet__Meeti__3D5E1FD2">
+          <End Role="Meeting" Type="Self.Meeting" Multiplicity="0..1" />
+          <End Role="User_Meeting" Type="Self.User_Meeting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Meeting">
+              <PropertyRef Name="MeetingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Meet__UserI__3C69FB99">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User_Meeting" Type="Self.User_Meeting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Meeting">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Post__Comme__403A8C7D">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="1" />
+          <End Role="User_Post_Comment" Type="Self.User_Post_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Post_Comment">
+              <PropertyRef Name="CommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Post__PostI__44FF419A">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="User_Post_Comment" Type="Self.User_Post_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Post_Comment">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Post__UserI__1FCDBCEB">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Post_Comment" Type="Self.User_Post_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Post_Comment">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IsOruDbModelStoreContainer">
+          <EntitySet Name="Access" EntityType="Self.Access" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meeting" EntityType="Self.Meeting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post_PostType" EntityType="Self.Post_PostType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostType" EntityType="Self.PostType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Access" EntityType="Self.User_Access" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Meeting" EntityType="Self.User_Meeting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Post_Comment" EntityType="Self.User_Post_Comment" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Account__UserID__1367E606" Association="Self.FK__Account__UserID__1367E606">
+            <End Role="User" EntitySet="User" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Post__PostingUse__4316F928" Association="Self.FK__Post__PostingUse__4316F928">
+            <End Role="User" EntitySet="User" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Post_Post__PostI__440B1D61" Association="Self.FK__Post_Post__PostI__440B1D61">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Post_PostType" EntitySet="Post_PostType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Post_Post__PostT__37A5467C" Association="Self.FK__Post_Post__PostT__37A5467C">
+            <End Role="PostType" EntitySet="PostType" />
+            <End Role="Post_PostType" EntitySet="Post_PostType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Acce__Acces__24927208" Association="Self.FK__User_Acce__Acces__24927208">
+            <End Role="Access" EntitySet="Access" />
+            <End Role="User_Access" EntitySet="User_Access" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Acce__UserI__239E4DCF" Association="Self.FK__User_Acce__UserI__239E4DCF">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_Access" EntitySet="User_Access" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Meet__Meeti__3D5E1FD2" Association="Self.FK__User_Meet__Meeti__3D5E1FD2">
+            <End Role="Meeting" EntitySet="Meeting" />
+            <End Role="User_Meeting" EntitySet="User_Meeting" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Meet__UserI__3C69FB99" Association="Self.FK__User_Meet__UserI__3C69FB99">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_Meeting" EntitySet="User_Meeting" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Post__Comme__403A8C7D" Association="Self.FK__User_Post__Comme__403A8C7D">
+            <End Role="Comment" EntitySet="Comment" />
+            <End Role="User_Post_Comment" EntitySet="User_Post_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Post__PostI__44FF419A" Association="Self.FK__User_Post__PostI__44FF419A">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="User_Post_Comment" EntitySet="User_Post_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Post__UserI__1FCDBCEB" Association="Self.FK__User_Post__UserI__1FCDBCEB">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_Post_Comment" EntitySet="User_Post_Comment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IsOruDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Access">
+          <Key>
+            <PropertyRef Name="AccessId" />
+          </Key>
+          <Property Name="AccessId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User_Access" Relationship="Self.FK__User_Acce__Acces__24927208" FromRole="Access" ToRole="User_Access" />
+        </EntityType>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Account__UserID__1367E606" FromRole="Account" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User_Post_Comment" Relationship="Self.FK__User_Post__Comme__403A8C7D" FromRole="Comment" ToRole="User_Post_Comment" />
+        </EntityType>
+        <EntityType Name="Meeting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User_Meeting" Relationship="Self.FK__User_Meet__Meeti__3D5E1FD2" FromRole="Meeting" ToRole="User_Meeting" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Titel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PostingUserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Post__PostingUse__4316F928" FromRole="Post" ToRole="User" />
+          <NavigationProperty Name="Post_PostType" Relationship="Self.FK__Post_Post__PostI__440B1D61" FromRole="Post" ToRole="Post_PostType" />
+          <NavigationProperty Name="User_Post_Comment" Relationship="Self.FK__User_Post__PostI__44FF419A" FromRole="Post" ToRole="User_Post_Comment" />
+        </EntityType>
+        <EntityType Name="Post_PostType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <Property Name="PostTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="Self.FK__Post_Post__PostI__440B1D61" FromRole="Post_PostType" ToRole="Post" />
+          <NavigationProperty Name="PostType" Relationship="Self.FK__Post_Post__PostT__37A5467C" FromRole="Post_PostType" ToRole="PostType" />
+        </EntityType>
+        <EntityType Name="PostType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Post_PostType" Relationship="Self.FK__Post_Post__PostT__37A5467C" FromRole="PostType" ToRole="Post_PostType" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firstname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Lastname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Account__UserID__1367E606" FromRole="User" ToRole="Account" />
+          <NavigationProperty Name="Post" Relationship="Self.FK__Post__PostingUse__4316F928" FromRole="User" ToRole="Post" />
+          <NavigationProperty Name="User_Access" Relationship="Self.FK__User_Acce__UserI__239E4DCF" FromRole="User" ToRole="User_Access" />
+          <NavigationProperty Name="User_Meeting" Relationship="Self.FK__User_Meet__UserI__3C69FB99" FromRole="User" ToRole="User_Meeting" />
+          <NavigationProperty Name="User_Post_Comment" Relationship="Self.FK__User_Post__UserI__1FCDBCEB" FromRole="User" ToRole="User_Post_Comment" />
+        </EntityType>
+        <EntityType Name="User_Access">
+          <Key>
+            <PropertyRef Name="User_PostId" />
+          </Key>
+          <Property Name="User_PostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AccessId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Access" Relationship="Self.FK__User_Acce__Acces__24927208" FromRole="User_Access" ToRole="Access" />
+          <NavigationProperty Name="User" Relationship="Self.FK__User_Acce__UserI__239E4DCF" FromRole="User_Access" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User_Meeting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="MeetingId" Type="Int32" />
+          <NavigationProperty Name="Meeting" Relationship="Self.FK__User_Meet__Meeti__3D5E1FD2" FromRole="User_Meeting" ToRole="Meeting" />
+          <NavigationProperty Name="User" Relationship="Self.FK__User_Meet__UserI__3C69FB99" FromRole="User_Meeting" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User_Post_Comment">
+          <Key>
+            <PropertyRef Name="UPCId" />
+          </Key>
+          <Property Name="UPCId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CommentId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK__User_Post__Comme__403A8C7D" FromRole="User_Post_Comment" ToRole="Comment" />
+          <NavigationProperty Name="Post" Relationship="Self.FK__User_Post__PostI__44FF419A" FromRole="User_Post_Comment" ToRole="Post" />
+          <NavigationProperty Name="User" Relationship="Self.FK__User_Post__UserI__1FCDBCEB" FromRole="User_Post_Comment" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__User_Acce__Acces__24927208">
+          <End Role="Access" Type="Self.Access" Multiplicity="1" />
+          <End Role="User_Access" Type="Self.User_Access" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Access">
+              <PropertyRef Name="AccessId" />
+            </Principal>
+            <Dependent Role="User_Access">
+              <PropertyRef Name="AccessId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Account__UserID__1367E606">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Post__Comme__403A8C7D">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="1" />
+          <End Role="User_Post_Comment" Type="Self.User_Post_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Post_Comment">
+              <PropertyRef Name="CommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Meet__Meeti__3D5E1FD2">
+          <End Role="Meeting" Type="Self.Meeting" Multiplicity="0..1" />
+          <End Role="User_Meeting" Type="Self.User_Meeting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Meeting">
+              <PropertyRef Name="MeetingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Post__PostingUse__4316F928">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="PostingUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Post_Post__PostI__440B1D61">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Post_PostType" Type="Self.Post_PostType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post_PostType">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Post__PostI__44FF419A">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="User_Post_Comment" Type="Self.User_Post_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Post_Comment">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Post_Post__PostT__37A5467C">
+          <End Role="PostType" Type="Self.PostType" Multiplicity="1" />
+          <End Role="Post_PostType" Type="Self.Post_PostType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post_PostType">
+              <PropertyRef Name="PostTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Acce__UserI__239E4DCF">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Access" Type="Self.User_Access" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Access">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Meet__UserI__3C69FB99">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User_Meeting" Type="Self.User_Meeting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Meeting">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Post__UserI__1FCDBCEB">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Post_Comment" Type="Self.User_Post_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Post_Comment">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IsOruDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Access" EntityType="Self.Access" />
+          <EntitySet Name="Account" EntityType="Self.Account" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" />
+          <EntitySet Name="Meeting" EntityType="Self.Meeting" />
+          <EntitySet Name="Post" EntityType="Self.Post" />
+          <EntitySet Name="Post_PostType" EntityType="Self.Post_PostType" />
+          <EntitySet Name="PostType" EntityType="Self.PostType" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="User_Access" EntityType="Self.User_Access" />
+          <EntitySet Name="User_Meeting" EntityType="Self.User_Meeting" />
+          <EntitySet Name="User_Post_Comment" EntityType="Self.User_Post_Comment" />
+          <AssociationSet Name="FK__User_Acce__Acces__24927208" Association="Self.FK__User_Acce__Acces__24927208">
+            <End Role="Access" EntitySet="Access" />
+            <End Role="User_Access" EntitySet="User_Access" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Account__UserID__1367E606" Association="Self.FK__Account__UserID__1367E606">
+            <End Role="User" EntitySet="User" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Post__Comme__403A8C7D" Association="Self.FK__User_Post__Comme__403A8C7D">
+            <End Role="Comment" EntitySet="Comment" />
+            <End Role="User_Post_Comment" EntitySet="User_Post_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Meet__Meeti__3D5E1FD2" Association="Self.FK__User_Meet__Meeti__3D5E1FD2">
+            <End Role="Meeting" EntitySet="Meeting" />
+            <End Role="User_Meeting" EntitySet="User_Meeting" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Post__PostingUse__4316F928" Association="Self.FK__Post__PostingUse__4316F928">
+            <End Role="User" EntitySet="User" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Post_Post__PostI__440B1D61" Association="Self.FK__Post_Post__PostI__440B1D61">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Post_PostType" EntitySet="Post_PostType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Post__PostI__44FF419A" Association="Self.FK__User_Post__PostI__44FF419A">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="User_Post_Comment" EntitySet="User_Post_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Post_Post__PostT__37A5467C" Association="Self.FK__Post_Post__PostT__37A5467C">
+            <End Role="PostType" EntitySet="PostType" />
+            <End Role="Post_PostType" EntitySet="Post_PostType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Acce__UserI__239E4DCF" Association="Self.FK__User_Acce__UserI__239E4DCF">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_Access" EntitySet="User_Access" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Meet__UserI__3C69FB99" Association="Self.FK__User_Meet__UserI__3C69FB99">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_Meeting" EntitySet="User_Meeting" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Post__UserI__1FCDBCEB" Association="Self.FK__User_Post__UserI__1FCDBCEB">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_Post_Comment" EntitySet="User_Post_Comment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IsOruDbModelStoreContainer" CdmEntityContainer="IsOruDbEntities">
+          <EntitySetMapping Name="Access">
+            <EntityTypeMapping TypeName="IsOruDbModel.Access">
+              <MappingFragment StoreEntitySet="Access">
+                <ScalarProperty Name="AccessId" ColumnName="AccessId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Account">
+            <EntityTypeMapping TypeName="IsOruDbModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="IsOruDbModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meeting">
+            <EntityTypeMapping TypeName="IsOruDbModel.Meeting">
+              <MappingFragment StoreEntitySet="Meeting">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post">
+            <EntityTypeMapping TypeName="IsOruDbModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Titel" ColumnName="Titel" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="PostingUserID" ColumnName="PostingUserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post_PostType">
+            <EntityTypeMapping TypeName="IsOruDbModel.Post_PostType">
+              <MappingFragment StoreEntitySet="Post_PostType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostType">
+            <EntityTypeMapping TypeName="IsOruDbModel.PostType">
+              <MappingFragment StoreEntitySet="PostType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="IsOruDbModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Access">
+            <EntityTypeMapping TypeName="IsOruDbModel.User_Access">
+              <MappingFragment StoreEntitySet="User_Access">
+                <ScalarProperty Name="User_PostId" ColumnName="User_PostId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AccessId" ColumnName="AccessId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Meeting">
+            <EntityTypeMapping TypeName="IsOruDbModel.User_Meeting">
+              <MappingFragment StoreEntitySet="User_Meeting">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Post_Comment">
+            <EntityTypeMapping TypeName="IsOruDbModel.User_Post_Comment">
+              <MappingFragment StoreEntitySet="User_Post_Comment">
+                <ScalarProperty Name="UPCId" ColumnName="UPCId" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
