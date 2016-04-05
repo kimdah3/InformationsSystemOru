@@ -15,7 +15,7 @@ namespace InformationsSystemOru.Controllers
             return View();
         }
 
-        public ActionResult Create(CreateModel cModel)
+        public ActionResult Create(CreateUserModel cModel)
         {
         //    users user = new users
         //    {
