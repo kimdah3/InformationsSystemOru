@@ -10,7 +10,7 @@ namespace InformationsSystemOru.Models
     {
         [Display(Name = "Username")]
         public string Username { get; set; }
-        [Display(Name = "PassworSd")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
     }
 }
