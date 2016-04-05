@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InformationsSystemOru", "In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InformationsSystemOru.Tests", "InformationsSystemOru.Tests\InformationsSystemOru.Tests.csproj", "{518E9AF0-AE4D-49AE-9976-1F61484A79CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Access Layer", "Data Access Layer\Data Access Layer.csproj", "{14FBF113-AEC6-4379-B320-30249291DC0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{518E9AF0-AE4D-49AE-9976-1F61484A79CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{518E9AF0-AE4D-49AE-9976-1F61484A79CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{518E9AF0-AE4D-49AE-9976-1F61484A79CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14FBF113-AEC6-4379-B320-30249291DC0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14FBF113-AEC6-4379-B320-30249291DC0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14FBF113-AEC6-4379-B320-30249291DC0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14FBF113-AEC6-4379-B320-30249291DC0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
