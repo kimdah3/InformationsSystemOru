@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InformationsSystemOru", "In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InformationsSystemOru.Tests", "InformationsSystemOru.Tests\InformationsSystemOru.Tests.csproj", "{518E9AF0-AE4D-49AE-9976-1F61484A79CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KimpasExtremeDataLagerFinalFirst2.0", "KimpasExtremeDataLagerFinalFirst2.0\KimpasExtremeDataLagerFinalFirst2.0.csproj", "{1F376F49-E542-4F00-B59E-CE1283EA1FF8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{518E9AF0-AE4D-49AE-9976-1F61484A79CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{518E9AF0-AE4D-49AE-9976-1F61484A79CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{518E9AF0-AE4D-49AE-9976-1F61484A79CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F376F49-E542-4F00-B59E-CE1283EA1FF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F376F49-E542-4F00-B59E-CE1283EA1FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F376F49-E542-4F00-B59E-CE1283EA1FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F376F49-E542-4F00-B59E-CE1283EA1FF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
