@@ -15,8 +15,8 @@ namespace InformationsSystemOru.Controllers
             return View();
         }
 
-        //public ActionResult(CreateModel cModel)
-        //{
+        public ActionResult Create(CreateModel cModel)
+        {
         //    users user = new users
         //    {
         //        firstname = cModel.Firstname,
@@ -25,8 +25,8 @@ namespace InformationsSystemOru.Controllers
 
         //     };
         //    userRepository.AddUser(user);
-        //    return View(cModel);
-        //}
+            return View();
+        }
         
     }
 }
