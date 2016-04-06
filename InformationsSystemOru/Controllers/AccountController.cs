@@ -10,10 +10,13 @@ namespace InformationsSystemOru.Controllers
     public class AccountController : Controller
     {
         private UserRepository userRepository;
+        private AccountRepository accountRepository;
 
         public AccountController()
         {
             userRepository = new UserRepository();
+            accountRepository= new AccountRepository();
+
      
         }
 
@@ -33,7 +36,14 @@ namespace InformationsSystemOru.Controllers
                 Email = model.Email
 
             };
-           // userRepository.AddUser(user);
+           userRepository.AddUser(user);
+            var account = new Account()
+            {
+                Username = model.Username,
+                Password = model.Password
+
+            };
+            accountRepository.Addaccount(account);
             return View(model);
         }
         
