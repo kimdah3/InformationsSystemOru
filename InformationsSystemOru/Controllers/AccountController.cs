@@ -33,7 +33,7 @@ namespace InformationsSystemOru.Controllers
                 Email = model.Email
 
             };
-            userRepository.AddUser(user);
+           // userRepository.AddUser(user);
             return View(model);
         }
         
