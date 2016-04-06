@@ -172,6 +172,9 @@
     <Content Include="Views\Blogs\EducationBlog.cshtml" />
     <Content Include="Views\Blogs\ScienceBlog.cshtml" />
     <Content Include="Views\Blogs\PrivateBlog.cshtml" />
+    <Content Include="Views\Shared\View.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Shared\_LayoutUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj">
