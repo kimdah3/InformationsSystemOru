@@ -22,11 +22,8 @@ namespace InformationsSystemOru.Controllers
             var y = new AccessRepository();
             var user = x.GetUserFromId(1);
             var user2 = x.GetUserFromId(2);
-            var p = new UserRepository();
             var t = y.IsAdmin(user);
             var m = y.IsAdmin(user2);
-            Console.WriteLine(t);
-            Console.WriteLine(m);
 
        
             return View();
