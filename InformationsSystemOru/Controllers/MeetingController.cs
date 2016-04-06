@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace InformationsSystemOru.Controllers
 {
-    public class ProfileController : Controller
+    public class MeetingController : Controller
     {
-        // GET: Profile
-        public new ActionResult Profile()
+        // GET: Meeting
+        public ActionResult Index()
         {
             return View();
         }
