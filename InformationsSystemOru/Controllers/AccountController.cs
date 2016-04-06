@@ -33,12 +33,16 @@ namespace InformationsSystemOru.Controllers
             {
                 Firstname = model.Firstname,
                 Lastname = model.Lastname,
-                Email = model.Email
-
+                Email = model.Email,
+               
+               
             };
            userRepository.AddUser(user);
+
+
             var account = new Account()
             {
+                UserID = user.Id,
                 Username = model.Username,
                 Password = model.Password
 

@@ -7,6 +7,7 @@ namespace InformationsSystemOru.Models
 {
     public class CreateUserModel
     {
+        public string Userid { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Email { get; set; }
