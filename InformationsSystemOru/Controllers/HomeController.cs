@@ -16,16 +16,7 @@ namespace InformationsSystemOru.Controllers
 
 
         public ActionResult Index()
-        {
-         
-            var x = new UserRepository();
-            var y = new AccessRepository();
-            var user = x.GetUserFromId(1);
-            var user2 = x.GetUserFromId(2);
-            var t = y.IsAdmin(user);
-            var m = y.IsAdmin(user2);
-
-       
+        {       
             return View();
         }
         [HttpPost]
