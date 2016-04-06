@@ -17,6 +17,5 @@ namespace Data_Access_Layer.Repositories
                 return context.Account.Any(x => x.Username == username && x.Password == password);
             }
         }
-
     }
 }

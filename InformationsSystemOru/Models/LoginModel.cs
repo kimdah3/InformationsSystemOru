@@ -18,6 +18,8 @@ namespace InformationsSystemOru.Models
         [Display(Name = "Password")]
         [Required(ErrorMessage = "Du måste ange ett lösenord")]
         public string Password { get; set; }
+
+        public string ErrorMessage { get; set; }
         
     }
 }
