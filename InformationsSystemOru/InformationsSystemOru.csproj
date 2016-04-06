@@ -175,6 +175,8 @@
     <Content Include="Views\Shared\View.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Shared\_LayoutUser.cshtml" />
+    <Content Include="Views\Blogs\InformalBlog.cshtml" />
+    <Content Include="Views\Profile\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj">
@@ -192,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Blog\" />
+    <Folder Include="Views\News\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
