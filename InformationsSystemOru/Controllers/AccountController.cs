@@ -26,30 +26,34 @@ namespace InformationsSystemOru.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Create(CreateUserModel model)
         {
-            var user = new User()
+            if (ModelState.IsValid)
             {
-                Firstname = model.Firstname,
-                Lastname = model.Lastname,
-                Email = model.Email,
-               
-               
-            };
-           userRepository.AddUser(user);
+                var user = new User()
+                {
+                    Firstname = model.Firstname,
+                    Lastname = model.Lastname,
+                    Email = model.Email,
 
 
-            var account = new Account()
-            {
-                UserID = user.Id,
-                Username = model.Username,
-                Password = model.Password
+                };
+                userRepository.AddUser(user);
 
-            };
-            accountRepository.Addaccount(account);
+
+                var account = new Account()
+                {
+                    UserID = user.Id,
+                    Username = model.Username,
+                    Password = model.Password
+
+                };
+                accountRepository.Addaccount(account);
+            }
             return View(model);
+           
         }
-        
     }
 }
