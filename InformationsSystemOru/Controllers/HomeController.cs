@@ -14,8 +14,9 @@ namespace InformationsSystemOru.Controllers
     {
 
 
-
+        [HttpGet]
         public ActionResult Index()
+<<<<<<< HEAD
         {
          
             var x = new UserRepository();
@@ -29,8 +30,14 @@ namespace InformationsSystemOru.Controllers
             Console.WriteLine(m);
 
        
+            return View(new LoginModel());
+=======
+        {       
             return View();
+>>>>>>> origin/master
         }
+
+
         [HttpPost]
         public ActionResult Index(LoginModel model)
         {
@@ -40,7 +47,7 @@ namespace InformationsSystemOru.Controllers
             var accountRepository = new AccountRepository();
             if (!accountRepository.Exists(model.Username, model.Password))
             {
-
+                model.ErrorMessage = "Wrong username or password";
                 return View(model);
             }
             {
