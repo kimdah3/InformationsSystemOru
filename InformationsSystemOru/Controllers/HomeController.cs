@@ -30,9 +30,6 @@ namespace InformationsSystemOru.Controllers
 
 
             return View(new LoginModel());
-            {
-                return View();
-            }
 
         }
 
