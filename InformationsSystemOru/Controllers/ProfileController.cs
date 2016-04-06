@@ -6,15 +6,10 @@ using System.Web.Mvc;
 
 namespace InformationsSystemOru.Controllers
 {
-    public class BlogController : Controller
+    public class ProfileController : Controller
     {
-        // GET: Blog
+        // GET: Profile
         public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult InformalBlog()
         {
             return View();
         }

@@ -1,31 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Data_Access_Layer;
+using Data_Access_Layer.Repositories;
 using InformationsSystemOru.Models;
 
+
 namespace InformationsSystemOru.Controllers
-{
+{ 
+
     public class AccountController : Controller
     {
-        // GET: Account
-        public ActionResult Index()
+        private UserRepository userRepository;
+
+        public AccountController()
+        {
+            userRepository = new UserRepository();
+     
+        }
+
+
+
+        public ActionResult Create()
         {
             return View();
         }
-
+        [HttpPost]
         public ActionResult Create(CreateUserModel model)
         {
-        //    users user = new users
-        //    {
-        //        firstname = cModel.Firstname,
-        //        lastname = cModel.Lastname,
-        //        email=cModel.Email
+            var user = new User()
+            {
+                Firstname = model.Firstname,
+                Lastname = model.Lastname,
+                Email = model.Email
 
-        //     };
-        //    userRepository.AddUser(user);
-            return View();
+            };
+            userRepository.AddUser(user);
+            return View(model);
         }
         
     }
