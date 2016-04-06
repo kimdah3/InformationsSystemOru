@@ -1,8 +1,21 @@
-﻿@model dynamic
+﻿@model InformationsSystemOru.Models.MeetingModel
 
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewBag.Title = "Meeting";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-
-<h2>title</h2>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h2>@ViewBag.Title</h2>
+        @foreach (var day in Model.UpcomingDays)
+        {
+            <button class="btn btn-default">@day.ToString("MMMM dd")</button>
+        }
+        @foreach (var meeting in Model.Meetings)
+        {
+            <p>@meeting.Date</p>
+        }
+    </div>
+    <div class="col-md-2"></div>
+</div>
