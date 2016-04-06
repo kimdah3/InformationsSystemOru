@@ -12,17 +12,17 @@ namespace InformationsSystemOru.Tests.Controllers
     [TestClass]
     public class AccountControllerTest
     {
-        [TestMethod]
-        public void Index()
-        {
-            // Arrange
-            AccountController controller = new AccountController();
+        //[TestMethod]
+        //public void Index()
+        //{
+        //    // Arrange
+        //    AccountController controller = new AccountController();
 
-            // Act
-            ViewResult result = controller.Index() as ViewResult;
+        //    // Act
+        //    ViewResult result = controller.Index() as ViewResult;
 
-            // Assert
-            Assert.IsNotNull(result);
-        }
+        //    // Assert
+        //    Assert.IsNotNull(result);
+        //}
     }
 }
