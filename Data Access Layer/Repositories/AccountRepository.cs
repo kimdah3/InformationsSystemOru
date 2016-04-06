@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data_Access_Layer.Repositories
 {
-    class AccountRepository
+    public class AccountRepository
     {
         //Kollar om användarnamn och lösenord stämmer 
         public bool Exists(string username, string password)
