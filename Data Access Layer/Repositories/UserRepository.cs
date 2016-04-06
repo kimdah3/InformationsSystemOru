@@ -18,7 +18,12 @@ namespace Data_Access_Layer.Repositories
 
         public void AddUser(User user)
         {
-            throw new NotImplementedException();
+            using (var context = new IsOruDbEntities())
+            {
+
+                context.User.Add(user);
+                context.SaveChanges();
+            }
         }
     }
 }
