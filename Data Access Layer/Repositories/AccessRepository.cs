@@ -6,15 +6,24 @@ using System.Threading.Tasks;
 
 namespace Data_Access_Layer.Repositories
 {
-  /*  class AccessRepository
+    public class AccessRepository
     {
-        public void AddAccess(User user, string accesslevel) {
+    /*    public void AddAccess(User user, string accesslevel) {
             
             using (var context = new IsOruDbEntities())
             {
                 context.User_Access.
             }
                 
+        }*/
+        public bool IsAdmin(User user)
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                return context.User_Access.Any(x => user.Id == x.UserId && x.AccessId == 1 || x.AccessId == 2);
+            }
         }
-    }*/
+    }
+
+
 }

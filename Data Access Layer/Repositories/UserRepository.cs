@@ -8,5 +8,12 @@ namespace Data_Access_Layer.Repositories
 {
     public class UserRepository
     {
+        public User GetUserFromId(int id)
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                return context.User.Where(x => x.Id == id).First();
+            }
+        }
     }
 }
