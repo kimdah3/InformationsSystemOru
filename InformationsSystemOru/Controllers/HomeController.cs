@@ -16,10 +16,8 @@ namespace InformationsSystemOru.Controllers
 
         [HttpGet]
         public ActionResult Index()
-<<<<<<< HEAD
-<<<<<<< HEAD
         {
-         
+
             var x = new UserRepository();
             var y = new AccessRepository();
             var user = x.GetUserFromId(1);
@@ -30,16 +28,13 @@ namespace InformationsSystemOru.Controllers
             Console.WriteLine(t);
             Console.WriteLine(m);
 
-       
-            return View(new LoginModel());
-=======
-=======
->>>>>>> origin/master
-        {       
-            return View();
->>>>>>> origin/master
-        }
 
+            return View(new LoginModel());
+            {
+                return View();
+            }
+
+        }
 
         [HttpPost]
         public ActionResult Index(LoginModel model)

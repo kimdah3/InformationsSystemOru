@@ -255,3 +255,6 @@ paket-files/
 *.ldf
 InformationsSystemOru/App_Data/IsOruDb.mdf
 *.mdf
+*.mdf
+InformationsSystemOru/App_Data/IsOruDb_log.ldf
+*.ldf
