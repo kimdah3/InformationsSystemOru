@@ -17,6 +17,7 @@ namespace InformationsSystemOru.Controllers
         [HttpGet]
         public ActionResult Index()
 <<<<<<< HEAD
+<<<<<<< HEAD
         {
          
             var x = new UserRepository();
@@ -32,6 +33,8 @@ namespace InformationsSystemOru.Controllers
        
             return View(new LoginModel());
 =======
+=======
+>>>>>>> origin/master
         {       
             return View();
 >>>>>>> origin/master
