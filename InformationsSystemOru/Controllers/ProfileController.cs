@@ -9,7 +9,7 @@ namespace InformationsSystemOru.Controllers
     public class ProfileController : Controller
     {
         // GET: Profile
-        public ActionResult Profile()
+        public new ActionResult Profile()
         {
             return View();
         }
