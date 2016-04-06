@@ -23,6 +23,14 @@ namespace Data_Access_Layer.Repositories
                 return context.User_Access.Any(x => user.Id == x.UserId && x.AccessId == 1 || x.AccessId == 2);
             }
         }
+
+        public List<int> GetUserIdsWithAccess()
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                return context.User_Access.Select(x => x.UserId).ToList();
+            }
+        }
     }
 
 

@@ -1,4 +1,4 @@
-﻿
+﻿@model InformationsSystemOru.Models.HandleAccessModel
 @{
     ViewBag.Title = "HandleAccess";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -6,3 +6,4 @@
 
 <h2>Handle Access</h2>
 
+@Html.DropDownList("Användare", new SelectList(Model.Users), "Välj en användare")

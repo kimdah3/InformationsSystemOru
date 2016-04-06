@@ -25,5 +25,13 @@ namespace Data_Access_Layer.Repositories
                 context.SaveChanges();
             }
         }
+
+        public List<User> GetAllUsers()
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                return context.User.ToList();
+            }
+        }
     }
 }
