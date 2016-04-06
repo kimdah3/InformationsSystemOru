@@ -15,5 +15,10 @@ namespace Data_Access_Layer.Repositories
                 return context.User.Where(x => x.Id == id).First();
             }
         }
+
+        public void AddUser(User user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
