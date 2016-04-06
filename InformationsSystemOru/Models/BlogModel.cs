@@ -12,6 +12,7 @@ namespace InformationsSystemOru.Models
         public string Title { get; set; } //max 50
         public DateTime DatePosted { get; set; }
         public string Category { get; set; } //rätt? max 10 char
-        //User id?
+        public int UserId { get; set; }
+        public string Type { get; set; }
     }
 }
