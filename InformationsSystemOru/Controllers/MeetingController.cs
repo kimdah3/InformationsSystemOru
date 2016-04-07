@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Data_Access_Layer;
 using Data_Access_Layer.Repositories;
 using InformationsSystemOru.Models;
 
@@ -36,5 +37,28 @@ namespace InformationsSystemOru.Controllers
         {
             return PartialView("_Meeting");
         }
+<<<<<<< HEAD
+=======
+
+        [HttpPost]
+        public ActionResult Meeting(NewMeetingModel model)
+        {
+
+            var meeting = new Meeting
+            {
+                Date = model.Date,
+                Location = model.Location,
+                Type = model.Type
+
+
+            };
+
+            MeetingRepository.AddMeeting(meeting);
+
+            return RedirectToAction("Calendar");
+
+
+        }
+>>>>>>> origin/master
     }
 }
