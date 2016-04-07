@@ -42,7 +42,7 @@ namespace Data_Access_Layer
 
         public override string ToString()
         {
-            return Firstname + " " + Lastname;
+            return Id.ToString() +". "+Firstname + " " + Lastname;
         }
     }
 }

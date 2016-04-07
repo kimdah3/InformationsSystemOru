@@ -4,7 +4,32 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Handle Access</h2>
 
-@Html.DropDownList("UsersWithoutAccess", new SelectList(Model.UsersWithoutAccess), "Choose a user")
-@Html.DropDownList("UsersWithAccess", new SelectList(Model.UsersWithoutAccess), "Choose a user")
+<div class="well well-lg">
+    <div class="form-horizontal" style="margin-left: 25%;">
+        <h4>Handle Access</h4>
+        <hr />
+        @using (Html.BeginForm("GiveUserNewswritingAccess", "HandleAccess"))
+        {
+            <div class="form-group">
+                @Html.Label("GiveAccess", "Give user news access.")
+                @Html.DropDownListFor(model => model.SelectedUser, new SelectList(Model.UsersWithoutAccess), "Choose a user", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Registrera" class="btn btn-success" />
+            </div>
+        }
+
+
+        <div class="form-group">
+            @Html.Label("RemoveAccess", "Remove news access from user.")
+            @Html.DropDownList("UsersWithAccess", new SelectList(Model.UsersWithAccess), "Choose a user", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Registrera" class="btn btn-success" />
+        </div>
+
+    </div>
+</div>

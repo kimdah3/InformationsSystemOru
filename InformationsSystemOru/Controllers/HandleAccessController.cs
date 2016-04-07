@@ -37,5 +37,15 @@ namespace InformationsSystemOru.Controllers
 
             return View(aModel);
         }
+
+        [HttpPost]
+        public ActionResult GiveUserNewswritingAccess(HandleAccessModel haModel)
+        {
+            //Få ut id ur SelectedUser strängen.
+            int index = haModel.SelectedUser.LastIndexOf(".");
+            var Id = int.Parse(haModel.SelectedUser.Substring(0, index));
+
+            return RedirectToAction("HandleAccess");
+        }
     }
 }

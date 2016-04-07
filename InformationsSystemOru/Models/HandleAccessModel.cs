@@ -10,7 +10,7 @@ namespace InformationsSystemOru.Models
     {
         public List<User> UsersWithoutAccess { get; set; }
         public List<User> UsersWithAccess { get; set; }
-        public int ID { get; set; }
+        public string SelectedUser { get; set; }
 
     }
 }
