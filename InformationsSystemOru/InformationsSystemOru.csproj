@@ -130,6 +130,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BlogModel.cs" />
+    <Compile Include="Models\CalendarModel.cs" />
     <Compile Include="Models\CreateUserModel.cs" />
     <Compile Include="Models\HandleAccessModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -181,8 +182,9 @@
     <Content Include="Views\Shared\_LayoutUser.cshtml" />
     <Content Include="Views\Blog\InformalBlog.cshtml" />
     <Content Include="Views\Profile\Profile.cshtml" />
-    <Content Include="Views\Meeting\Index.cshtml" />
+    <Content Include="Views\Meeting\Calendar.cshtml" />
     <Content Include="Views\HandleAccess\HandleAccess.cshtml" />
+    <Content Include="Views\Meeting\_Meeting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj">
