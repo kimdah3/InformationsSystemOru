@@ -33,29 +33,32 @@ namespace InformationsSystemOru.Controllers
             return View(model);
         }
 
-        public PartialViewResult Meeting(string meetingId)
+        public PartialViewResult Meeting(string date)
         {
-            return PartialView("_Meeting");
-        }
-
-        [HttpPost]
-        public ActionResult Meeting(NewMeetingModel model)
-        {
-
-            var meeting = new Meeting
+            var model = new MeetingModel()
             {
-                Date = model.Date,
-                Location = model.Location,
-                Type = model.Type
-
-
+                Date = date,
+                Meetings = new List<Meeting>()
             };
 
-            MeetingRepository.AddMeeting(meeting);
-
-            return RedirectToAction("Calendar");
-
-
+            return PartialView("_Meeting", model);
         }
+
+        //public ActionResult Meeting(NewMeetingModel model)
+        //{
+
+        //    var meeting = new Meeting
+        //    {
+        //        Date = model.Date,
+        //        Location = model.Location,
+        //        Type = model.Type
+        //    };
+
+        //    MeetingRepository.AddMeeting(meeting);
+
+        //    return RedirectToAction("Calendar");
+
+
+        //}
     }
 }
