@@ -6,4 +6,5 @@
 
 <h2>Handle Access</h2>
 
-@Html.DropDownList("Användare", new SelectList(Model.Users), "Välj en användare")
+@Html.DropDownList("UsersWithoutAccess", new SelectList(Model.UsersWithoutAccess), "Choose a user")
+@Html.DropDownList("UsersWithAccess", new SelectList(Model.UsersWithoutAccess), "Choose a user")

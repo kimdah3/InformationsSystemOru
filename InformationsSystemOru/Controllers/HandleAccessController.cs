@@ -12,14 +12,28 @@ namespace InformationsSystemOru.Controllers
     {
         private AccessRepository accessRep = new AccessRepository();
         private UserRepository userRep = new UserRepository();
+        private AccountRepository accountRep = new AccountRepository();
+
         // GET: HandleAccess
         public ActionResult HandleAccess()
         {
-            var ids = accessRep.GetUserIdsWithAccess();
+            var namn = User.Identity.Name;
+            var loggedInUser = userRep.GetUserFromId(accountRep.GetIdFromUsername(User.Identity.Name));
             var users = userRep.GetAllUsers();
             var aModel = new HandleAccessModel();
 
-            aModel.Users = users.Where(x => !ids.Contains(x.Id)).ToList();
+            if (accessRep.IsInformaticsAdmin(loggedInUser))
+            {
+                var ids = accessRep.GetUserIdsWithInformaticsAccess();
+                aModel.UsersWithAccess = users.Where(x => ids.Contains(x.Id)).ToList();
+                aModel.UsersWithoutAccess = users.Where(x => !ids.Contains(x.Id)).ToList();
+            }
+            else
+            {
+                var ids = accessRep.GetUserIdsWithResearchAccess();
+                aModel.UsersWithAccess = users.Where(x => ids.Contains(x.Id)).ToList();
+                aModel.UsersWithoutAccess = users.Where(x => !ids.Contains(x.Id)).ToList();
+            }
 
             return View(aModel);
         }

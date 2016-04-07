@@ -1,0 +1,46 @@
+﻿@model InformationsSystemOru.Models.CalendarModel
+
+@{
+    ViewBag.Title = "Meeting";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h2>@ViewBag.Title</h2>
+        @foreach (var day in Model.UpcomingDays)
+        {
+            var amountOfMeetings = 0;
+
+
+            foreach (var meeting in Model.Meetings)
+            {
+                if (meeting.Date == day.Date)
+                {
+                    amountOfMeetings++;
+                }
+            }
+
+            <button class="btn btn-default">
+                @day.ToString("MMMM dd")
+                @if (@amountOfMeetings != 0)
+                {
+                    <span class="glyphicon glyphicon-pushpin glyphicon-pushpin-edit"></span>
+                    @amountOfMeetings
+                }
+            </button>
+        }
+
+    </div>
+    <div class="col-md-2"></div>
+    </div>
+    <div class="row">
+        <br />
+        <br/>
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            @Html.Action("Meeting", "Meeting", new { Values = "meetingId" })
+        </div>
+        <div class="col-md-2"></div>
+
+    </div>

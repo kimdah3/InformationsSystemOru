@@ -13,13 +13,13 @@ namespace InformationsSystemOru.Tests.Controllers
     public class AccountControllerTest
     {
         //[TestMethod]
-        //public void Index()
+        //public void Calendar()
         //{
         //    // Arrange
         //    AccountController controller = new AccountController();
 
         //    // Act
-        //    ViewResult result = controller.Index() as ViewResult;
+        //    ViewResult result = controller.Calendar() as ViewResult;
 
         //    // Assert
         //    Assert.IsNotNull(result);

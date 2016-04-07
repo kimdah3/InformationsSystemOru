@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net.Configuration;
 using System.Security.Cryptography;
@@ -40,34 +41,21 @@ namespace Data_Access_Layer.Repositories
 
         }
 
-        //public void SavePost(Post post, String Type)
-        //{
-        //    if (Type == "Private")
-        //    {
-        //        using (var db = new IsOruDbEntities())
-        //            {
-        //                db.Post.Add(post);
+        public void SavePost(Post post, int posttypeid)
+        {
+            {
+                using (var db = new IsOruDbEntities())
+                {
+                    var postposttypeobj = new Post_PostTypeRespository();
+                    db.Post.Add(post);
+                    postposttypeobj.savePosttype(post.Id, posttypeid);
 
-        //                int userid = post.PostingUserID;
-        //                db.Post_PostType.Add(userid, Ty);
-        //                db.SaveChanges();
-        //            }
+                    db.SaveChanges();
+                }
 
-        //    }
+            }
 
-        //if(Type == "Informal")
-        //{
-        //    using (var db = new IsOruDbEntities())
-        //    {
-        //        db.Post.Add(post);
-        //        int userid = post.PostingUserID;
-        //        db.Post_PostType.Add(userid, Type);
-        //        db.SaveChanges();
-        //    }
-
-        //}
-
-
+        }
     }
 
     //public Post getAllPosts()

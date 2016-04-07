@@ -8,7 +8,8 @@ namespace InformationsSystemOru.Models
 {
     public class HandleAccessModel
     {
-        public List<User> Users { get; set; }
+        public List<User> UsersWithoutAccess { get; set; }
+        public List<User> UsersWithAccess { get; set; }
         public int ID { get; set; }
 
     }

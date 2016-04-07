@@ -16,11 +16,19 @@ namespace Data_Access_Layer.Repositories
             }
                 
         }*/
-        public bool IsAdmin(User user)
+        public bool IsInformaticsAdmin(User user)
         {
             using (var context = new IsOruDbEntities())
             {
-                return context.User_Access.Any(x => user.Id == x.UserId && x.AccessId == 1 || x.AccessId == 2);
+                return context.User_Access.Any(x => user.Id == x.UserId && x.AccessId == 1);
+            }
+        }
+
+        public bool IsResearchAdmin(User user)
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                return context.User_Access.Any(x => user.Id == x.UserId && x.AccessId == 2);
             }
         }
 
@@ -28,7 +36,23 @@ namespace Data_Access_Layer.Repositories
         {
             using (var context = new IsOruDbEntities())
             {
-                return context.User_Access.Select(x => x.UserId).ToList();
+                return context.User_Access.Where(x => x.AccessId == 3 && x.AccessId != 1).Select(x => x.UserId).ToList();
+            }
+        }
+
+        public List<int> GetUserIdsWithInformaticsAccess()
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                return context.User_Access.Where(x => x.AccessId == 3 && x.AccessId != 1).Select(x => x.UserId).ToList();
+            }
+        }
+
+        public List<int> GetUserIdsWithResearchAccess()
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                return context.User_Access.Where(x => x.AccessId == 4 && x.AccessId != 2).Select(x => x.UserId).ToList();
             }
         }
     }

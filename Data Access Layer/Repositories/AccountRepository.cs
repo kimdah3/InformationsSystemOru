@@ -27,5 +27,13 @@ namespace Data_Access_Layer.Repositories
                 context.SaveChanges();
             }
         }
+
+        public int GetIdFromUsername(string username)
+        {
+            using(var context = new IsOruDbEntities())
+            {
+                return context.Account.Where(x => x.Username.ToLower() == username.ToLower()).Select(x => x.UserID).First();
+            }
+        }
     }
 }

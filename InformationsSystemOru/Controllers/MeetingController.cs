@@ -12,7 +12,7 @@ namespace InformationsSystemOru.Controllers
     public class MeetingController : Controller
     {
         // GET: Meeting
-        public ActionResult Index()
+        public ActionResult Calendar()
         {
             var days = new List<DateTime>();
             var currentDate = DateTime.Now;
@@ -23,13 +23,18 @@ namespace InformationsSystemOru.Controllers
                 days.Add(currentDate);
                 currentDate = currentDate.AddDays(1);
             }
-            var model = new MeetingModel()
+            var model = new CalendarModel()
             {
                 UpcomingDays = days,
                 Meetings = meetingRepository.GetAllMeetings()
             };
 
             return View(model);
+        }
+
+        public PartialViewResult Meeting(string meetingId)
+        {
+            return PartialView("_Meeting");
         }
     }
 }
