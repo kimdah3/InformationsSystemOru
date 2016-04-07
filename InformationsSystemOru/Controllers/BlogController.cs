@@ -30,30 +30,30 @@ namespace InformationsSystemOru.Controllers
             return View();
         }
 
-        public ActionResult SavePost(BlogModel model)
-        {
-            var post = new Post()
-            {
-                Category = model.Category,
-                Date = model.DatePosted,
-                Titel = model.Title,
-                Text = model.Text,
-                PostingUserID = model.UserId
+        //public ActionResult SavePost(BlogModel model)
+        //{
+        //    var post = new Post()
+        //    {
+        //        Category = model.Category,
+        //        Date = model.DatePosted,
+        //        Titel = model.Title,
+        //        Text = model.Text,
+        //        PostingUserID = model.UserId
 
-            };
-            postrepository.SavePost(post);
+        //    };
+        //    postrepository.SavePost(post);
 
-            var post_posttype = new Post_PostType()
-            {
-                PostType = model.asd,
-                PostId = post.PostingUserID
+        //    var post_posttype = new Post_PostType()
+        //    {
+        //        PostType = model.asd,
+        //        PostId = post.PostingUserID
 
-            };
-            postrepository.SavePost()
-            return View(model);
+        //    };
+        //    postrepository.SavePost()
+        //    return View(model);
 
 
-        }
+        //}
 
         //model.Category = post.Category;
         //model.DatePosted = post.Date;
