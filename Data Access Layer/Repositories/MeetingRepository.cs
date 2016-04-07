@@ -23,7 +23,7 @@ namespace Data_Access_Layer.Repositories
 
 
         // Lägger till ett nytt möte
-        public static void RegisterUser(Meeting newMeeting)
+        public static void AddMeeting (Meeting newMeeting)
         {
             using (var context = new IsOruDbEntities())
             {
