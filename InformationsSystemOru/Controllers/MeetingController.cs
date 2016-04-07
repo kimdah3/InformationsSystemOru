@@ -37,8 +37,6 @@ namespace InformationsSystemOru.Controllers
         {
             return PartialView("_Meeting");
         }
-<<<<<<< HEAD
-=======
 
         [HttpPost]
         public ActionResult Meeting(NewMeetingModel model)
@@ -59,6 +57,5 @@ namespace InformationsSystemOru.Controllers
 
 
         }
->>>>>>> origin/master
     }
 }
