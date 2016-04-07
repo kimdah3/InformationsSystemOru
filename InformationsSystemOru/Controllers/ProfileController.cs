@@ -12,6 +12,7 @@ namespace InformationsSystemOru.Controllers
     public class ProfileController : Controller
     {
         private PostRepository postrepository;
+        private AccountRepository accountRep = new AccountRepository();
 
         // GET: Profile
         public new ActionResult Profile()
@@ -27,20 +28,20 @@ namespace InformationsSystemOru.Controllers
 
         public ActionResult SaveThePost(BlogModel model)
         {
+            var postingUserId = accountRep.GetIdFromUsername(User.Identity.Name);
             var post = new Post()
             {
                 Category = model.Category,
-                Date = model.DatePosted,
+                Date = DateTime.Now,
                 Titel = model.Title,
                 Text = model.Text,
-                PostingUserID = model.UserId
-                
+                PostingUserID = postingUserId
 
             };
             int type = model.Type;
             postrepository.SavePost(post, type);
 
-            return View(model);
+            return RedirectToAction("Profile");
 
 
         }

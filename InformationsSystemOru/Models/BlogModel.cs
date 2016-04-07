@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace InformationsSystemOru.Models
-{
+{ //validering
     public class BlogModel
     {
         public string Text { get; set; }

@@ -1,4 +1,4 @@
-﻿
+﻿@model InformationsSystemOru.Models.BlogModel
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
@@ -9,9 +9,21 @@
 
 <div id="Wall">
 
-    @Html.Label("Write a blog post") <br />
+@using (Html.BeginForm("SaveThePost", "Profile"))
+{
+    @Html.Label("Write a blog post")
+    <br/>
 
-    @Html.TextBox("TitleInput"); <br />
-    @Html.TextArea("WallInputText", new { rows = 5, cols = 80 })
-    <input type="submit" value="Post" id="btnSend" />
+    @Html.TextBoxFor(model => model.Title, "TitleInput")
+    ;
+    <br/>
+    @Html.TextBoxFor(model => model.Category, "Kategori")
+    ;
+    <br/>
+    @Html.TextAreaFor(model => model.Text, "WallInputText")
+    ;
+
+    <input type="submit" value="Post" id="btnSend"/>
+}
 </div>
+
