@@ -19,6 +19,19 @@ namespace Data_Access_Layer.Repositories
                 }
             }
             return meetings;
-        } 
+        }
+
+
+        // Lägger till ett nytt möte
+        public static void RegisterUser(Meeting newMeeting)
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                
+                context.Meeting.Add(newMeeting);
+                context.SaveChanges();
+
+            }
+        }
     }
 }
