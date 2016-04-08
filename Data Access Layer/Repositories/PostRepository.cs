@@ -43,24 +43,24 @@ namespace Data_Access_Layer.Repositories
 
         public void SavePost(Post post, int posttypeid)
         {
+
+            using (var db = new IsOruDbEntities())
             {
-                using (var db = new IsOruDbEntities())
-                {
-                    var postposttypeobj = new Post_PostTypeRespository();
-                    db.Post.Add(post);
-                    postposttypeobj.savePosttype(post.Id, posttypeid);
-
-                    db.SaveChanges();
-                }
-
+                db.Post.Add(post);
+                db.SaveChanges();
             }
 
         }
+
+
+        public List<Post> GetProfileBlogPosts(int profileid, List<int> privatePostId)
+        {
+            using (var db = new IsOruDbEntities())
+            {
+                return db.Post.Where(x => x.PostingUserID == profileid && privatePostId.Contains(x.Id)).OrderByDescending(x=> x.Date).ToList();
+            }
+        }
+
     }
-
-    //public Post getAllPosts()
-    //{
-
-    //}
 
 }

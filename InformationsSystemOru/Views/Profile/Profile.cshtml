@@ -7,28 +7,60 @@
 
 <h2>Profile</h2>
 
-<div id="Wall">
+<div>
 
-@using (Html.BeginForm("Profile", "Profile", FormMethod.Post))
-{
-    @Html.Label("Write a blog post")
-    <br/>
+    @using (Html.BeginForm("Profile", "Profile", FormMethod.Post))
+    {
+        @Html.Label("Write a blog post")
 
-    @Html.LabelFor(model => model.Title, "Title", htmlAttributes: new { @class = "control-label col-md-2" })
-    @Html.TextBoxFor(model => model.Title, "TitleInput")
-    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-    <br/>
-    @Html.TextBoxFor(model => model.Category, "Kategori")
-    @Html.LabelFor(model => model.Category, "Kategori", htmlAttributes: new { @class = "control-label col-md-2" })
-    @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
-    ;
-    <br/>
-    @Html.TextAreaFor(model => model.Text, "WallInputText")
-    @Html.LabelFor(model => model.Text, "Text", htmlAttributes: new { @class = "control-label col-md-2" })
-    @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
-    ;
 
-    <input type="submit" value="Post" id="btnSend"/>
-}
+        @Html.LabelFor(model => model.Title, "Title", htmlAttributes: new { @class = "col-md-2" })
+        @Html.TextBoxFor(model => model.Title, "TitleInput")
+        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+
+        @Html.TextBoxFor(model => model.Category, "Kategori")
+        @Html.LabelFor(model => model.Category, "Kategori", htmlAttributes: new { @class = "col-md-4" })
+        @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+        ;
+
+        @Html.TextAreaFor(model => model.Text, "WallInputText")
+        @Html.LabelFor(model => model.Text, "Text", htmlAttributes: new { @class = "col-md-8" })
+        @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+        ;
+
+        <input type="submit" value="Post" id="btnSend" />
+
+
+    }
+
 </div>
 
+
+@if (Model.AllPostsForUser != null)
+{
+    foreach (var post in Model.AllPostsForUser)
+    {
+        <p>@post.Titel</p>
+        <br/>
+        <p>@post.Category</p>
+        <br/>
+        <p>@post.Text</p>
+        <br/>
+        <p>@post.Date</p>
+    }
+}
+
+
+@*<div id="theWall">
+    @Html.LabelFor(model => model.Title, "Title", htmlAttributes: new {@class = "col-md-2"})
+    @Html.LabelFor(model => model.Category, "Kategori", htmlAttributes: new {@class = "col-md-4"})
+    @Html.LabelFor(model => model.Text, "Text", htmlAttributes: new {@class = "col-md-8"})
+
+</div>*@
+
+@*<div>
+    <h3>@Model.Title</h3>
+    <h3>@Model.Category</h3>
+    <h3>@Model.DatePosted</h3>
+    <h2>@Model.Text</h2>
+</div>*@

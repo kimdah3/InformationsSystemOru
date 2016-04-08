@@ -6,19 +6,30 @@ using System.Threading.Tasks;
 
 namespace Data_Access_Layer.Repositories
 {
-    class Post_PostTypeRespository
+    public class Post_PostTypeRespository
     {
         
-        public void savePosttype(int postid, int posttypeid)
+        public void SavePosttype(int postid, int posttypeid)
         {
             using (var db = new IsOruDbEntities())
             {
-                var newposttype = new Post_PostType();
-                newposttype.PostId = postid;
-                newposttype.PostTypeId = posttypeid;
+                var newposttype = new Post_PostType
+                {
+                    PostId = postid,
+                    PostTypeId = posttypeid
+                };
 
                 db.Post_PostType.Add(newposttype);
+                db.SaveChanges();
             }
         }
+
+        public List<int> GetAllPrivatePostIds()
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                return context.Post_PostType.Where(x => x.PostTypeId == 1).Select(x => x.PostId).ToList();
+            }
+        } 
     }
 }

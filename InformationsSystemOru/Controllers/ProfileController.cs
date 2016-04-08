@@ -11,20 +11,20 @@ namespace InformationsSystemOru.Controllers
 {
     public class ProfileController : Controller
     {
-        private PostRepository postrepository;
+        private UserRepository userRep = new UserRepository();
+        private PostRepository postrepository = new PostRepository();
         private AccountRepository accountRep = new AccountRepository();
+        private Post_PostTypeRespository postPostType = new Post_PostTypeRespository();
 
         // GET: Profile
-        public new ActionResult Profile()
+        public ActionResult Profile()
         {
-            return View();
-        }
+            var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
+            var posts = postrepository.GetProfileBlogPosts(loggedInUser, postPostType.GetAllPrivatePostIds());
 
-        public ProfileController()
-        {
-            postrepository = new PostRepository();
-
+            return View(new BlogModel {AllPostsForUser = posts });
         }
+        
 
         [HttpPost]
         public ActionResult Profile(BlogModel model)
@@ -44,10 +44,23 @@ namespace InformationsSystemOru.Controllers
             };
             int type = model.Type;
             postrepository.SavePost(post, type);
+            postPostType.SavePosttype(post.Id, 1);
 
-            return View();
-
-
+           
+            return RedirectToAction("Profile");
         }
+
+        
+        //public ActionResult ProfilePostResult(int userID)
+        //{
+        //    postrepository.
+        //    List<Post> = 
+        //    var model = new BlogModel();
+        //    model.Category = post.Category;
+        //    model.DatePosted = post.Date;
+        //    model.Title = post.Titel;
+        //    model.Text = post.Text;
+        //    return View(model);
+        //}
     }
 }
