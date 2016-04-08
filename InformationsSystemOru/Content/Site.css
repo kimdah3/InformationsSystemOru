@@ -1,4 +1,18 @@
-﻿body {
+﻿#logo {
+    width: 50%;
+    height: auto;
+
+}
+
+#Login {
+    margin-top: 5%;
+    text-align: center !important;
+    
+    
+
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
