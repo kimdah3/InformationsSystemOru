@@ -1,6 +1,44 @@
 ﻿@model InformationsSystemOru.Models.MeetingModel
 
+<script type="text/javascript">
+    $(function () {
+        $('#timepicker').val('');
+        $('#timepicker').timepicker();
+        console.log("sad");
+    })
+</script>
 <div class="well">
 
-    <h3>ETT MÖTE @Model.Date</h3>
+    <h2>@Model.Date</h2>
+    @if (Model.Meetings.Count > 0)
+    {
+        <h3>Bookings</h3>
+    }
+    @foreach (var meeting in Model.Meetings)
+    {
+        <p>Plats: @meeting.Location</p>
+        <p>Typ: @meeting.Type</p>
+        <p>@*@meeting.User_Book*@</p>
+    }
+
+    <h3>Book</h3>
+    @using (Html.BeginForm("Book", "Meeting"))
+    {
+        @Html.LabelFor(x => x.TimeOfDay)
+        <br />
+        @Html.TextBoxFor(x => x.TimeOfDay, new {id = "timepicker"})
+        <br />
+        @Html.LabelFor(x => x.Location)
+        <br />
+        @Html.TextBoxFor(x => x.Location)
+        <br />
+
+        @Html.LabelFor(x => x.Type)
+        <br />
+        @Html.TextBoxFor(x => x.Type)
+
+        <input type="submit" class="btn btn-default" value="Add meeting"/>
+        @*@Html.LabelFor(model => model.Password, "Lösenord", htmlAttributes: new { @class = "control-label col-md-2" })*@
+
+    }
 </div>

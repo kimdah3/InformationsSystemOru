@@ -1,9 +1,13 @@
 ﻿@model InformationsSystemOru.Models.CalendarModel
 
 @{
-    ViewBag.Title = "Meeting";
+    ViewBag.Title = "Calendar";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
+
+<link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.timepicker.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -22,7 +26,7 @@
         {
             var amountOfMeetings = Model.Meetings.Count(meeting => meeting.Date == day.Date);
 
-            <button class="btn btn-default meeting-button" id="@day.Date" data-url="@Url.Action("Meeting","Meeting", new { date = day.Date})">
+            <button class="btn btn-default meeting-button" id="@day.Date" data-url="@Url.Action("Book","Meeting", new { date = day.Date})">
                 @day.ToString("MMMM dd")
                 @if (@amountOfMeetings != 0)
                 {
@@ -43,7 +47,7 @@
         <div id="meeting-view">
 
         </div>
-        @*@Html.Action("Meeting", "Meeting", new { meetingId = "meetingId" })*@
+        @*@Html.Action("Book", "Book", new { meetingId = "meetingId" })*@
     </div>
     <div class="col-md-2"></div>
 
