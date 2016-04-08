@@ -141,6 +141,7 @@
     <Compile Include="Models\BlogModel.cs" />
     <Compile Include="Models\CalendarModel.cs" />
     <Compile Include="Models\CreateUserModel.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\HandleAccessModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MeetingModel.cs" />
@@ -196,6 +197,8 @@
     <Content Include="Views\HandleAccess\HandleAccess.cshtml" />
     <Content Include="Views\Meeting\_Meeting.cshtml" />
     <Content Include="Views\Admin\Admin.cshtml" />
+    <Content Include="Views\Home\Sent.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj">
