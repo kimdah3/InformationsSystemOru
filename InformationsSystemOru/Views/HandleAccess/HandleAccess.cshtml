@@ -14,22 +14,25 @@
             <div class="form-group">
                 @Html.Label("GiveAccess", "Give user news access.")
                 @Html.DropDownListFor(model => model.SelectedUser, new SelectList(Model.UsersWithoutAccess), "Choose a user", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SelectedUser, "", new { @class = "text-danger" })
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Registrera" class="btn btn-success" />
+                <input type="submit" value="Give access" class="btn btn-success" />
             </div>
         }
 
+        @using (Html.BeginForm("RemoveUserNewswritingAccess", "HandleAccess"))
+        {
+            <div class="form-group">
+                @Html.Label("RemoveAccess", "Remove news access from user.")
+                @Html.DropDownListFor(Model => Model.SelectedUser, new SelectList(Model.UsersWithAccess), "Choose a user", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SelectedUser, "", new { @class = "text-danger" })
+            </div>
 
-        <div class="form-group">
-            @Html.Label("RemoveAccess", "Remove news access from user.")
-            @Html.DropDownList("UsersWithAccess", new SelectList(Model.UsersWithAccess), "Choose a user", new { @class = "form-control" })
-        </div>
-
-        <div class="form-group">
-            <input type="submit" value="Registrera" class="btn btn-success" />
-        </div>
-
+            <div class="form-group">
+                <input type="submit" value="Remove access" class="btn btn-success" />
+            </div>
+        }
     </div>
 </div>
