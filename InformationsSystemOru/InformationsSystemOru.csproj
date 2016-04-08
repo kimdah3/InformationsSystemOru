@@ -155,11 +155,8 @@
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-<<<<<<< HEAD
     <Content Include="Content\jquery.timepicker.css" />
-=======
     <Content Include="Content\oruInformatikLogga.jpg" />
->>>>>>> origin/master
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
