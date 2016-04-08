@@ -11,23 +11,27 @@ namespace InformationsSystemOru.Controllers
 {
     public class ProfileController : Controller
     {
-        private PostRepository postrepository;
+        private UserRepository userRep = new UserRepository();
+        private PostRepository postrepository = new PostRepository();
         private AccountRepository accountRep = new AccountRepository();
+        private Post_PostTypeRespository postPostType = new Post_PostTypeRespository();
 
         // GET: Profile
-        public new ActionResult Profile()
+        public ActionResult Profile()
         {
-            return View();
+            var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
+            var posts = postrepository.GetProfileBlogPosts(loggedInUser, postPostType.GetAllPrivatePostIds());
+
+            return View(new BlogModel {AllPostsForUser = posts });
         }
+        
 
-        public ProfileController()
+        [HttpPost]
+        public ActionResult Profile(BlogModel model)
         {
-            postrepository = new PostRepository();
+            if (!ModelState.IsValid)
+                return View(model);
 
-        }
-
-        public ActionResult SaveThePost(BlogModel model)
-        {
             var postingUserId = accountRep.GetIdFromUsername(User.Identity.Name);
             var post = new Post()
             {
@@ -40,10 +44,23 @@ namespace InformationsSystemOru.Controllers
             };
             int type = model.Type;
             postrepository.SavePost(post, type);
+            postPostType.SavePosttype(post.Id, 1);
 
+           
             return RedirectToAction("Profile");
-
-
         }
+
+        
+        //public ActionResult ProfilePostResult(int userID)
+        //{
+        //    postrepository.
+        //    List<Post> = 
+        //    var model = new BlogModel();
+        //    model.Category = post.Category;
+        //    model.DatePosted = post.Date;
+        //    model.Title = post.Titel;
+        //    model.Text = post.Text;
+        //    return View(model);
+        //}
     }
 }
