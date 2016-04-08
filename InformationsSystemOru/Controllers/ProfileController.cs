@@ -26,8 +26,12 @@ namespace InformationsSystemOru.Controllers
 
         }
 
-        public ActionResult SaveThePost(BlogModel model)
+        [HttpPost]
+        public ActionResult Profile(BlogModel model)
         {
+            if (!ModelState.IsValid)
+                return View(model);
+
             var postingUserId = accountRep.GetIdFromUsername(User.Identity.Name);
             var post = new Post()
             {
@@ -41,7 +45,7 @@ namespace InformationsSystemOru.Controllers
             int type = model.Type;
             postrepository.SavePost(post, type);
 
-            return RedirectToAction("Profile");
+            return View();
 
 
         }
