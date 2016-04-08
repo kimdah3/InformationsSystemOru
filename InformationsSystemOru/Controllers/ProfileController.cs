@@ -22,17 +22,22 @@ namespace InformationsSystemOru.Controllers
             var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
             var posts = postrepository.GetProfileBlogPosts(loggedInUser, postPostType.GetAllPrivatePostIds());
 
-            return View(new BlogModel {AllPostsForUser = posts });
+            return View(new BlogModel { AllPostsForUser = posts });
         }
         
 
         [HttpPost]
         public ActionResult Profile(BlogModel model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
-
             var postingUserId = accountRep.GetIdFromUsername(User.Identity.Name);
+
+            if (!ModelState.IsValid)
+            {
+                var posts = postrepository.GetProfileBlogPosts(postingUserId, postPostType.GetAllPrivatePostIds());
+                model.AllPostsForUser = posts;
+                return View(model);
+            }
+                
             var post = new Post()
             {
                 Category = model.Category,
