@@ -1,4 +1,10 @@
-﻿#Login {
+﻿#logo {
+    width: 50%;
+    height: auto;
+
+}
+
+#Login {
     margin-top: 5%;
     text-align: center !important;
     
