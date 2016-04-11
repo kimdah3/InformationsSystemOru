@@ -16,8 +16,8 @@ namespace InformationsSystemOru.Models
 
         [Display(Name = "Time")]
         [Required(ErrorMessage = "Enter a time!")]
-        //[DataType(DataType.Date)]
-        public DateTime TimeOfDay { get; set; }
+        //[DataType(DataType.DateTime)]
+        public string TimeOfDay { get; set; }
         [Required(ErrorMessage = "Enter a Location!")]
         [Display(Name = "Location")]
         public string Location { get; set; }

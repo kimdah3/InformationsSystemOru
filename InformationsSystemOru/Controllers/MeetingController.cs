@@ -46,19 +46,24 @@ namespace InformationsSystemOru.Controllers
             return PartialView("_Meeting", model);
         }
 
-        public ActionResult Book(NewMeetingModel model)
+        public ActionResult Book(MeetingModel model)
         {
-            if (!ModelState.IsValid) return RedirectToAction("Meeting", model);
+            if (!ModelState.IsValid) return RedirectToAction("Calendar");
+
+            var timeofday = DateTime.ParseExact(model.TimeOfDay, "h:mmtt", CultureInfo.InvariantCulture);
+            var date = DateTime.Parse(model.Date);
+
+            date = date.Add(timeofday.TimeOfDay);
+            var meetingRepository = new MeetingRepository();
 
             var meeting = new Meeting
             {
-                Date = model.Date,
+                Date = date,
                 Location = model.Location,
                 Type = model.Type
             };
 
-            MeetingRepository.AddMeeting(meeting);
-
+            meetingRepository.AddMeeting(meeting);
             return RedirectToAction("Calendar");
 
 

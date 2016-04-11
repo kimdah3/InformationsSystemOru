@@ -25,7 +25,7 @@ namespace Data_Access_Layer.Repositories
 
 
         // Lägger till ett nytt möte
-        public static void AddMeeting(Meeting newMeeting)
+        public void AddMeeting(Meeting newMeeting)
         {
             using (var context = new IsOruDbEntities())
             {
@@ -46,7 +46,7 @@ namespace Data_Access_Layer.Repositories
             {
                 foreach (var meeting in db.Meeting)
                 {
-                    if (DateTime.Equals(meeting.Date, dateTime.Date))
+                    if (DateTime.Equals(meeting.Date.Value.Date, dateTime.Date))
                     {
                         meetings.Add(meeting);
                     }

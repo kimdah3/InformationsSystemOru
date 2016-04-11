@@ -1,4 +1,5 @@
-﻿@model InformationsSystemOru.Models.CalendarModel
+﻿@using Data_Access_Layer
+@model InformationsSystemOru.Models.CalendarModel
 
 @{
     ViewBag.Title = "Calendar";
@@ -21,11 +22,11 @@
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
-        <h2>@ViewBag.Title</h2>
+        <h2>@ViewBag.Title</h2> 
         @foreach (var day in Model.UpcomingDays)
         {
-            var amountOfMeetings = Model.Meetings.Count(meeting => meeting.Date == day.Date);
-
+            var amountOfMeetings =  Model.Meetings.Count(meeting => meeting.Date.Value.Date == day.Date);
+           
             <button class="btn btn-default meeting-button" id="@day.Date" data-url="@Url.Action("Book","Meeting", new { date = day.Date})">
                 @day.ToString("MMMM dd")
                 @if (@amountOfMeetings != 0)

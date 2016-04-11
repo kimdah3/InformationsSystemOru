@@ -24,6 +24,7 @@
     <h3>Book</h3>
     @using (Html.BeginForm("Book", "Meeting"))
     {
+        @Html.HiddenFor(x => x.Date)
         @Html.LabelFor(x => x.TimeOfDay)
         <br />
         @Html.TextBoxFor(x => x.TimeOfDay, new {id = "timepicker"})
