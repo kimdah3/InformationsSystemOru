@@ -14,33 +14,6 @@ namespace Data_Access_Layer.Repositories
     {
 
 
-        //public List<Post> getInformalPostByUser(User user)
-        //{
-        //    using (var db = new IsOruDbEntities())
-        //    {
-        //        var postList = new List<Post>();
-
-        //        var posttype = db.PostType.Where(x => x.Id == 1);
-        //        foreach (var postvar in db.Post)
-        //        {
-
-        //        }
-
-
-        //        var result = db.Post.Where(x => x.PostingUserID.Equals(user.Id));
-
-
-
-        //        foreach (var text in result)
-        //        {
-        //            postList.Add(text);
-        //        }
-
-        //        return postList;
-        //    }
-
-        //}
-
         public void SavePost(Post post, int posttypeid)
         {
 
