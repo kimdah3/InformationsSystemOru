@@ -3,7 +3,7 @@
 <script type="text/javascript">
     $(function () {
         $('#timepicker').val('');
-        $('#timepicker').timepicker();
+        $('#timepicker').timepicker({ 'scrollDefault': 'now' });
         console.log("sad");
     })
 </script>
@@ -16,8 +16,9 @@
     }
     @foreach (var meeting in Model.Meetings)
     {
-        <p>Plats: @meeting.Location</p>
-        <p>Typ: @meeting.Type</p>
+        <p>Time: @meeting.Date.Value.ToString("HH:mm")</p>
+        <p>Place: @meeting.Location</p>
+        <p>Type: @meeting.Type</p>
         <p>@*@meeting.User_Book*@</p>
     }
 
