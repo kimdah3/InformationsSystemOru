@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="IsOruDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="IsOruDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Access">
           <Key>
             <PropertyRef Name="AccessId" />
@@ -48,6 +48,7 @@
           <Property Name="Titel" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Category" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="PostingUserID" Type="int" Nullable="false" />
+          <Property Name="FileURL" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Post_PostType">
           <Key>
@@ -287,8 +288,7 @@
             <End Role="User_Post_Comment" EntitySet="User_Post_Comment" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IsOruDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -342,6 +342,7 @@
           <NavigationProperty Name="User" Relationship="Self.FK__Post__PostingUse__4316F928" FromRole="Post" ToRole="User" />
           <NavigationProperty Name="Post_PostType" Relationship="Self.FK__Post_Post__PostI__440B1D61" FromRole="Post" ToRole="Post_PostType" />
           <NavigationProperty Name="User_Post_Comment" Relationship="Self.FK__User_Post__PostI__44FF419A" FromRole="Post" ToRole="User_Post_Comment" />
+          <Property Name="FileURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Post_PostType">
           <Key>
@@ -642,6 +643,7 @@
           <EntitySetMapping Name="Post">
             <EntityTypeMapping TypeName="IsOruDbModel.Post">
               <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="FileURL" ColumnName="FileURL" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
