@@ -5,3 +5,16 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="well well-sm">
+            @Html.Label("GiveInvite", "Invite to meeting.")
+            @Html.DropDownListFor(model => model.AllUsers, new SelectList(Model.AllUsers), "Choose a user", new { @class = "form-control" })
+
+            @Html.Label("RemoveInvite", "Remove invitation from user.")
+            @Html.DropDownListFor(model => model.InvitedUsers, new SelectList(Model.InvitedUsers), "Choose a user", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>

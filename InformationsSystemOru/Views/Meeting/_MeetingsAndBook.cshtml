@@ -44,11 +44,6 @@
 
         <input type="submit" class="btn btn-default" value="Add meeting" />
         <br />
-        @Html.Label("GiveInvite", "Invite to meeting.")
-        @Html.DropDownListFor(model => model.AllUsers, new SelectList(Model.AllUsers), "Choose a user", new { @class = "form-control" })
-
-        @Html.Label("RemoveInvite", "Remove invitation from user.")
-        @Html.DropDownListFor(model => model.InvitedUsers, new SelectList(Model.InvitedUsers), "Choose a user", new { @class = "form-control" })
 
 
         @*@Html.LabelFor(model => model.Password, "Lösenord", htmlAttributes: new { @class = "control-label col-md-2" })*@
