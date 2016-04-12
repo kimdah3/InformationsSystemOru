@@ -145,6 +145,7 @@
     <Compile Include="Models\HandleAccessModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MeetingModel.cs" />
+    <Compile Include="Models\MeetingsModel.cs" />
     <Compile Include="Models\NewMeetingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -199,10 +200,11 @@
     <Content Include="Views\Profile\Profile.cshtml" />
     <Content Include="Views\Meeting\Calendar.cshtml" />
     <Content Include="Views\HandleAccess\HandleAccess.cshtml" />
-    <Content Include="Views\Meeting\_Meeting.cshtml" />
+    <Content Include="Views\Meeting\_MeetingsAndBook.cshtml" />
     <Content Include="Views\Admin\Admin.cshtml" />
     <Content Include="Views\Home\Sent.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Meeting\Meeting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj">
