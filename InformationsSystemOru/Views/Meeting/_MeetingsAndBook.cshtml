@@ -21,7 +21,7 @@
             <p>Place: @meeting.Location</p>
             <p>Type: @meeting.Type</p>
             <p>Host: @meeting.HostId</p>
-            @Html.ActionLink("View meeting", "Meeting", "Meeting", null, new { @class = "btn btn-default" })
+            @Html.ActionLink("View meeting", "Meeting", "Meeting", new {@meetingId = meeting.Id}, new { @class = "btn btn-default" })
         </div>
     }
 

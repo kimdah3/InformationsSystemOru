@@ -74,10 +74,23 @@ namespace InformationsSystemOru.Controllers
 
         }
 
-        public ActionResult Meeting()
+        public ActionResult Meeting(string meetingId)
         {
+            var meetingRepository = new MeetingRepository();
+            var userRepository = new UserRepository();
+
+            var model = new MeetingModel()
+            {
+                Meeting = meetingRepository.GettMeetingById(int.Parse(meetingId)),
+                AllUsers = userRepository.GetAllUsers(),
+                AcceptedUsers = new List<User>(),
+                InvitedUsers = new List<User>(),
+            };
+
+            if(!model.Meeting.HostId.HasValue) throw new NullReferenceException("Saknas value i db!");
+            model.Host = userRepository.GetUserFromId(model.Meeting.HostId.Value);
             
-            return View();
+            return View(model);
         }
     }
 }
