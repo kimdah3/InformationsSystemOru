@@ -27,6 +27,7 @@
         <AssociationConnector Association="IsOruDbModel.FK__User_Acce__UserI__239E4DCF" ManuallyRouted="false" />
         <AssociationConnector Association="IsOruDbModel.FK__User_Meet__UserI__3C69FB99" ManuallyRouted="false" />
         <AssociationConnector Association="IsOruDbModel.FK__User_Post__UserI__1FCDBCEB" ManuallyRouted="false" />
+        <AssociationConnector Association="IsOruDbModel.FK__Meeting__HostId__47DBAE45" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

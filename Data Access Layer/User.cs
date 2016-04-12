@@ -22,12 +22,14 @@ namespace Data_Access_Layer
             this.User_Access = new HashSet<User_Access>();
             this.User_Meeting = new HashSet<User_Meeting>();
             this.User_Post_Comment = new HashSet<User_Post_Comment>();
+            this.Meeting = new HashSet<Meeting>();
         }
     
         public int Id { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Email { get; set; }
+        public byte[] ProfilePicture { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Account> Account { get; set; }
@@ -39,10 +41,7 @@ namespace Data_Access_Layer
         public virtual ICollection<User_Meeting> User_Meeting { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Post_Comment> User_Post_Comment { get; set; }
-
-        public override string ToString()
-        {
-            return Id.ToString() +". "+Firstname + " " + Lastname;
-        }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Meeting> Meeting { get; set; }
     }
 }

@@ -24,8 +24,10 @@ namespace Data_Access_Layer
         public Nullable<System.DateTime> Date { get; set; }
         public string Location { get; set; }
         public string Type { get; set; }
+        public Nullable<int> HostId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Meeting> User_Meeting { get; set; }
+        public virtual User User { get; set; }
     }
 }
