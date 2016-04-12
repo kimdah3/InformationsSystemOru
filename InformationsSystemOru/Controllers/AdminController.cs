@@ -9,6 +9,7 @@ namespace InformationsSystemOru.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
+        [Authorize]
         public ActionResult Admin()
         {
             return View();

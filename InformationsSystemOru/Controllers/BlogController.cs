@@ -13,26 +13,22 @@ namespace InformationsSystemOru.Controllers
     {
         private AccountRepository accountRep = new AccountRepository();
         private Post_PostTypeRespository postPostType = new Post_PostTypeRespository();
-        private PostRepository postrepository;
-        // GET: Blog
-
-        public BlogController()
-        {
-            postrepository = new PostRepository();
-        }
-
+        private PostRepository postrepository = new PostRepository();
         
+        // GET: Blog
+        [Authorize]
         public ActionResult InformalBlog()
         {
-
             return View();
         }
 
+        [Authorize]
         public ActionResult ScienceBlog()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult EducationBlog()
         {
             var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);

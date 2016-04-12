@@ -15,6 +15,7 @@ namespace InformationsSystemOru.Controllers
         private AccountRepository accountRep = new AccountRepository();
 
         // GET: HandleAccess
+        [Authorize]
         public ActionResult HandleAccess()
         {
             var namn = User.Identity.Name;

@@ -16,12 +16,9 @@ namespace InformationsSystemOru.Controllers
         {
             userRepository = new UserRepository();
             accountRepository= new AccountRepository();
-
-     
         }
 
-
-
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -53,7 +50,6 @@ namespace InformationsSystemOru.Controllers
                 accountRepository.Addaccount(account);
             }
             return View(model);
-           
         }
     }
 }

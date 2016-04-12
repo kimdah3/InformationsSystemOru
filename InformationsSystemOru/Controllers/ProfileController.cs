@@ -17,6 +17,7 @@ namespace InformationsSystemOru.Controllers
         private Post_PostTypeRespository postPostType = new Post_PostTypeRespository();
 
         // GET: Profile
+        [Authorize]
         public ActionResult Profile()
         {
             var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);

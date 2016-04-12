@@ -1,7 +1,8 @@
-﻿@model InformationsSystemOru.Models.EmailModel
+﻿@using InformationsSystemOru.Extensions
+@model InformationsSystemOru.Models.EmailModel
 @{
     ViewBag.Title = "Contact";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
 }
 <h2>@ViewBag.Title.</h2>
 

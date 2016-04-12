@@ -12,7 +12,7 @@ namespace Data_Access_Layer.Repositories
         {
             using (var context = new IsOruDbEntities())
             {
-                return context.User.Where(x => x.Id == id).First();
+                return context.User.First(x => x.Id == id);
             }
         }
 

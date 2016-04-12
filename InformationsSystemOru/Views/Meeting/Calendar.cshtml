@@ -1,9 +1,11 @@
 ﻿@using Data_Access_Layer
+@using InformationsSystemOru.Extensions
 @model InformationsSystemOru.Models.CalendarModel
 
 @{
     ViewBag.Title = "Calendar";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
 }
 
 <link href="~/Content/jquery.timepicker.css" rel="stylesheet" />

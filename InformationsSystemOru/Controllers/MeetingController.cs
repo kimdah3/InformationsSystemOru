@@ -13,6 +13,7 @@ namespace InformationsSystemOru.Controllers
     public class MeetingController : Controller
     {
         // GET: Meeting
+        [Authorize]
         public ActionResult Calendar()
         {
             var days = new List<DateTime>();
@@ -49,6 +50,7 @@ namespace InformationsSystemOru.Controllers
             return PartialView("_MeetingsAndBook", model);
         }
 
+        [Authorize]
         public ActionResult Book(MeetingsModel model)
         {
             if (!ModelState.IsValid) return RedirectToAction("Calendar");

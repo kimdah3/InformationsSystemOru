@@ -1,6 +1,8 @@
-﻿
+﻿@using InformationsSystemOru.Extensions
+
 @{
     ViewBag.Title = "Sent";
+    Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
 }
 
 <h2>Your message has been sent</h2>

@@ -1,8 +1,8 @@
-﻿@model InformationsSystemOru.Models.BlogModel
+﻿@using InformationsSystemOru.Extensions
+@model InformationsSystemOru.Models.BlogModel
 @{
     ViewBag.Title = "Profile";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
-
+    Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
 }
 <div class="row">
 

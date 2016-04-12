@@ -1,6 +1,8 @@
-﻿
+﻿@using InformationsSystemOru.Extensions
+
 @{
     ViewBag.Title = "ScienceBlog";
+    Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
 }
 
 <h2>ScienceBlog</h2>

@@ -1,0 +1,42 @@
+﻿@model InformationsSystemOru.Models.LoginModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 col-centered" id="Login">
+
+        <img src="~/Content/oruInformatikLogga.jpg" id="logo" />
+
+        <br />
+        <br />
+
+        @using (Html.BeginForm("Login", "Home"))
+            {
+            <p>Username: </p>
+            @Html.TextBoxFor(m => m.Username, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Username, "", new { @class = "text-danger" })
+            <br />
+                <br />
+                <p>Password: </p>
+                @Html.PasswordFor(m => m.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+                <br />
+                <br />
+                <input type="submit" value="Log in" class="btn btn-default" />
+        }
+
+        <br />
+        @{
+            if (Model.ErrorMessage != null)
+            {
+                <h3 class="text-danger"> @Model.ErrorMessage </h3>
+            }
+        }
+    </div>
+</div>
+<div class="col-md-2"></div>
+

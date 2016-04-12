@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h2>Admin</h2>
@@ -8,8 +9,8 @@
 <div class="well well-lg">
     <div class="form-horizontal" style="margin-left: 25%;">
         <ul style="list-style-type: none;">
-            <li style="margin:1%";><a href="@Url.Action("Create", "Account")" class="btn btn-primary btn-md">Add new user</a></li>
-            <li style="margin:1%";><a href="@Url.Action("HandleAccess", "HandleAccess")" class="btn btn-primary btn-md">Handle access</a></li>
+            <li style="margin:1%"><a href="@Url.Action("Create", "Account")" class="btn btn-primary btn-md">Add new user</a></li>
+            <li style="margin:1%"><a href="@Url.Action("HandleAccess", "HandleAccess")" class="btn btn-primary btn-md">Handle access</a></li>
         </ul> 
     </div>
 </div>
