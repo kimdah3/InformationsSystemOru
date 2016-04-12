@@ -9,7 +9,7 @@
 </script>
 <div class="well">
 
-    <h2>@Model.Date</h2>
+    <h2>@Model.Date.Substring(0, 10)</h2> @*Splittar för formateringen är kass, datumet skickas ner från controllern som en string och ej datetime.*@ 
     @if (Model.Meetings.Count > 0)
     {
         <h3>Bookings</h3>
