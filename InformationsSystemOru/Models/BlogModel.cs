@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Data_Access_Layer;
+using System.Web;
 
 namespace InformationsSystemOru.Models
 { //validering
@@ -31,5 +32,8 @@ namespace InformationsSystemOru.Models
         public int UserId { get; set; }
 
         public int Type { get; set; }
+
+        [DataType(DataType.Upload)]
+        public HttpPostedFileBase File { get; set; }
     }
 }
