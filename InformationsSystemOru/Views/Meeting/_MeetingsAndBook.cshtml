@@ -1,4 +1,4 @@
-﻿@model InformationsSystemOru.Models.MeetingModel
+﻿@model InformationsSystemOru.Models.MeetingsModel
 
 <script type="text/javascript">
     $(function () {
@@ -9,17 +9,20 @@
 </script>
 <div class="well">
 
-    <h2>@Model.Date.Substring(0, 10)</h2> @*Splittar för formateringen är kass, datumet skickas ner från controllern som en string och ej datetime.*@ 
+    <h2>@Model.Date.Substring(0, 10)</h2> @*Splittar för formateringen är kass, datumet skickas ner från controllern som en string och ej datetime.*@
     @if (Model.Meetings.Count > 0)
     {
-        <h3>Bookings</h3>
+        <h3>Meetings</h3>
     }
     @foreach (var meeting in Model.Meetings)
     {
-        <p>Time: @meeting.Date.Value.ToString("HH:mm")</p>
-        <p>Place: @meeting.Location</p>
-        <p>Type: @meeting.Type</p>
-        <p>@*@meeting.User_Book*@</p>
+        <div class="well">
+            <p>Time: @meeting.Date.Value.ToString("HH:mm")</p>
+            <p>Place: @meeting.Location</p>
+            <p>Type: @meeting.Type</p>
+            <p>Host: @meeting.HostId</p>
+            @Html.ActionLink("View meeting", "Meeting", "Meeting", new {@meetingId = meeting.Id}, new { @class = "btn btn-default" })
+        </div>
     }
 
     <h3>Book</h3>
@@ -28,7 +31,7 @@
         @Html.HiddenFor(x => x.Date)
         @Html.LabelFor(x => x.TimeOfDay)
         <br />
-        @Html.TextBoxFor(x => x.TimeOfDay, new {id = "timepicker"})
+        @Html.TextBoxFor(x => x.TimeOfDay, new { id = "timepicker" })
         <br />
         @Html.LabelFor(x => x.Location)
         <br />
@@ -39,7 +42,10 @@
         <br />
         @Html.TextBoxFor(x => x.Type)
 
-        <input type="submit" class="btn btn-default" value="Add meeting"/>
+        <input type="submit" class="btn btn-default" value="Add meeting" />
+        <br />
+
+
         @*@Html.LabelFor(model => model.Password, "Lösenord", htmlAttributes: new { @class = "control-label col-md-2" })*@
 
     }

@@ -54,5 +54,13 @@ namespace Data_Access_Layer.Repositories
             }
             return meetings;
         }
+
+        public Meeting GettMeetingById(int meetingId)
+        {
+            using (var db = new IsOruDbEntities())
+            {
+                return db.Meeting.Where(x => x.Id == meetingId).First();
+            }
+        }
     }
 }

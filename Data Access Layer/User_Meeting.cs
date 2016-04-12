@@ -17,6 +17,7 @@ namespace Data_Access_Layer
         public int Id { get; set; }
         public Nullable<int> UserId { get; set; }
         public Nullable<int> MeetingId { get; set; }
+        public Nullable<bool> Accepted { get; set; }
     
         public virtual Meeting Meeting { get; set; }
         public virtual User User { get; set; }

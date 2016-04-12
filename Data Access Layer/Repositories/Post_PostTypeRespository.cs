@@ -31,5 +31,13 @@ namespace Data_Access_Layer.Repositories
                 return context.Post_PostType.Where(x => x.PostTypeId == 1).Select(x => x.PostId).ToList();
             }
         } 
+
+        public List<int> GetAllEducationPostIds()
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                return context.Post_PostType.Where(x => x.PostTypeId == 3).Select(x => x.PostId).ToList();
+            }
+        }
     }
 }
