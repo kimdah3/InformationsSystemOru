@@ -1,0 +1,57 @@
+﻿@model InformationsSystemOru.Models.MeetingsModel
+
+<script type="text/javascript">
+    $(function () {
+        $('#timepicker').val('');
+        $('#timepicker').timepicker({ 'scrollDefault': 'now' });
+        console.log("sad");
+    })
+</script>
+<div class="well">
+
+    <h2>@Model.Date.Substring(0, 10)</h2> @*Splittar för formateringen är kass, datumet skickas ner från controllern som en string och ej datetime.*@
+    @if (Model.Meetings.Count > 0)
+    {
+        <h3>Meetings</h3>
+    }
+    @foreach (var meeting in Model.Meetings)
+    {
+        <div class="well">
+            <p>Time: @meeting.Date.Value.ToString("HH:mm")</p>
+            <p>Place: @meeting.Location</p>
+            <p>Type: @meeting.Type</p>
+            <p>Host: @meeting.HostId</p>
+            @Html.ActionLink("View meeting", "Meeting", "Meeting", null, new { @class = "btn btn-default" })
+        </div>
+    }
+
+    <h3>Book</h3>
+    @using (Html.BeginForm("Book", "Meeting"))
+    {
+        @Html.HiddenFor(x => x.Date)
+        @Html.LabelFor(x => x.TimeOfDay)
+        <br />
+        @Html.TextBoxFor(x => x.TimeOfDay, new { id = "timepicker" })
+        <br />
+        @Html.LabelFor(x => x.Location)
+        <br />
+        @Html.TextBoxFor(x => x.Location)
+        <br />
+
+        @Html.LabelFor(x => x.Type)
+        <br />
+        @Html.TextBoxFor(x => x.Type)
+
+        <input type="submit" class="btn btn-default" value="Add meeting" />
+        <br />
+        @Html.Label("GiveInvite", "Invite to meeting.")
+        @Html.DropDownListFor(model => model.AllUsers, new SelectList(Model.AllUsers), "Choose a user", new { @class = "form-control" })
+
+        @Html.Label("RemoveInvite", "Remove invitation from user.")
+        @Html.DropDownListFor(model => model.InvitedUsers, new SelectList(Model.InvitedUsers), "Choose a user", new { @class = "form-control" })
+
+
+        @*@Html.LabelFor(model => model.Password, "Lösenord", htmlAttributes: new { @class = "control-label col-md-2" })*@
+
+    }
+</div>

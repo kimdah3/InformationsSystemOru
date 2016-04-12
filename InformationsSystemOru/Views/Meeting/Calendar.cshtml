@@ -13,7 +13,7 @@
     $(document).ready(function () {
 
         $('.meeting-button').click(function () {
-            var url = '@Url.Action("Meeting", "Meeting")';
+            var url = '@Url.Action("MeetingsAndBook", "Meeting")';
             var date = $(this).attr('id');
             $('#meeting-view').load(url, { date: date});
         });

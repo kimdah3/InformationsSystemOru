@@ -43,5 +43,10 @@ namespace Data_Access_Layer
         public virtual ICollection<User_Post_Comment> User_Post_Comment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Meeting> Meeting { get; set; }
+
+        public override string ToString()
+        {
+            return Firstname + " " + Lastname;
+        }
     }
 }
