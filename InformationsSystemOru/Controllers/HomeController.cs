@@ -16,14 +16,9 @@ namespace InformationsSystemOru.Controllers
 {
     public class HomeController : Controller
     {
-<<<<<<< HEAD
-=======
         private UserRepository userRepository = new UserRepository();
         private AccountRepository accountRepository = new AccountRepository();
-
-  
-
->>>>>>> origin/master
+        
         [HttpGet]
         public ActionResult Index()
         {
