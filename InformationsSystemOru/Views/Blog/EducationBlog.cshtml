@@ -1,7 +1,64 @@
-﻿
+﻿@model InformationsSystemOru.Models.BlogModel
 @{
     ViewBag.Title = "EducationBlog";
 }
 
-<h2>EducationBlog</h2>
 
+<div class="row">
+
+    <h2>EducationBlog</h2>
+
+    
+
+    <div class="col-md-12">
+
+        <div id="blogg" class="col-md-6">
+            @using (Html.BeginForm("EducationBlog", "Blog", FormMethod.Post))
+            {
+                @Html.Label("Write a blog post about education")
+
+                <div class="form-group">
+
+                    @Html.LabelFor(model => model.Title, "Title", htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.Title, "TitleInput", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Category, "Kategori", htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.Category, "Kategori", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Text, "Text", htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.Text, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                </div>
+
+                <div>
+                    <input type="submit" value="Post" class="btn btn-success" id="btnSend" />
+                </div>
+
+            }
+
+        </div>
+
+        @*<div class="col-md-6">
+            @if (Model.AllPostsForUser != null)
+            {
+                foreach (var post in Model.AllPostsForUser)
+                {
+                    <div class="well well-sm">
+                        <h2>@post.Titel</h2>
+                        <h3>@post.Category</h3>
+                        <p>@post.Text</p>
+                        <p>@post.Date</p>
+                    </div>
+                }
+            }
+        </div>*@
+
+    </div>
+
+</div>
