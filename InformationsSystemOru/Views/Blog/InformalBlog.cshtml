@@ -8,16 +8,23 @@
 
 <h2>InformalBlog</h2>
 
-<div id="Wall">
 
-    @Html.Label("Write a blog post:") <br/>
-    
-    @Html.TextBox("TitleInput"); <br/>
-    @Html.TextArea("WallInputText", new { rows = 5, cols = 80 })
-    <input type="submit" value="Post" id="btnSend" />
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            @if (Model.AllPostsForUser != null)
+            {
+                foreach (var post in Model.AllPostsForUser)
+                {
+                    <div class="well well-sm">
+                        <h2>@post.Titel</h2>
+                        <h3>@post.Category</h3>
+                        <p>@post.Text</p>
+                        <p>@post.Date</p>
+                    </div>
+                }
+            }
+        </div>
+
 </div>
-
-<div>
-    @Html.
-
-</div>
+    </div>

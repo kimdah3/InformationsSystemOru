@@ -19,7 +19,8 @@ namespace InformationsSystemOru.Controllers
         [Authorize]
         public ActionResult InformalBlog()
         {
-            return View();
+            var posts = postrepository.GetAllInformalPosts();
+            return View(new BlogModel { AllPostsForUser = posts });
         }
 
         [Authorize]

@@ -45,5 +45,13 @@ namespace Data_Access_Layer.Repositories
             }
         }
 
+        public List<Post> GetAllInformalPosts()
+        {
+            using(var db = new IsOruDbEntities())
+            {
+                var privatepostIDs = db.Post_PostType.Where(x => x.PostTypeId == 1).Select(x => x.PostId);
+                return db.Post.Where(x => privatepostIDs.Contains(x.Id)).OrderByDescending(x => x.Date).ToList();
+            }
+        }
     }
 }
