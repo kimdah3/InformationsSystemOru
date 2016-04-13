@@ -3,6 +3,7 @@ using Data_Access_Layer.Repositories;
 using InformationsSystemOru.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -25,7 +26,7 @@ namespace InformationsSystemOru.Controllers
 
             return View(new BlogModel { AllPostsForUser = posts });
         }
-        
+
 
         [HttpPost]
         public ActionResult Profile(BlogModel model)
@@ -38,16 +39,29 @@ namespace InformationsSystemOru.Controllers
                 model.AllPostsForUser = posts;
                 return View(model);
             }
-                
+            string fileName = null;
+            string path = null;
+
+          if(model.File != null) { 
+            if (model.File.ContentLength > 0)
+            {
+                fileName = Path.GetFileName(model.File.FileName);
+                path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
+                model.File.SaveAs(path);
+            }
+            }
+
             var post = new Post()
             {
                 Category = model.Category,
                 Date = DateTime.Now,
                 Titel = model.Title,
                 Text = model.Text,
-                PostingUserID = postingUserId
-
+                PostingUserID = postingUserId,
+                FileURL = path,
+                Filename = fileName
             };
+        
             int type = model.Type;
             postrepository.SavePost(post, type);
             postPostType.SavePosttype(post.Id, 1);
@@ -56,7 +70,14 @@ namespace InformationsSystemOru.Controllers
             return RedirectToAction("Profile");
         }
 
-        
+        [HttpGet]
+        public ActionResult GetFile(string path)
+        {
+            return File(path, System.Net.Mime.MediaTypeNames.Application.Octet, Path.GetFileName(path));
+
+        }
+
+
         //public ActionResult ProfilePostResult(int userID)
         //{
         //    postrepository.

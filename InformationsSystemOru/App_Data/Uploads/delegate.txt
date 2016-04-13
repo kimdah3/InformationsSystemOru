@@ -1,0 +1,63 @@
+{
+    class Program
+    {
+
+        
+
+        static void Main(string[] args)
+        {
+
+            Text test = new Text();
+            test.test();
+            Console.ReadLine();
+        }
+    }
+
+    class Text
+    {
+        public delegate void hanteraText(string text);
+
+        public void SkrivText(string text)
+        {
+
+            Console.WriteLine(text);
+        }
+
+        public void SkrivTextToUpper(string text)
+        {
+            Console.WriteLine(text.ToUpper());
+        }
+
+        public void test()
+        {
+            Text minText = new Text();
+            var textHanterare = new Text.hanteraText(minText.SkrivText);
+            textHanterare += new Text.hanteraText(minText.SkrivTextToUpper);
+
+           
+           textHanterare("helloWorld");
+
+        }
+
+
+
+public class OfficeRepository
+{
+	public Office_GetFirst()
+{
+	using (var context = new DemoApplicationDbEntities())
+{
+		return context.Office.FirstorDefault();	
+}
+}
+}
+
+
+  <connectionStrings>
+    <add name="FindLoveDbEntities" connectionString="metadata=res://*/FindLoveDbModel.csdl|res://*/FindLoveDbModel.ssdl|res://*/FindLoveDbModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=|DataDirectory|\FindLoveDb.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+  </connectionStrings>
+
+<connectionStrings>
+  <add name="FindLoveDbEntities" connectionString="metadata=res://*/FindLoveDbModel.csdl|res://*/FindLoveDbModel.ssdl|res://*/FindLoveDbModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=C:\Users\Kim\Documents\GitHub\.NetFindLoveNowMaybe\FindLoveNowMaybe\FindLoveNowMaybe\App_Data\FindLoveDb.mdf;integrated security=True;multipleactiveresultsets=True;application name=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+</connectionStrings>
+
