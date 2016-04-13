@@ -4,27 +4,27 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Lägg till ny användare</h2>
+<h2>Add new user</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="well well-lg">
         <div class="form-horizontal" style="margin-left: 25%;">
-            <h4>Fyll i din information här</h4>
+            <h4>Fill in your details here</h4>
             <hr/>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(model => model.Firstname, "Förnamn", htmlAttributes: new {@class = "control-label col-md-2"})
+                @Html.LabelFor(model => model.Firstname, "Firstname", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-5">
-                    @Html.EditorFor(model => model.Firstname, new {htmlAttributes = new {@class = "form-control", placeholder = "Förnamn"}})
+                    @Html.EditorFor(model => model.Firstname, new {htmlAttributes = new {@class = "form-control", placeholder = "Firstname"}})
                     @Html.ValidationMessageFor(model => model.Firstname, "", new {@class = "text-danger"})
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Lastname, "Efternamn", htmlAttributes: new {@class = "control-label col-md-2"})
+                @Html.LabelFor(model => model.Lastname, "Lastname", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-5">
-                    @Html.EditorFor(model => model.Lastname, new {htmlAttributes = new {@class = "form-control", placeholder = "Efternamn"}})
+                    @Html.EditorFor(model => model.Lastname, new {htmlAttributes = new {@class = "form-control", placeholder = "Lastname"}})
                     @Html.ValidationMessageFor(model => model.Lastname, "", new {@class = "text-danger"})
                 </div>
             </div>
@@ -36,23 +36,38 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Username, "Användarnamn", htmlAttributes: new {@class = "control-label col-md-2"})
+                @Html.LabelFor(model => model.Username, "Username", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-5">
-                    @Html.EditorFor(model => model.Username, new {htmlAttributes = new {@class = "form-control", placeholder = "Användarnamn"}})
+                    @Html.EditorFor(model => model.Username, new {htmlAttributes = new {@class = "form-control", placeholder = "Username"}})
                     @Html.ValidationMessageFor(model => model.Username, "", new {@class = "text-danger"})
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Password, "Lösenord", htmlAttributes: new {@class = "control-label col-md-2"})
+                @Html.LabelFor(model => model.Password, "Password", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-5">
-                    @Html.EditorFor(model => model.Password, new {htmlAttributes = new {@class = "form-control", placeholder = "Lösenord"}})
+                    @Html.EditorFor(model => model.Password, new {htmlAttributes = new {@class = "form-control", placeholder = "Password"}})
                     @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
                 </div>
             </div>
             <div class="form-group">
+                @Html.LabelFor(model => model.Accesslevel, "Access", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    <div class="checkbox">
+                        @Html.DropDownListFor(model => model.Accesslevel, new List<SelectListItem>
+                       {
+                           new SelectListItem {Text ="Informatics ", Value = "3"},
+                           new SelectListItem {Text = "Research ", Value = "4"},
+                           new SelectListItem {Text = "Informatic and Research ", Value = "5"}
+                       }, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Accesslevel, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Registrera" class="btn btn-success"/>
+                    <input type="submit" value="Register" class="btn btn-success"/>
                 </div>
             </div>
         </div>

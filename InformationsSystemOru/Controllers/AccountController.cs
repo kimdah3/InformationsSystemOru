@@ -11,11 +11,13 @@ namespace InformationsSystemOru.Controllers
     {
         private UserRepository userRepository;
         private AccountRepository accountRepository;
+        private AccessRepository accessRepository;
 
         public AccountController()
         {
             userRepository = new UserRepository();
             accountRepository= new AccountRepository();
+            accessRepository = new AccessRepository();
         }
 
         [Authorize]
@@ -48,6 +50,41 @@ namespace InformationsSystemOru.Controllers
 
                 };
                 accountRepository.Addaccount(account);
+
+                if (model.Accesslevel == 5)
+                {
+                    var userAccess1 = new User_Access()
+                    {
+
+                        UserId = user.Id,
+                        AccessId = 3
+
+
+
+                    };
+                    accessRepository.CreateNewAccess(userAccess1);
+                    var userAccess2 = new User_Access()
+                    {
+                        UserId = user.Id,
+                        AccessId = 4
+
+                    };
+                    accessRepository.CreateNewAccess(userAccess2);
+                }
+                else
+                {
+                    var userAccess = new User_Access()
+                    {
+
+                        UserId = user.Id,
+                        AccessId = model.Accesslevel,
+
+
+
+                    };
+                    accessRepository.CreateNewAccess(userAccess);
+                }
+                return RedirectToAction("Index", "Home");
             }
             return View(model);
         }

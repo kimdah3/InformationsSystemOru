@@ -18,6 +18,16 @@ namespace Data_Access_Layer.Repositories
 
         }
 
+        public void CreateNewAccess(User_Access useraccess )
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                context.User_Access.Add(useraccess);
+                context.SaveChanges();
+            }
+        }
+
+
         public void RemoveAccess(int userId, int accessId)
         {
             using (var context = new IsOruDbEntities())
