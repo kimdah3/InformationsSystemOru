@@ -26,7 +26,29 @@ namespace InformationsSystemOru.Controllers
         [Authorize]
         public ActionResult ScienceBlog()
         {
-            return View();
+            var posts = postrepository.GetAllSciencePosts();
+            return View(new BlogModel { AllPostsForUser = posts });
+        }
+
+        [HttpPost]
+        public ActionResult ScienceBlog(BlogModel model)
+        {
+            var postingUserId = accountRep.GetIdFromUsername(User.Identity.Name);
+
+            var post = new Post()
+            {
+                Category = model.Category,
+                Date = DateTime.Now,
+                Titel = model.Title,
+                Text = model.Text,
+                PostingUserID = postingUserId
+
+
+            };
+            int type = model.Type;
+            postrepository.SavePost(post, type);
+            postPostType.SavePosttype(post.Id, 2);
+            return RedirectToAction("Scienceblog");
         }
 
         [Authorize]

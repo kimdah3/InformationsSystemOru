@@ -53,5 +53,14 @@ namespace Data_Access_Layer.Repositories
                 return db.Post.Where(x => privatepostIDs.Contains(x.Id)).OrderByDescending(x => x.Date).ToList();
             }
         }
+
+        public List<Post> GetAllSciencePosts()
+        {
+            using(var db = new IsOruDbEntities())
+            {
+                var sciencepostIDs = db.Post_PostType.Where(x => x.PostTypeId == 2).Select(x => x.PostId);
+                return db.Post.Where(x => sciencepostIDs.Contains(x.Id)).OrderByDescending(x => x.Date).ToList();
+            }
+        }
     }
 }
