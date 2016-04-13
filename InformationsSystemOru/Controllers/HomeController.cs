@@ -44,6 +44,12 @@ namespace InformationsSystemOru.Controllers
             FormsAuthentication.SetAuthCookie(model.Username, false);
             return RedirectToAction("Profile", "Profile", new RouteValueDictionary(new { username = model.Username }));
         }
+        
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login");
+        }
 
         [Authorize]
         public ActionResult Contact()
@@ -51,7 +57,6 @@ namespace InformationsSystemOru.Controllers
             ViewBag.Message = "Your contact page.";
             return View();
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]

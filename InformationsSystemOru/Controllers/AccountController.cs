@@ -2,7 +2,7 @@
 using Data_Access_Layer;
 using Data_Access_Layer.Repositories;
 using InformationsSystemOru.Models;
-
+using InformationsSystemOru.Extensions;
 
 namespace InformationsSystemOru.Controllers
 { 
@@ -23,6 +23,8 @@ namespace InformationsSystemOru.Controllers
         [Authorize]
         public ActionResult Create()
         {
+            if (!User.Identity.IsAdmin())
+                return RedirectToAction("Index", "Home");
             return View();
         }
 

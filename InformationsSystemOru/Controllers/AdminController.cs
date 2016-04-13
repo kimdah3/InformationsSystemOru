@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InformationsSystemOru.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,8 @@ namespace InformationsSystemOru.Controllers
         [Authorize]
         public ActionResult Admin()
         {
+            if (!User.Identity.IsAdmin())
+                return RedirectToAction("Index", "Home");
             return View();
         }
     }

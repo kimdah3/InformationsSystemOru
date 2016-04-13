@@ -25,8 +25,20 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Meeting", "Calendar", "Meeting")</li>
                     <li>@Html.ActionLink("E-mail", "Contact", "Home")</li>
-
                 </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <button type="button" class="btn btn-success pull-right navbar-btn dropdown-toggle" data-toggle="dropdown" role="button">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Profile", "Profile", "Profile")</li>
+                            <li>@Url.Action("Logout", "Logout", "Home")</li>
+                        </ul>
+                    </li>
+                </ul>
+
             </div>
         </div>
     </div>
