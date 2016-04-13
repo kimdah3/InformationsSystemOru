@@ -69,8 +69,8 @@ namespace InformationsSystemOru.Controllers
             var postingUserId = accountRep.GetIdFromUsername(User.Identity.Name);
             if (model.File != null)
             {
-                    fileName = model.File.FileName;
-                    path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
+                    fileName = model.File.FileName;                
+                    path = Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName);
                     model.File.SaveAs(path);
                 
             }
