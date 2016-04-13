@@ -42,13 +42,11 @@ namespace InformationsSystemOru.Controllers
             string fileName = null;
             string path = null;
 
-          if(model.File != null) { 
-            if (model.File.ContentLength > 0)
-            {
-                fileName = Path.GetFileName(model.File.FileName);
+          if(model.File != null) {
+                fileName = model.File.FileName;
                 path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
                 model.File.SaveAs(path);
-            }
+            
             }
 
             var post = new Post()

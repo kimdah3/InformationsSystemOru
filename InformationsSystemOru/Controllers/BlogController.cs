@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Data_Access_Layer;
 using InformationsSystemOru.Models;
 using Data_Access_Layer.Repositories;
+using System.IO;
 
 namespace InformationsSystemOru.Controllers
 {
@@ -14,7 +15,9 @@ namespace InformationsSystemOru.Controllers
         private AccountRepository accountRep = new AccountRepository();
         private Post_PostTypeRespository postPostType = new Post_PostTypeRespository();
         private PostRepository postrepository = new PostRepository();
-        
+        private string fileName = null;
+        private string path = null;
+
         // GET: Blog
         [Authorize]
         public ActionResult InformalBlog()
@@ -64,14 +67,22 @@ namespace InformationsSystemOru.Controllers
         public ActionResult EducationBlog(BlogModel model)
         {
             var postingUserId = accountRep.GetIdFromUsername(User.Identity.Name);
-
-            var post = new Post()
+            if (model.File != null)
+            {
+                    fileName = model.File.FileName;
+                    path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
+                    model.File.SaveAs(path);
+                
+            }
+                var post = new Post()
             {
                 Category = model.Category,
                 Date = DateTime.Now,
                 Titel = model.Title,
                 Text = model.Text,
-                PostingUserID = postingUserId
+                PostingUserID = postingUserId,
+                FileURL = path,
+                Filename = fileName
                 
 
             };
