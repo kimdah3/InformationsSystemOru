@@ -34,11 +34,14 @@ namespace Data_Access_Layer.Repositories
             }
         }
 
-        public List<Post> GetAllEducationPosts(int educationPostId)
+        public List<Post> GetAllEducationPosts()
         {
             using (var db = new IsOruDbEntities())
             {
-                return db.Post.Where(x => x.Id == educationPostId).ToList();
+                var educationpostIDs = db.Post_PostType.Where(x => x.PostTypeId == 3).Select(x => x.PostId);
+                return db.Post.Where(x => educationpostIDs.Contains(x.Id)).OrderByDescending(x => x.Date).ToList();
+
+                
             }
         }
 

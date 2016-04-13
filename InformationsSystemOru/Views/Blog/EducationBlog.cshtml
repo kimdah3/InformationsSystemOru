@@ -17,7 +17,6 @@
         <div id="blogg" class="col-md-6">
             @using (Html.BeginForm("EducationBlog", "Blog", FormMethod.Post))
             {
-                @Html.Label("Write a blog post about education")
 
                 <div class="form-group">
 
@@ -46,7 +45,7 @@
 
         </div>
 
-        @*<div class="col-md-6">
+        <div class="col-md-6">
             @if (Model.AllPostsForUser != null)
             {
                 foreach (var post in Model.AllPostsForUser)
@@ -59,7 +58,7 @@
                     </div>
                 }
             }
-        </div>*@
+        </div>
 
     </div>
 

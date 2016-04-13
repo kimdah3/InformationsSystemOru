@@ -31,10 +31,10 @@ namespace InformationsSystemOru.Controllers
         [Authorize]
         public ActionResult EducationBlog()
         {
-            var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
-            //var posts = postrepository.GetProfileBlogPosts(loggedInUser, postPostType.GetAllPrivatePostIds());
-            //return View(new BlogModel { AllPostsForUser = posts });
-            return View();
+            //    var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
+            var posts = postrepository.GetAllEducationPosts();
+            return View(new BlogModel { AllPostsForUser = posts });
+           
         }
 
         [HttpPost]
@@ -58,34 +58,5 @@ namespace InformationsSystemOru.Controllers
             return RedirectToAction("Educationblog");
         }
 
-        //public ActionResult SavePost(BlogModel model)
-        //{
-        //    var post = new Post()
-        //    {
-        //        Category = model.Category,
-        //        Date = model.DatePosted,
-        //        Titel = model.Title,
-        //        Text = model.Text,
-        //        PostingUserID = model.UserId
-
-        //    };
-        //    postrepository.SavePost(post);
-
-        //    var post_posttype = new Post_PostType()
-        //    {
-        //        PostType = model.asd,
-        //        PostId = post.PostingUserID
-
-        //    };
-        //    postrepository.SavePost()
-        //    return View(model);
-
-
-        //}
-
-        //model.Category = post.Category;
-        //model.DatePosted = post.Date;
-        //model.Title = post.Titel;
-        //model.Text = post.Text;
     }
 }
