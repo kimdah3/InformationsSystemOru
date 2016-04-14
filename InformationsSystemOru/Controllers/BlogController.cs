@@ -37,6 +37,13 @@ namespace InformationsSystemOru.Controllers
         public ActionResult ScienceBlog(BlogModel model)
         {
             var postingUserId = accountRep.GetIdFromUsername(User.Identity.Name);
+            if (model.File != null)
+            {
+                fileName = model.File.FileName;
+                path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
+                model.File.SaveAs(path);
+
+            }
 
             var post = new Post()
             {
@@ -44,10 +51,11 @@ namespace InformationsSystemOru.Controllers
                 Date = DateTime.Now,
                 Titel = model.Title,
                 Text = model.Text,
-                PostingUserID = postingUserId
-
-
+                PostingUserID = postingUserId,
+                FileURL = path,
+                Filename = fileName
             };
+
             int type = model.Type;
             postrepository.SavePost(post, type);
             postPostType.SavePosttype(post.Id, 2);

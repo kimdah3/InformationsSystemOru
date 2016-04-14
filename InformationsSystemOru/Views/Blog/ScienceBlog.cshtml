@@ -12,7 +12,7 @@
 <div class="col-md-12">
 
     <div id="blogg" class="col-md-6">
-        @using (Html.BeginForm("ScienceBlog", "Blog", FormMethod.Post))
+        @using (Html.BeginForm("ScienceBlog", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
 
             <div class="form-group">
@@ -34,6 +34,13 @@
                     @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
                 </div>
 
+                <div class="form-group">
+
+                    <label for="file">Filename:</label>
+                    @Html.TextBoxFor(model => model.File, new { @class = "form-control", type = "file" })
+
+                </div>
+
                 <div>
                     <input type="submit" value="Post" class="btn btn-success" id="btnSend" />
                 </div>
@@ -52,6 +59,10 @@
                     <h1 class="text-center">@post.Titel</h1>
                     <h3 class="text-center">@post.Category</h3>
                     <h2 class="text-center">@post.Text</h2>
+                    @if (post.Filename != null)
+                    {
+                        <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileURL } )">@post.Filename</a>
+                    }
                     <p>@post.Date</p>
                 </div>
             }
