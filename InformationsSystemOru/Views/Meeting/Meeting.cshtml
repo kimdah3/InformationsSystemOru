@@ -20,6 +20,16 @@
 
             @Html.Label("RemoveInvite", "Remove invitation from user.")
             @Html.DropDownListFor(model => model.InvitedUsers, new SelectList(Model.InvitedUsers), "Choose a user", new {@class = "form-control"})
+
+            @Html.Label("Attending", "Attending")
+            <br />
+            @Html.ListBoxFor(model => model.AcceptedUsers, new SelectList(Model.AcceptedUsers))
+
+            <br/>
+
+            @Html.Label("WaitInvitation", "Waiting for response")
+            <br />
+            @Html.ListBoxFor(model => model.AcceptedUsers, new SelectList(Model.AcceptedUsers))
         </div>
     </div>
     <div class="col-md-2"></div>
