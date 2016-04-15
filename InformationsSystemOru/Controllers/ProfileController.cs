@@ -42,11 +42,12 @@ namespace InformationsSystemOru.Controllers
             string fileName = null;
             string path = null;
 
-          if(model.File != null) {
+            if (model.File != null)
+            {
                 fileName = model.File.FileName;
                 path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
                 model.File.SaveAs(path);
-            
+
             }
 
             var post = new Post()
@@ -59,12 +60,12 @@ namespace InformationsSystemOru.Controllers
                 FileURL = path,
                 Filename = fileName
             };
-        
+
             int type = model.Type;
             postrepository.SavePost(post, type);
             postPostType.SavePosttype(post.Id, 1);
 
-           
+
             return RedirectToAction("Profile");
         }
 
@@ -72,6 +73,39 @@ namespace InformationsSystemOru.Controllers
         public ActionResult GetFile(string path)
         {
             return File(path, System.Net.Mime.MediaTypeNames.Application.Octet, Path.GetFileName(path));
+
+        }
+
+        [HttpGet]
+        public ActionResult ChangeProfilePic()
+        {
+            
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult ChangeProfilePic(ProfileModel pModel)
+        {
+            if (pModel.File.ContentLength > 1 * 1024 * 1024)
+            {
+                ModelState.AddModelError("File", "Bilden får inte vara större än 1MB");
+                return View(pModel);
+            }
+            var fileExtension = Path.GetExtension(pModel.File.FileName);
+            var imgTypes = new[] {".jpg", ".jpeg", ".png", ".JPG", ".JPEG", ".PNG"};
+            if (imgTypes.Contains(fileExtension))
+            {
+                MemoryStream target = new MemoryStream();
+                pModel.File.InputStream.CopyTo(target);
+                byte[] data = target.ToArray();
+                var userId = userRep.GetIdFromUser(User.Identity.Name);
+                userRep.UploadPic(data, userId);
+                return RedirectToAction("ChangeProfilePic", "Profile");
+            }
+            ModelState.AddModelError("File", "Bilden måste vara .jpg, .jpeg, .png eller .gif");
+            return View("ChangeProfilePic", pModel);
+
 
         }
 
