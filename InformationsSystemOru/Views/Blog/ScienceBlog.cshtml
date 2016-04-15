@@ -1,10 +1,23 @@
 ﻿@model InformationsSystemOru.Models.BlogModel
+@using System.Security.Policy
+@using Data_Access_Layer
 @using InformationsSystemOru.Extensions
 
 @{
     ViewBag.Title = "ScienceBlog";
     Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
 }
+<script src="~/scripts/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinyMCE.init({
+        mode: "textareas",
+        theme: "modern",
+        plugins: "textcolor colorpicker",
+        toolbar: "formatselect | bold italic underline | forecolor backcolor | bullist numlist",
+        content_css: "~/Content/Site.css"
+    });
+</script>
+
 
 <h1 class="text-center">Science</h1>
 <h2 class="text-center">News and blogs about science at Örebro University</h2>
@@ -22,11 +35,11 @@
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Category, "Category", htmlAttributes: new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.Category, "Category", htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
-                </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Category, "Category", htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Category, "Category", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+            </div>
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Text, "Text", htmlAttributes: new { @class = "control-label" })
@@ -48,7 +61,7 @@
         }
 
     </div>
-    
+
     <div class="col-md-12">
         <br />
         @if (Model.AllPostsForUser != null)
@@ -58,12 +71,19 @@
                 <div class="well well-sm">
                     <h1 class="text-center">@post.Titel</h1>
                     <h3 class="text-center">@post.Category</h3>
-                    <h2 class="text-center">@post.Text</h2>
+                    <h2 class="text-center">@Html.Raw(@post.Text)</h2>
                     @if (post.Filename != null)
                     {
                         <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileURL } )">@post.Filename</a>
                     }
                     <p>@post.Date</p>
+
+                    @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.Id ,sida="Science"}))
+                    {
+
+                        <button type="submit"><span class="glyphicon glyphicon-remove" alt=""></span></button>
+                    }
+
                 </div>
             }
         }

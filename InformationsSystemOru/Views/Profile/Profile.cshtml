@@ -4,8 +4,18 @@
     ViewBag.Title = "Profile";
     Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
 }
-<div class="row">
+<script src="~/scripts/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinyMCE.init({
+        mode: "textareas",
+        theme: "modern",
+        plugins: "textcolor colorpicker",
+        toolbar: "formatselect | bold italic underline | forecolor backcolor | bullist numlist",
+        content_css: "~/Content/Site.css"
+    });
+</script>
 
+<div class="row">
 
     <h2>Profile</h2>
 
@@ -62,7 +72,7 @@
                     <div class="well well-sm">
                         <h2>@post.Titel</h2>
                         <h3>@post.Category</h3>
-                        <p>@post.Text</p>
+                        <p>@Html.Raw(@post.Text)</p>
                         @if (post.Filename != null)
                         {
                         <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileURL } )">@post.Filename</a>

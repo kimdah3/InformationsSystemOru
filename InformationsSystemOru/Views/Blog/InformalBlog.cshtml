@@ -21,8 +21,13 @@
                     <div class="well well-sm">
                         <h1 class="text-center">@post.Titel</h1>
                         <h3 class="text-center">@post.Category</h3>
-                        <h2 class="text-center">@post.Text</h2>
+                        <h2 class="text-center">@Html.Raw(@post.Text)</h2>
                         <p class="text-center">@post.Date</p>
+                        @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.Id, sida = "InformalBlog" }))
+                        {
+
+                            <button type="submit"><span class="glyphicon glyphicon-remove" alt=""></span></button>
+                        }
                     </div>
                 }
             }

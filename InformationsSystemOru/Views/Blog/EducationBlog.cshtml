@@ -4,7 +4,16 @@
     ViewBag.Title = "EducationBlog";
     Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
 }
-
+<script src="~/scripts/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinyMCE.init({
+        mode: "textareas",
+        theme: "modern",
+        plugins: "textcolor colorpicker",
+        toolbar: "formatselect | bold italic underline | forecolor backcolor | bullist numlist",
+        content_css: "~/Content/Site.css"
+        });
+</script>
 
 <div class="row">
 
@@ -62,12 +71,17 @@
                     <div class="well well-sm">
                         <h1 class="text-center">@post.Titel</h1>
                         <h3 class="text-center">@post.Category</h3>
-                        <h2 class="text-center">@post.Text</h2>
+                        <h2 class="text-center">@Html.Raw(@post.Text)</h2>
                         @if (post.Filename != null)
                         {
                             <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileURL } )">@post.Filename</a>
                         }
                         <p>@post.Date</p>
+                        @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.Id, sida = "Education" }))
+                        {
+
+                            <button type="submit"><span class="glyphicon glyphicon-remove" alt=""></span></button>
+                        }
                     </div>
                 }
             }

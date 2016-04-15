@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Data_Access_Layer;
 using System.Web;
+using System.Web.Mvc;
 
 namespace InformationsSystemOru.Models
 { //validering
@@ -15,6 +16,7 @@ namespace InformationsSystemOru.Models
 
         [Display(Name = "Text")]
         [Required(ErrorMessage = "Write Something")]
+        [AllowHtml]
         public string Text { get; set; }
 
 
