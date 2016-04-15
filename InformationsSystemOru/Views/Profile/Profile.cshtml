@@ -16,9 +16,7 @@
 </script>
 
 <div class="row">
-
     <h2>Profile</h2>
-
     <div class="col-md-12">
 
         <div id="blogg" class="col-md-6">
@@ -51,15 +49,9 @@
                     @Html.TextBoxFor(model => model.NewPost.File, new { @class = "form-control", type = "file" })
 
                 </div>
-
                 <div>
                     <input type="submit" value="Post" class="btn btn-success" id="btnSend" />
                 </div>
-
-                <div class="form-group">
-
-                </div>
-
             }
 
         </div>
@@ -70,14 +62,17 @@
                 foreach (var post in Model.AllPosts)
                 {
                     <div class="well well-sm">
-                        <h2>@post.Title</h2>
-                        <h3>@post.Category</h3>
-                        <p>@Html.Raw(@post.Text)</p>
-                        @if (post.Filename != null)
-                        {
-                        <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
-                        }
-                        <p>@post.DatePosted</p>
+                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading">@post.Title</h4>
+                                <p>@Html.Raw(@post.Text)</p>
+                                @if (post.Filename != null)
+                                {
+                                    <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
+                                }
+                                <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
+                            </div>
+                        </div>
                     </div>
                 }
             }

@@ -1,9 +1,4 @@
-﻿#logo {
-    width: 50%;
-    height: auto;
-}
-
-#Login {
+﻿#Login {
     margin-top: 5%;
     text-align: center !important;
 }
@@ -19,13 +14,6 @@
 */
 .dl-horizontal dt {
     white-space: normal;
-}
-
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
 }
 
 /*Ändrat färg på pushpin för meeting.*/

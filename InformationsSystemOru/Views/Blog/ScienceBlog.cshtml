@@ -41,22 +41,22 @@
                 @Html.ValidationMessageFor(model => model.NewPost.Category, "", new { @class = "text-danger" })
             </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewPost.Text, "Text", htmlAttributes: new { @class = "control-label" })
-                    @Html.TextAreaFor(model => model.NewPost.Text, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.NewPost.Text, "", new { @class = "text-danger" })
-                </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.NewPost.Text, "Text", htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.NewPost.Text, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NewPost.Text, "", new { @class = "text-danger" })
+            </div>
 
-                <div class="form-group">
+            <div class="form-group">
 
-                    <label for="file">Filename:</label>
-                    @Html.TextBoxFor(model => model.NewPost.File, new { @class = "form-control", type = "file" })
+                <label for="file">Filename:</label>
+                @Html.TextBoxFor(model => model.NewPost.File, new { @class = "form-control", type = "file" })
 
-                </div>
+            </div>
 
-                <div>
-                    <input type="submit" value="Post" class="btn btn-success" id="btnSend" />
-                </div>
+            <div>
+                <input type="submit" value="Post" class="btn btn-success" id="btnSend" />
+            </div>
 
         }
 
@@ -69,26 +69,31 @@
                 foreach (var post in Model.AllPosts)
                 {
                 <div class="well well-sm">
-                    <h1 class="text-center">@post.Title</h1>
-                    <h3 class="text-center">@post.Category</h3>
-                    <h2 class="text-center">@Html.Raw(@post.Text)</h2>
-                    @if (post.Filename != null)
-                    {
-                        <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
-                    }
-                    <p>@post.DatePosted</p>
+                    <div class="media">
+                        <div class="media-body">
 
+                            <div class="col-md-11 col-sm-11">
+                                <h4 class="media-heading">@post.Title</h4>
+                                <p>@Html.Raw(@post.Text)</p>
+                                @if (post.Filename != null)
+                                {
+                                    <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
+                                }
+                                <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
+                            </div>
 
-                    @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId ,sida="Science"}))
-                    {
-                        <button type="submit"><span class="glyphicon glyphicon-remove" alt=""></span></button>
-                    }
+                            <div class="col-md-1 col-sm-1">
+                                @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "Education" }))
+                                {
+                                    <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                }
+                            </div>
 
+                        </div>
+                    </div>
                 </div>
             }
         }
     </div>
-
-</div>
 
 </div>
