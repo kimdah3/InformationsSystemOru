@@ -195,11 +195,23 @@ namespace InformationsSystemOru.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeletePost(int postid)
+        public ActionResult DeletePost(int postid, string sida)
         {
             postrepository.DeletePost(postid);
-            return RedirectToAction("ScienceBlog");
-        }
+            if (sida == "Education")
+            {
+                return RedirectToAction("Educationblog");
+            }
+            else if (sida == "InformalBlog")
+            {
+                return RedirectToAction("InformalBlog");
+            }
+            else 
+            
+                return RedirectToAction("ScienceBlog");
+            
+        
+    }
 
     }
 }

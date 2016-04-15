@@ -78,7 +78,11 @@
                     }
                     <p>@post.DatePosted</p>
 
+
                     @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId }))
+
+                    @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.Id ,sida="Science"}))
+
                     {
 
                         <button type="submit"><span class="glyphicon glyphicon-remove" alt=""></span></button>

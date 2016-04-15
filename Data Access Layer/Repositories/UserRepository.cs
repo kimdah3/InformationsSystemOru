@@ -33,5 +33,30 @@ namespace Data_Access_Layer.Repositories
                 return context.User.ToList();
             }
         }
+
+        public void UploadPic(byte[] ImgData, int id)
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                var user = context.User.Where(x => x.Id == id).FirstOrDefault();
+                user.ProfilePicture = ImgData;
+                context.SaveChanges();
+            }
+        }
+
+        public int GetIdFromUser(string user)
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                foreach (var account in context.Account)
+                    if (account.Username.ToLower() == user.ToLower())
+                        return account.Id;
+                return 0;
+                {
+                    
+                }
+            }
+        }
+        
     }
 }

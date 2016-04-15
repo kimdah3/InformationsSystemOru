@@ -96,6 +96,7 @@
     <Compile Include="Repositories\PostRepository.cs" />
     <Compile Include="Repositories\Post_PostTypeRespository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\User_MeetingRepository.cs" />
     <Compile Include="Repositories\User_Post_CommentRepository.cs" />
     <Compile Include="User.cs">
       <DependentUpon>IsOruModel.tt</DependentUpon>
