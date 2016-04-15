@@ -14,7 +14,7 @@
             <h1>@Model.Meeting.Date.Value.ToString("D")</h1>
             <p>Place: @Model.Meeting.Location</p>
             <p>Type: @Model.Meeting.Type</p>
-            <p>Host: @Model.Meeting.HostId</p>
+            <p>Host: @Model.Host.Firstname @Model.Host.Lastname</p>
             @using (Html.BeginForm("Invite", "Meeting", new { @meetingId = Model.Meeting.Id }))
             {
                 @Html.Label("GiveInvite", "Invite to meeting.");
