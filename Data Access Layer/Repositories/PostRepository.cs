@@ -62,5 +62,17 @@ namespace Data_Access_Layer.Repositories
                 return db.Post.Where(x => sciencepostIDs.Contains(x.Id)).OrderByDescending(x => x.Date).ToList();
             }
         }
+
+        public void DeletePost(int postid)
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                var post = context.Post_PostType.FirstOrDefault(x => x.Id == postid);
+                context.Post_PostType.Remove(post);
+                var post2 = context.Post.FirstOrDefault(x => x.Id == postid);
+                context.Post.Remove(post2);
+                context.SaveChanges();
+            }
+        }
     }
 }

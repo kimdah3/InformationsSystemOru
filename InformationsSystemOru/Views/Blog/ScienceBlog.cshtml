@@ -82,6 +82,15 @@
                         <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileURL } )">@post.Filename</a>
                     }
                     <p>@post.Date</p>
+
+                    @using (Html.BeginForm("DeletePost", "Blog", FormMethod.Post,new {postid=post.Id} ))
+                    {
+
+                        <button type="submit"> <span class="glyphicon glyphicon-remove" alt=""></span></button>
+                            
+                      
+                         
+                    }
                 </div>
             }
         }

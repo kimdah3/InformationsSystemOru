@@ -100,5 +100,11 @@ namespace InformationsSystemOru.Controllers
             return RedirectToAction("Educationblog");
         }
 
+        [HttpPost]
+        public void DeletePost(int postid)
+        {
+            postrepository.DeletePost(postid);
+        }
+
     }
 }
