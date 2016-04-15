@@ -79,7 +79,7 @@
                     <div class="well well-sm">
                         <h2>@post.Titel</h2>
                         <h3>@post.Category</h3>
-                        <p>@post.Text</p>
+                        <p>@Html.Raw(@post.Text)</p>
                         @if (post.Filename != null)
                         {
                         <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileURL } )">@post.Filename</a>
