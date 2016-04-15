@@ -21,15 +21,12 @@ namespace InformationsSystemOru.Controllers
         private string fileName = null;
         private string path = null;
 
-        // GET: Blog
-        [Authorize]
-        public ActionResult InformalBlog()
+        public BlogModel LoadPosts(List<Post> postList)
         {
-            var posts = postrepository.GetAllInformalPosts();
             var model = new BlogModel();
             model.AllPosts = new List<PostModel>();
 
-            foreach (var post in posts)
+            foreach (var post in postList)
             {
                 var commentIds = userPostCommentRep.GetPostCommentIds(post.Id);
                 var commentList = new List<Comment>();
@@ -54,6 +51,17 @@ namespace InformationsSystemOru.Controllers
                     Title = post.Titel
                 });
             }
+
+            return model;
+        }
+
+
+        // GET: Blog
+        [Authorize]
+        public ActionResult InformalBlog()
+        {
+            var posts = postrepository.GetAllInformalPosts();
+            var model = LoadPosts(posts);
 
             return View(model);
         }
@@ -62,34 +70,7 @@ namespace InformationsSystemOru.Controllers
         public ActionResult ScienceBlog()
         {
             var posts = postrepository.GetAllSciencePosts();
-            var model = new BlogModel();
-            model.AllPosts = new List<PostModel>();
-
-            foreach (var post in posts)
-            {
-                var commentIds = userPostCommentRep.GetPostCommentIds(post.Id);
-                var commentList = new List<Comment>();
-                var user = userRep.GetUserFromId(post.PostingUserID);
-
-                foreach (var id in commentIds)
-                {
-                    commentList.Add(commentRep.GetComment(id));
-                }
-
-                model.AllPosts.Add(new PostModel
-                {
-                    Category = post.Category,
-                    DatePosted = post.Date,
-                    Comments = commentList,
-                    FileUrl = post.FileURL,
-                    Filename = post.Filename,
-                    PostId = post.Id,
-                    Text = post.Text,
-                    PostingUserId = post.PostingUserID,
-                    PostingUsersName = user.Firstname + " " + user.Lastname,
-                    Title = post.Titel
-                });
-            }
+            var model = LoadPosts(posts);
 
             return View(model);
         }
@@ -119,7 +100,6 @@ namespace InformationsSystemOru.Controllers
                 Filename = fileName
             };
 
-            int type = model.NewPost.Type;
             postrepository.SavePost(post);
             postPostType.SavePosttype(post.Id, 2);
             return RedirectToAction("Scienceblog");
@@ -160,7 +140,6 @@ namespace InformationsSystemOru.Controllers
             }
 
             return View(model);
-
         }
 
         [HttpPost]
@@ -188,7 +167,6 @@ namespace InformationsSystemOru.Controllers
                 Filename = fileName
             };
 
-            int type = model.NewPost.Type;
             postrepository.SavePost(post);
             postPostType.SavePosttype(post.Id, 3);
             return RedirectToAction("Educationblog");
@@ -206,12 +184,10 @@ namespace InformationsSystemOru.Controllers
             {
                 return RedirectToAction("InformalBlog");
             }
-            else 
-            
+            else
                 return RedirectToAction("ScienceBlog");
-            
-        
-    }
+
+        }
 
     }
 }

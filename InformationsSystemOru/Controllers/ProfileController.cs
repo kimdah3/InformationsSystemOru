@@ -19,25 +19,19 @@ namespace InformationsSystemOru.Controllers
         private User_Post_CommentRepository userPostCommentRep = new User_Post_CommentRepository();
         private CommentRepository commentRep = new CommentRepository();
 
-        // GET: Profile
-        [Authorize]
-        public ActionResult Profile()
+        public BlogModel LoadPosts(List<Post> postList)
         {
-            var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
-            var posts = postrepository.GetProfileBlogPosts(loggedInUser, postPostType.GetAllPrivatePostIds());
             var model = new BlogModel();
             model.AllPosts = new List<PostModel>();
 
-            foreach (var post in posts)
+            foreach (var post in postList)
             {
                 var commentIds = userPostCommentRep.GetPostCommentIds(post.Id);
                 var commentList = new List<Comment>();
                 var user = userRep.GetUserFromId(post.PostingUserID);
 
                 foreach (var id in commentIds)
-                {
                     commentList.Add(commentRep.GetComment(id));
-                }
 
                 model.AllPosts.Add(new PostModel
                 {
@@ -54,6 +48,16 @@ namespace InformationsSystemOru.Controllers
                 });
             }
 
+            return model;
+        }
+
+        // GET: Profile
+        [Authorize]
+        public ActionResult Profile()
+        {
+            var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
+            var posts = postrepository.GetProfileBlogPosts(loggedInUser, postPostType.GetAllPrivatePostIds());
+            var model = LoadPosts(posts);
             return View(model);
         }
 
@@ -63,46 +67,20 @@ namespace InformationsSystemOru.Controllers
         {
             var postingUserId = accountRep.GetIdFromUsername(User.Identity.Name);
             var posts = postrepository.GetProfileBlogPosts(postingUserId, postPostType.GetAllPrivatePostIds());
-            var _model = new BlogModel();
+            string fileName = null;
+            string path = null;
 
             if (!ModelState.IsValid)
             {
-                foreach (var p in posts)
-                {
-                    var commentIds = userPostCommentRep.GetPostCommentIds(p.Id);
-                    var commentList = new List<Comment>();
-                    var user = userRep.GetUserFromId(p.PostingUserID);
-
-                    foreach (var id in commentIds)
-                    {
-                        commentList.Add(commentRep.GetComment(id));
-                    }
-
-                    model.AllPosts.Add(new PostModel
-                    {
-                        Category = p.Category,
-                        DatePosted = p.Date,
-                        Comments = commentList,
-                        FileUrl = p.FileURL,
-                        Filename = p.Filename,
-                        PostId = p.Id,
-                        Text = p.Text,
-                        PostingUserId = p.PostingUserID,
-                        PostingUsersName = user.Firstname + " " + user.Lastname,
-                        Title = p.Titel
-                    });
-                }
+                model = LoadPosts(posts);
                 return View(model);
             }
-            string fileName = null;
-            string path = null;
 
             if (model.NewPost.File != null)
             {
                 fileName = model.NewPost.File.FileName;
                 path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
                 model.NewPost.File.SaveAs(path);
-                
             }
 
             var post = new Post()
@@ -115,12 +93,9 @@ namespace InformationsSystemOru.Controllers
                 FileURL = path,
                 Filename = fileName
             };
-             
-                
+
             postrepository.SavePost(post);
             postPostType.SavePosttype(post.Id, 1);
-
-
 
             return RedirectToAction("Profile");
         }
@@ -129,15 +104,12 @@ namespace InformationsSystemOru.Controllers
         public ActionResult GetFile(string path)
         {
             return File(path, System.Net.Mime.MediaTypeNames.Application.Octet, Path.GetFileName(path));
-
         }
 
         [HttpGet]
         public ActionResult ChangeProfilePic()
         {
-            
             return View();
-
         }
 
         [HttpPost]
@@ -149,7 +121,7 @@ namespace InformationsSystemOru.Controllers
                 return View(pModel);
             }
             var fileExtension = Path.GetExtension(pModel.File.FileName);
-            var imgTypes = new[] {".jpg", ".jpeg", ".png", ".JPG", ".JPEG", ".PNG"};
+            var imgTypes = new[] { ".jpg", ".jpeg", ".png", ".JPG", ".JPEG", ".PNG" };
             if (imgTypes.Contains(fileExtension))
             {
                 MemoryStream target = new MemoryStream();
@@ -161,21 +133,8 @@ namespace InformationsSystemOru.Controllers
             }
             ModelState.AddModelError("File", "Bilden måste vara .jpg, .jpeg, .png eller .gif");
             return View("ChangeProfilePic", pModel);
-
-
         }
 
 
-        //public ActionResult ProfilePostResult(int userID)
-        //{
-        //    postrepository.
-        //    List<Post> = 
-        //    var model = new BlogModel();
-        //    model.Category = post.Category;
-        //    model.DatePosted = post.Date;
-        //    model.Title = post.Titel;
-        //    model.Text = post.Text;
-        //    return View(model);
-        //}
     }
 }

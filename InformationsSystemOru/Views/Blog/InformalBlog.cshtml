@@ -1,45 +1,36 @@
 ﻿@using InformationsSystemOru.Extensions
 @model InformationsSystemOru.Models.BlogModel
 
-    @{
-        ViewBag.Title = "InformalBlog";
-        Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
-    }
+@{
+    ViewBag.Title = "InformalBlog";
+    Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
+}
 
-    <h1 class="text-center">The Informal blog.</h1>
-    <h3 class="text-center">Come hang out, dude</h3>
-    <br /><br />
+<h1 class="text-center">The Informal blog.</h1>
+<h3 class="text-center">Come hang out, dude</h3>
+<br /><br />
 
 
-    <div class="row">
+<div class="row">
+    <div class="col-md-12">
         <div class="col-md-12">
-            <div class="col-md-12">
-                @if (Model.AllPosts != null)
+            @if (Model.AllPosts != null)
             {
                 foreach (var post in Model.AllPosts)
                 {
-
-                        <div class="well well-sm">
-                            <h1 class="text-center">@post.Title</h1>
-                            <h3 class="text-center">@post.Category</h3>
-                            <h2 class="text-center">@Html.Raw(@post.Text)</h2>
-                            <p class="text-center">@post.DatePosted</p>
-
                     <div class="well well-sm">
-                        <h1 class="text-center">@post.Titel</h1>
+                        <h1 class="text-center">@post.Title</h1>
                         <h3 class="text-center">@post.Category</h3>
                         <h2 class="text-center">@Html.Raw(@post.Text)</h2>
-                        <p class="text-center">@post.Date</p>
-                        @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.Id, sida = "InformalBlog" }))
+                        <p class="text-center">@post.DatePosted</p>
+                        @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "InformalBlog" }))
                         {
-
                             <button type="submit"><span class="glyphicon glyphicon-remove" alt=""></span></button>
                         }
 
                     </div>
-                    }
                 }
-            </div>
-
+            }
         </div>
     </div>
+</div>
