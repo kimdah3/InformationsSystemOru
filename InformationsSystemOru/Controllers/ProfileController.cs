@@ -102,14 +102,7 @@ namespace InformationsSystemOru.Controllers
                 fileName = model.NewPost.File.FileName;
                 path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
                 model.NewPost.File.SaveAs(path);
-
-            if (model.File != null)
-            {
-                fileName = model.File.FileName;
-                path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
-                model.File.SaveAs(path);
-
-
+                
             }
 
             var post = new Post()
@@ -122,14 +115,9 @@ namespace InformationsSystemOru.Controllers
                 FileURL = path,
                 Filename = fileName
             };
-
-
+             
+                
             postrepository.SavePost(post);
-            postPostType.SavePosttype(post.Id, 1);
-
-
-            int type = model.Type;
-            postrepository.SavePost(post, type);
             postPostType.SavePosttype(post.Id, 1);
 
 
