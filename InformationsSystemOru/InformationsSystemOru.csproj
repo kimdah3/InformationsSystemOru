@@ -148,6 +148,7 @@
     <Compile Include="Models\MeetingModel.cs" />
     <Compile Include="Models\MeetingsModel.cs" />
     <Compile Include="Models\NewMeetingModel.cs" />
+    <Compile Include="Models\PostModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

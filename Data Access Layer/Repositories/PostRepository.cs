@@ -14,7 +14,7 @@ namespace Data_Access_Layer.Repositories
     {
 
 
-        public void SavePost(Post post, int posttypeid)
+        public void SavePost(Post post)
         {
 
             using (var db = new IsOruDbEntities())

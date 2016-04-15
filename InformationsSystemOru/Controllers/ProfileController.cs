@@ -16,6 +16,8 @@ namespace InformationsSystemOru.Controllers
         private PostRepository postrepository = new PostRepository();
         private AccountRepository accountRep = new AccountRepository();
         private Post_PostTypeRespository postPostType = new Post_PostTypeRespository();
+        private User_Post_CommentRepository userPostCommentRep = new User_Post_CommentRepository();
+        private CommentRepository commentRep = new CommentRepository();
 
         // GET: Profile
         [Authorize]
@@ -23,8 +25,36 @@ namespace InformationsSystemOru.Controllers
         {
             var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
             var posts = postrepository.GetProfileBlogPosts(loggedInUser, postPostType.GetAllPrivatePostIds());
+            var model = new BlogModel();
+            model.AllPosts = new List<PostModel>();
 
-            return View(new BlogModel { AllPostsForUser = posts });
+            foreach (var post in posts)
+            {
+                var commentIds = userPostCommentRep.GetPostCommentIds(post.Id);
+                var commentList = new List<Comment>();
+                var user = userRep.GetUserFromId(post.PostingUserID);
+
+                foreach (var id in commentIds)
+                {
+                    commentList.Add(commentRep.GetComment(id));
+                }
+
+                model.AllPosts.Add(new PostModel
+                {
+                    Category = post.Category,
+                    DatePosted = post.Date,
+                    Comments = commentList,
+                    FileUrl = post.FileURL,
+                    Filename = post.Filename,
+                    PostId = post.Id,
+                    Text = post.Text,
+                    PostingUserId = post.PostingUserID,
+                    PostingUsersName = user.Firstname + " " + user.Lastname,
+                    Title = post.Titel
+                });
+            }
+
+            return View(model);
         }
 
 
@@ -32,39 +62,62 @@ namespace InformationsSystemOru.Controllers
         public ActionResult Profile(BlogModel model)
         {
             var postingUserId = accountRep.GetIdFromUsername(User.Identity.Name);
+            var posts = postrepository.GetProfileBlogPosts(postingUserId, postPostType.GetAllPrivatePostIds());
+            var _model = new BlogModel();
 
             if (!ModelState.IsValid)
             {
-                var posts = postrepository.GetProfileBlogPosts(postingUserId, postPostType.GetAllPrivatePostIds());
-                model.AllPostsForUser = posts;
+                foreach (var p in posts)
+                {
+                    var commentIds = userPostCommentRep.GetPostCommentIds(p.Id);
+                    var commentList = new List<Comment>();
+                    var user = userRep.GetUserFromId(p.PostingUserID);
+
+                    foreach (var id in commentIds)
+                    {
+                        commentList.Add(commentRep.GetComment(id));
+                    }
+
+                    model.AllPosts.Add(new PostModel
+                    {
+                        Category = p.Category,
+                        DatePosted = p.Date,
+                        Comments = commentList,
+                        FileUrl = p.FileURL,
+                        Filename = p.Filename,
+                        PostId = p.Id,
+                        Text = p.Text,
+                        PostingUserId = p.PostingUserID,
+                        PostingUsersName = user.Firstname + " " + user.Lastname,
+                        Title = p.Titel
+                    });
+                }
                 return View(model);
             }
             string fileName = null;
             string path = null;
 
-          if(model.File != null) {
-                fileName = model.File.FileName;
+            if (model.NewPost.File != null)
+            {
+                fileName = model.NewPost.File.FileName;
                 path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
-                model.File.SaveAs(path);
-            
+                model.NewPost.File.SaveAs(path);
             }
 
             var post = new Post()
             {
-                Category = model.Category,
+                Category = model.NewPost.Category,
                 Date = DateTime.Now,
-                Titel = model.Title,
-                Text = model.Text,
+                Titel = model.NewPost.Title,
+                Text = model.NewPost.Text,
                 PostingUserID = postingUserId,
                 FileURL = path,
                 Filename = fileName
             };
-        
-            int type = model.Type;
-            postrepository.SavePost(post, type);
+
+            postrepository.SavePost(post);
             postPostType.SavePosttype(post.Id, 1);
 
-           
             return RedirectToAction("Profile");
         }
 

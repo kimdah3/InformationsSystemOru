@@ -15,6 +15,9 @@ namespace InformationsSystemOru.Controllers
         private AccountRepository accountRep = new AccountRepository();
         private Post_PostTypeRespository postPostType = new Post_PostTypeRespository();
         private PostRepository postrepository = new PostRepository();
+        private CommentRepository commentRep = new CommentRepository();
+        private User_Post_CommentRepository userPostCommentRep = new User_Post_CommentRepository();
+        private UserRepository userRep = new UserRepository();
         private string fileName = null;
         private string path = null;
 
@@ -23,41 +26,101 @@ namespace InformationsSystemOru.Controllers
         public ActionResult InformalBlog()
         {
             var posts = postrepository.GetAllInformalPosts();
-            return View(new BlogModel { AllPostsForUser = posts });
+            var model = new BlogModel();
+            model.AllPosts = new List<PostModel>();
+
+            foreach (var post in posts)
+            {
+                var commentIds = userPostCommentRep.GetPostCommentIds(post.Id);
+                var commentList = new List<Comment>();
+                var user = userRep.GetUserFromId(post.PostingUserID);
+
+                foreach (var id in commentIds)
+                {
+                    commentList.Add(commentRep.GetComment(id));
+                }
+
+                model.AllPosts.Add(new PostModel
+                {
+                    Category = post.Category,
+                    DatePosted = post.Date,
+                    Comments = commentList,
+                    FileUrl = post.FileURL,
+                    Filename = post.Filename,
+                    PostId = post.Id,
+                    Text = post.Text,
+                    PostingUserId = post.PostingUserID,
+                    PostingUsersName = user.Firstname + " " + user.Lastname,
+                    Title = post.Titel
+                });
+            }
+
+            return View(model);
         }
 
         [Authorize]
         public ActionResult ScienceBlog()
         {
             var posts = postrepository.GetAllSciencePosts();
-            return View(new BlogModel { AllPostsForUser = posts });
+            var model = new BlogModel();
+            model.AllPosts = new List<PostModel>();
+
+            foreach (var post in posts)
+            {
+                var commentIds = userPostCommentRep.GetPostCommentIds(post.Id);
+                var commentList = new List<Comment>();
+                var user = userRep.GetUserFromId(post.PostingUserID);
+
+                foreach (var id in commentIds)
+                {
+                    commentList.Add(commentRep.GetComment(id));
+                }
+
+                model.AllPosts.Add(new PostModel
+                {
+                    Category = post.Category,
+                    DatePosted = post.Date,
+                    Comments = commentList,
+                    FileUrl = post.FileURL,
+                    Filename = post.Filename,
+                    PostId = post.Id,
+                    Text = post.Text,
+                    PostingUserId = post.PostingUserID,
+                    PostingUsersName = user.Firstname + " " + user.Lastname,
+                    Title = post.Titel
+                });
+            }
+
+            return View(model);
         }
 
         [HttpPost]
         public ActionResult ScienceBlog(BlogModel model)
         {
             var postingUserId = accountRep.GetIdFromUsername(User.Identity.Name);
-            if (model.File != null)
-            {
-                fileName = model.File.FileName;
-                path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
-                model.File.SaveAs(path);
+            string fileName = null;
+            string path = null;
 
+            if (model.NewPost.File != null)
+            {
+                fileName = model.NewPost.File.FileName;
+                path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
+                model.NewPost.File.SaveAs(path);
             }
 
             var post = new Post()
             {
-                Category = model.Category,
+                Category = model.NewPost.Category,
                 Date = DateTime.Now,
-                Titel = model.Title,
-                Text = model.Text,
+                Titel = model.NewPost.Title,
+                Text = model.NewPost.Text,
                 PostingUserID = postingUserId,
                 FileURL = path,
                 Filename = fileName
             };
 
-            int type = model.Type;
-            postrepository.SavePost(post, type);
+            int type = model.NewPost.Type;
+            postrepository.SavePost(post);
             postPostType.SavePosttype(post.Id, 2);
             return RedirectToAction("Scienceblog");
         }
@@ -67,35 +130,66 @@ namespace InformationsSystemOru.Controllers
         {
             //    var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
             var posts = postrepository.GetAllEducationPosts();
-            return View(new BlogModel { AllPostsForUser = posts });
-           
+            var model = new BlogModel();
+            model.AllPosts = new List<PostModel>();
+
+            foreach (var post in posts)
+            {
+                var commentIds = userPostCommentRep.GetPostCommentIds(post.Id);
+                var commentList = new List<Comment>();
+                var user = userRep.GetUserFromId(post.PostingUserID);
+
+                foreach (var id in commentIds)
+                {
+                    commentList.Add(commentRep.GetComment(id));
+                }
+
+                model.AllPosts.Add(new PostModel
+                {
+                    Category = post.Category,
+                    DatePosted = post.Date,
+                    Comments = commentList,
+                    FileUrl = post.FileURL,
+                    Filename = post.Filename,
+                    PostId = post.Id,
+                    Text = post.Text,
+                    PostingUserId = post.PostingUserID,
+                    PostingUsersName = user.Firstname + " " + user.Lastname,
+                    Title = post.Titel
+                });
+            }
+
+            return View(model);
+
         }
 
         [HttpPost]
         public ActionResult EducationBlog(BlogModel model)
         {
             var postingUserId = accountRep.GetIdFromUsername(User.Identity.Name);
-            if (model.File != null)
+
+            string fileName = null;
+            string path = null;
+
+            if (model.NewPost.File != null)
             {
-                    fileName = model.File.FileName;                
-                    path = Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName);
-                    model.File.SaveAs(path);
-                
+                fileName = model.NewPost.File.FileName;
+                path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
+                model.NewPost.File.SaveAs(path);
             }
-                var post = new Post()
+            var post = new Post()
             {
-                Category = model.Category,
+                Category = model.NewPost.Category,
                 Date = DateTime.Now,
-                Titel = model.Title,
-                Text = model.Text,
+                Titel = model.NewPost.Title,
+                Text = model.NewPost.Text,
                 PostingUserID = postingUserId,
                 FileURL = path,
                 Filename = fileName
-                
-
             };
-            int type = model.Type;
-            postrepository.SavePost(post, type);
+
+            int type = model.NewPost.Type;
+            postrepository.SavePost(post);
             postPostType.SavePosttype(post.Id, 3);
             return RedirectToAction("Educationblog");
         }

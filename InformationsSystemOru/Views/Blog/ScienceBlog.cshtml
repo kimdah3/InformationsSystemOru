@@ -30,27 +30,27 @@
 
             <div class="form-group">
 
-                @Html.LabelFor(model => model.Title, "Title", htmlAttributes: new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.Title, "TitleInput", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.NewPost.Title, "Title", htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.NewPost.Title, "TitleInput", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NewPost.Title, "", new { @class = "text-danger" })
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Category, "Category", htmlAttributes: new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.Category, "Category", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.NewPost.Category, "Category", htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.NewPost.Category, "Category", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NewPost.Category, "", new { @class = "text-danger" })
             </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Text, "Text", htmlAttributes: new { @class = "control-label" })
-                    @Html.TextAreaFor(model => model.Text, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.NewPost.Text, "Text", htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.NewPost.Text, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NewPost.Text, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
 
                     <label for="file">Filename:</label>
-                    @Html.TextBoxFor(model => model.File, new { @class = "form-control", type = "file" })
+                    @Html.TextBoxFor(model => model.NewPost.File, new { @class = "form-control", type = "file" })
 
                 </div>
 
@@ -64,21 +64,21 @@
 
     <div class="col-md-12">
         <br />
-        @if (Model.AllPostsForUser != null)
+        @if (Model.AllPosts != null)
             {
-                foreach (var post in Model.AllPostsForUser)
+                foreach (var post in Model.AllPosts)
                 {
                 <div class="well well-sm">
-                    <h1 class="text-center">@post.Titel</h1>
+                    <h1 class="text-center">@post.Title</h1>
                     <h3 class="text-center">@post.Category</h3>
                     <h2 class="text-center">@Html.Raw(@post.Text)</h2>
                     @if (post.Filename != null)
                     {
-                        <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileURL } )">@post.Filename</a>
+                        <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
                     }
-                    <p>@post.Date</p>
+                    <p>@post.DatePosted</p>
 
-                    @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.Id }))
+                    @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId }))
                     {
 
                         <button type="submit"><span class="glyphicon glyphicon-remove" alt=""></span></button>
