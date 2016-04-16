@@ -17,67 +17,102 @@
 
 <div class="row">
     <h2>Profile</h2>
-    <div class="col-md-12">
+    <hr />
 
-        <div id="blogg" class="col-md-6">
-            @using (Html.BeginForm("Profile", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    <div class="col-md-3">
+
+        <img src="~/Content/oruInformatikLogga.jpg" alt="..." class="img-thumbnail">
+
+        <hr />
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Users name</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+
+                    <div class="col-md-9">
+                        <table class="table table-user-information">
+                            <tbody>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td>asd</td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td><a href="mailto:info@support.com">info@support.com</a></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <a data-original-title="Broadcast Message" data-toggle="tooltip" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-9">
+
+        @using (Html.BeginForm("Profile", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                @Html.Label("Write a blog post")
+            @Html.Label("Write a blog post")
 
-                <div class="form-group">
+            <div class="form-group">
 
-                    @Html.LabelFor(model => model.NewPost.Title, "Title", htmlAttributes: new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.NewPost.Title, "TitleInput", htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.NewPost.Title, "", new { @class = "text-danger" })
-                </div>
+                @Html.LabelFor(model => model.NewPost.Title, "Title", htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.NewPost.Title, "TitleInput", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NewPost.Title, "", new { @class = "text-danger" })
+            </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewPost.Category, "Kategori", htmlAttributes: new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.NewPost.Category, "Kategori", htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.NewPost.Category, "", new { @class = "text-danger" })
-                </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.NewPost.Category, "Kategori", htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.NewPost.Category, "Kategori", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NewPost.Category, "", new { @class = "text-danger" })
+            </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewPost.Text, "Text", htmlAttributes: new { @class = "control-label" })
-                    @Html.TextAreaFor(model => model.NewPost.Text, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.NewPost.Text, "", new { @class = "text-danger" })
-                </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.NewPost.Text, "Text", htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.NewPost.Text, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NewPost.Text, "", new { @class = "text-danger" })
+            </div>
 
-                <div class="form-group">
+            <div class="form-group">
 
-                    <label for="file">Filename:</label>
-                    @Html.TextBoxFor(model => model.NewPost.File, new { @class = "form-control", type = "file" })
+                <label for="file">Filename:</label>
+                @Html.TextBoxFor(model => model.NewPost.File, new { @class = "form-control", type = "file" })
 
-                </div>
+            </div>
                 <div>
                     <input type="submit" value="Post" class="btn btn-success" id="btnSend" />
                 </div>
-            }
+        }
 
-        </div>
+        <hr />
 
-        <div class="col-md-6">
-            @if (Model.AllPosts != null)
+        @if (Model.AllPosts != null)
             {
                 foreach (var post in Model.AllPosts)
                 {
-                    <div class="well well-sm">
-                        <div class="media">
-                            <div class="media-body">
-                                <h4 class="media-heading">@post.Title</h4>
-                                <p>@Html.Raw(@post.Text)</p>
-                                @if (post.Filename != null)
-                                {
-                                    <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
-                                }
-                                <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
-                            </div>
+                <div class="well well-sm">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="media-heading">@post.Title</h4>
+                            <p>@Html.Raw(@post.Text)</p>
+                            @if (post.Filename != null)
+                            {
+                                <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
+                            }
+                            <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
                         </div>
                     </div>
-                }
+                </div>
             }
-        </div>
-
+        }
     </div>
 
 </div>
