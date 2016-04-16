@@ -41,7 +41,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <button type="button" class="btn btn-success pull-right navbar-btn dropdown-toggle" data-toggle="dropdown" role="button">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> @User.Identity.Name
                         </button>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Profile", "Profile", "Profile")</li>
