@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="IsOruDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="IsOruDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Access">
           <Key>
             <PropertyRef Name="AccessId" />
@@ -28,6 +28,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="AuthorId" Type="int" />
         </EntityType>
         <EntityType Name="Meeting">
           <Key>
@@ -100,7 +101,6 @@
           </Key>
           <Property Name="UPCId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PostId" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="CommentId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK__Account__UserID__1367E606">
@@ -112,6 +112,18 @@
             </Principal>
             <Dependent Role="Account">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__AuthorI__5AEE82B9">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="AuthorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -235,18 +247,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User_Post__UserI__1FCDBCEB">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="User_Post_Comment" Type="Self.User_Post_Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="User_Post_Comment">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="IsOruDbModelStoreContainer">
           <EntitySet Name="Access" EntityType="Self.Access" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
@@ -262,6 +262,10 @@
           <AssociationSet Name="FK__Account__UserID__1367E606" Association="Self.FK__Account__UserID__1367E606">
             <End Role="User" EntitySet="User" />
             <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__AuthorI__5AEE82B9" Association="Self.FK__Comment__AuthorI__5AEE82B9">
+            <End Role="User" EntitySet="User" />
+            <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
           <AssociationSet Name="FK__Meeting__HostId__47DBAE45" Association="Self.FK__Meeting__HostId__47DBAE45">
             <End Role="User" EntitySet="User" />
@@ -303,12 +307,9 @@
             <End Role="Post" EntitySet="Post" />
             <End Role="User_Post_Comment" EntitySet="User_Post_Comment" />
           </AssociationSet>
-          <AssociationSet Name="FK__User_Post__UserI__1FCDBCEB" Association="Self.FK__User_Post__UserI__1FCDBCEB">
-            <End Role="User" EntitySet="User" />
-            <End Role="User_Post_Comment" EntitySet="User_Post_Comment" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IsOruDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -337,6 +338,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AuthorId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Comment__AuthorI__5AEE82B9" FromRole="Comment" ToRole="User" />
           <NavigationProperty Name="User_Post_Comment" Relationship="Self.FK__User_Post__Comme__403A8C7D" FromRole="Comment" ToRole="User_Post_Comment" />
         </EntityType>
         <EntityType Name="Meeting">
@@ -347,9 +350,9 @@
           <Property Name="Date" Type="DateTime" Precision="3" />
           <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="User_Meeting" Relationship="Self.FK__User_Meet__Meeti__3D5E1FD2" FromRole="Meeting" ToRole="User_Meeting" />
           <Property Name="HostId" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="IsOruDbModel.FK__Meeting__HostId__47DBAE45" FromRole="Meeting" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Meeting__HostId__47DBAE45" FromRole="Meeting" ToRole="User" />
+          <NavigationProperty Name="User_Meeting" Relationship="Self.FK__User_Meet__Meeti__3D5E1FD2" FromRole="Meeting" ToRole="User_Meeting" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
@@ -361,11 +364,11 @@
           <Property Name="Titel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Category" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="PostingUserID" Type="Int32" Nullable="false" />
+          <Property Name="FileURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Filename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User" Relationship="Self.FK__Post__PostingUse__4316F928" FromRole="Post" ToRole="User" />
           <NavigationProperty Name="Post_PostType" Relationship="Self.FK__Post_Post__PostI__440B1D61" FromRole="Post" ToRole="Post_PostType" />
           <NavigationProperty Name="User_Post_Comment" Relationship="Self.FK__User_Post__PostI__44FF419A" FromRole="Post" ToRole="User_Post_Comment" />
-          <Property Name="FileURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Filename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Post_PostType">
           <Key>
@@ -393,13 +396,13 @@
           <Property Name="Firstname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Lastname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProfilePicture" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Account" Relationship="Self.FK__Account__UserID__1367E606" FromRole="User" ToRole="Account" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK__Comment__AuthorI__5AEE82B9" FromRole="User" ToRole="Comment" />
+          <NavigationProperty Name="Meeting" Relationship="Self.FK__Meeting__HostId__47DBAE45" FromRole="User" ToRole="Meeting" />
           <NavigationProperty Name="Post" Relationship="Self.FK__Post__PostingUse__4316F928" FromRole="User" ToRole="Post" />
           <NavigationProperty Name="User_Access" Relationship="Self.FK__User_Acce__UserI__239E4DCF" FromRole="User" ToRole="User_Access" />
           <NavigationProperty Name="User_Meeting" Relationship="Self.FK__User_Meet__UserI__3C69FB99" FromRole="User" ToRole="User_Meeting" />
-          <NavigationProperty Name="User_Post_Comment" Relationship="Self.FK__User_Post__UserI__1FCDBCEB" FromRole="User" ToRole="User_Post_Comment" />
-          <Property Name="ProfilePicture" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Meeting" Relationship="IsOruDbModel.FK__Meeting__HostId__47DBAE45" FromRole="User" ToRole="Meeting" />
         </EntityType>
         <EntityType Name="User_Access">
           <Key>
@@ -418,9 +421,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" />
           <Property Name="MeetingId" Type="Int32" />
+          <Property Name="Accepted" Type="Boolean" />
           <NavigationProperty Name="Meeting" Relationship="Self.FK__User_Meet__Meeti__3D5E1FD2" FromRole="User_Meeting" ToRole="Meeting" />
           <NavigationProperty Name="User" Relationship="Self.FK__User_Meet__UserI__3C69FB99" FromRole="User_Meeting" ToRole="User" />
-          <Property Name="Accepted" Type="Boolean" />
         </EntityType>
         <EntityType Name="User_Post_Comment">
           <Key>
@@ -428,11 +431,9 @@
           </Key>
           <Property Name="UPCId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PostId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="CommentId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Comment" Relationship="Self.FK__User_Post__Comme__403A8C7D" FromRole="User_Post_Comment" ToRole="Comment" />
           <NavigationProperty Name="Post" Relationship="Self.FK__User_Post__PostI__44FF419A" FromRole="User_Post_Comment" ToRole="Post" />
-          <NavigationProperty Name="User" Relationship="Self.FK__User_Post__UserI__1FCDBCEB" FromRole="User_Post_Comment" ToRole="User" />
         </EntityType>
         <Association Name="FK__User_Acce__Acces__24927208">
           <End Role="Access" Type="Self.Access" Multiplicity="1" />
@@ -458,6 +459,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Comment__AuthorI__5AEE82B9">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="AuthorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__User_Post__Comme__403A8C7D">
           <End Role="Comment" Type="Self.Comment" Multiplicity="1" />
           <End Role="User_Post_Comment" Type="Self.User_Post_Comment" Multiplicity="*" />
@@ -467,6 +480,18 @@
             </Principal>
             <Dependent Role="User_Post_Comment">
               <PropertyRef Name="CommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Meeting__HostId__47DBAE45">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Meeting">
+              <PropertyRef Name="HostId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -554,18 +579,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User_Post__UserI__1FCDBCEB">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="User_Post_Comment" Type="Self.User_Post_Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="User_Post_Comment">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="IsOruDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Access" EntityType="Self.Access" />
           <EntitySet Name="Account" EntityType="Self.Account" />
@@ -586,9 +599,17 @@
             <End Role="User" EntitySet="User" />
             <End Role="Account" EntitySet="Account" />
           </AssociationSet>
+          <AssociationSet Name="FK__Comment__AuthorI__5AEE82B9" Association="Self.FK__Comment__AuthorI__5AEE82B9">
+            <End Role="User" EntitySet="User" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
           <AssociationSet Name="FK__User_Post__Comme__403A8C7D" Association="Self.FK__User_Post__Comme__403A8C7D">
             <End Role="Comment" EntitySet="Comment" />
             <End Role="User_Post_Comment" EntitySet="User_Post_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Meeting__HostId__47DBAE45" Association="Self.FK__Meeting__HostId__47DBAE45">
+            <End Role="User" EntitySet="User" />
+            <End Role="Meeting" EntitySet="Meeting" />
           </AssociationSet>
           <AssociationSet Name="FK__User_Meet__Meeti__3D5E1FD2" Association="Self.FK__User_Meet__Meeti__3D5E1FD2">
             <End Role="Meeting" EntitySet="Meeting" />
@@ -618,27 +639,7 @@
             <End Role="User" EntitySet="User" />
             <End Role="User_Meeting" EntitySet="User_Meeting" />
           </AssociationSet>
-          <AssociationSet Name="FK__User_Post__UserI__1FCDBCEB" Association="Self.FK__User_Post__UserI__1FCDBCEB">
-            <End Role="User" EntitySet="User" />
-            <End Role="User_Post_Comment" EntitySet="User_Post_Comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Meeting__HostId__47DBAE45" Association="IsOruDbModel.FK__Meeting__HostId__47DBAE45">
-            <End Role="User" EntitySet="User" />
-            <End Role="Meeting" EntitySet="Meeting" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK__Meeting__HostId__47DBAE45">
-          <End Type="IsOruDbModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="IsOruDbModel.Meeting" Role="Meeting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Meeting">
-              <PropertyRef Name="HostId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -669,31 +670,32 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Meeting">
             <EntityTypeMapping TypeName="IsOruDbModel.Meeting">
               <MappingFragment StoreEntitySet="Meeting">
-                <ScalarProperty Name="HostId" ColumnName="HostId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="HostId" ColumnName="HostId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Post">
             <EntityTypeMapping TypeName="IsOruDbModel.Post">
               <MappingFragment StoreEntitySet="Post">
-                <ScalarProperty Name="Filename" ColumnName="Filename" />
-                <ScalarProperty Name="FileURL" ColumnName="FileURL" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Titel" ColumnName="Titel" />
                 <ScalarProperty Name="Category" ColumnName="Category" />
                 <ScalarProperty Name="PostingUserID" ColumnName="PostingUserID" />
+                <ScalarProperty Name="FileURL" ColumnName="FileURL" />
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -717,11 +719,11 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="IsOruDbModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Firstname" ColumnName="Firstname" />
                 <ScalarProperty Name="Lastname" ColumnName="Lastname" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -737,10 +739,10 @@
           <EntitySetMapping Name="User_Meeting">
             <EntityTypeMapping TypeName="IsOruDbModel.User_Meeting">
               <MappingFragment StoreEntitySet="User_Meeting">
-                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
+                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -749,7 +751,6 @@
               <MappingFragment StoreEntitySet="User_Post_Comment">
                 <ScalarProperty Name="UPCId" ColumnName="UPCId" />
                 <ScalarProperty Name="PostId" ColumnName="PostId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CommentId" ColumnName="CommentId" />
               </MappingFragment>
             </EntityTypeMapping>

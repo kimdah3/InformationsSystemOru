@@ -23,7 +23,9 @@ namespace Data_Access_Layer
         public int Id { get; set; }
         public string Text { get; set; }
         public System.DateTime Date { get; set; }
+        public Nullable<int> AuthorId { get; set; }
     
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Post_Comment> User_Post_Comment { get; set; }
     }

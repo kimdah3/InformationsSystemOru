@@ -26,8 +26,8 @@ namespace Data_Access_Layer
         public string Type { get; set; }
         public Nullable<int> HostId { get; set; }
     
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Meeting> User_Meeting { get; set; }
-        public virtual User User { get; set; }
     }
 }

@@ -18,11 +18,11 @@ namespace Data_Access_Layer
         public User()
         {
             this.Account = new HashSet<Account>();
+            this.Comment = new HashSet<Comment>();
+            this.Meeting = new HashSet<Meeting>();
             this.Post = new HashSet<Post>();
             this.User_Access = new HashSet<User_Access>();
             this.User_Meeting = new HashSet<User_Meeting>();
-            this.User_Post_Comment = new HashSet<User_Post_Comment>();
-            this.Meeting = new HashSet<Meeting>();
         }
     
         public int Id { get; set; }
@@ -34,19 +34,14 @@ namespace Data_Access_Layer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Account> Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comment { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Meeting> Meeting { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Post { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Access> User_Access { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Meeting> User_Meeting { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User_Post_Comment> User_Post_Comment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Meeting> Meeting { get; set; }
-
-        public override string ToString()
-        {
-            return Id + ". " + Firstname + " " + Lastname;
-        }
     }
 }

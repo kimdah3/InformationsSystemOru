@@ -18,8 +18,6 @@ namespace InformationsSystemOru.Controllers
         private CommentRepository commentRep = new CommentRepository();
         private User_Post_CommentRepository userPostCommentRep = new User_Post_CommentRepository();
         private UserRepository userRep = new UserRepository();
-        private string fileName = null;
-        private string path = null;
 
         public BlogModel LoadPosts(List<Post> postList)
         {
