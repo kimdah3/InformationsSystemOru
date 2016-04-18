@@ -30,6 +30,36 @@
                                         <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
                                     }
                                     <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
+
+                                    <div class="panel panel-primary">
+                                        <div class="panel-body">
+
+
+                                            @using (Ajax.BeginForm("PostComment", "Blog", new AjaxOptions
+                                            { HttpMethod = "POST", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = post.PostId.ToString() }))
+                                            {
+                                                <div class="input-group">
+                                                    @Html.Hidden("postId", post.PostId)
+                                                    @Html.TextBox("tbComment", "", htmlAttributes: new { @class = "form-control", placeholder = "Write a comment" })
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="submit">Reply</button>
+                                                    </span>
+                                                </div>
+                                            }
+
+                                            <div id="@post.PostId.ToString()">
+                                                @if (post.Comments != null)
+                                                {
+                                                    foreach (var c in post.Comments)
+                                                    {
+                                                        <span class="label label-primary">@c.User.Firstname @c.User.Lastname</span> @c.Date
+                                                        <p>@c.Text</p>
+                                                    }
+                                                }
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="col-md-1 col-sm-1">

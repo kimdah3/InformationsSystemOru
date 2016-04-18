@@ -15,5 +15,18 @@ namespace Data_Access_Layer.Repositories
                 return context.User_Post_Comment.Where(x => x.PostId == postId).Select(x => x.CommentId).ToList();
             }
         }
+
+        public void SaveCommentPostRelation(int postId, int commentId)
+        {
+            using(var context = new IsOruDbEntities())
+            {
+                context.User_Post_Comment.Add(new User_Post_Comment
+                {
+                    PostId = postId,
+                    CommentId = commentId
+                });
+                context.SaveChanges();
+            }
+        }
     }
 }

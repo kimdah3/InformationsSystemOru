@@ -32,7 +32,9 @@ namespace InformationsSystemOru.Controllers
 
                 foreach (var id in commentIds)
                 {
-                    commentList.Add(commentRep.GetComment(id));
+                    var comment = commentRep.GetComment(id);
+                    comment.User = userRep.GetUserFromId((int)comment.AuthorId);
+                    commentList.Add(comment);
                 }
 
                 model.AllPosts.Add(new PostModel
@@ -53,6 +55,28 @@ namespace InformationsSystemOru.Controllers
             return model;
         }
 
+        [HttpPost]
+        public ActionResult PostComment(int postId, string tbComment)
+        {
+            var loggedInUser = userRep.GetUserFromId(accountRep.GetIdFromUsername(User.Identity.Name));
+            var newComment = new Comment
+            {
+                AuthorId = loggedInUser.Id,
+                Date = DateTime.Now,
+                Text = tbComment,
+                Id = commentRep.GetNewId()
+            };
+
+            commentRep.SaveComment(newComment);
+            userPostCommentRep.SaveCommentPostRelation(postId, newComment.Id);
+
+            return PartialView("_CommentPartial", new CommentModel
+            {
+                Authorname = loggedInUser.Firstname + " " + loggedInUser.Lastname,
+                Date = newComment.Date,
+                Text = newComment.Text
+            });
+        }
 
         // GET: Blog
         [Authorize]
