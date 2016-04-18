@@ -147,5 +147,10 @@ namespace InformationsSystemOru.Controllers
 
             return RedirectToAction("Meeting", new { @meetingId = meetingId });
         }
+
+        public ActionResult MyMeetings()
+        {
+            return View();
+        }
     }
 }

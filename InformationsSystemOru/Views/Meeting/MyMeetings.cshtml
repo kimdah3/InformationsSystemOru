@@ -1,0 +1,9 @@
+﻿@using InformationsSystemOru.Extensions
+@model InformationsSystemOru.Models.MeetingModel
+
+@{
+    ViewBag.Title = "My meetings";
+    Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<p>My meetings</p>
