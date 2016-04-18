@@ -150,7 +150,14 @@ namespace InformationsSystemOru.Controllers
 
         public ActionResult MyMeetings()
         {
-            return View();
+            var model = new MyMeetingsModel()
+            {
+                InvitedToMeetings = new List<Meeting>(),
+                AttendingToMeetings = new List<Meeting>(),
+                HostToMeetings = new List<Meeting>()
+            };
+
+            return View(model);
         }
     }
 }

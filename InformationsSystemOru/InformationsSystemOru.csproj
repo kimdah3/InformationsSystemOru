@@ -147,6 +147,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MeetingModel.cs" />
     <Compile Include="Models\MeetingsModel.cs" />
+    <Compile Include="Models\MyMeetingsModel.cs" />
     <Compile Include="Models\NewMeetingModel.cs" />
     <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
@@ -377,6 +378,7 @@
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\readme.md" />
     <Content Include="Scripts\tinymce\langs\readme.md" />
     <Content Include="Views\Profile\ChangeProfilePic.cshtml" />
+    <Content Include="Views\Meeting\MyMeetings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj">
