@@ -31,7 +31,8 @@ namespace Data_Access_Layer.Repositories
             {
                 invitedUsers = db.User_Meeting.Where(x => x.MeetingId == meetingId).ToList();
             }
-            
+
+
             return invitedUsers;
         }
 
@@ -41,6 +42,60 @@ namespace Data_Access_Layer.Repositories
             using (var db = new IsOruDbEntities())
             {
                 db.User_Meeting.Remove(db.User_Meeting.FirstOrDefault(x => x.UserId == user.Id && x.MeetingId == meetingId));
+                db.SaveChanges();
+            }
+        }
+
+        public List<Meeting> GetInvitedToMeetingsByUserId(User user)
+        {
+            var meetings = new List<Meeting>();
+            using (var db = new IsOruDbEntities())
+            {
+                var userMeetings = db.User_Meeting.Where(x => x.UserId == user.Id && !x.Accepted.Value);
+
+                foreach (var meeting in userMeetings)
+                {
+                    var m = db.Meeting.FirstOrDefault(x => x.Id == meeting.MeetingId);
+                    m.User = db.User.FirstOrDefault(x => x.Id == m.HostId.Value);
+                    meetings.Add(m);
+                }
+            }
+            return meetings;
+        }
+
+        public List<Meeting> GetAttendingMeetingsByUserId(User user)
+        {
+            var meetings = new List<Meeting>();
+
+            using (var db = new IsOruDbEntities())
+            {
+                var userMeetings = db.User_Meeting.Where(x => x.Accepted.Value && x.UserId == user.Id);
+                foreach (var meeting in userMeetings)
+                {
+                    var m = db.Meeting.FirstOrDefault(x => x.Id == meeting.MeetingId);
+                    m.User = db.User.FirstOrDefault(x => x.Id == m.HostId.Value);
+                    meetings.Add(m);
+                }
+            }
+            return meetings;
+        }
+
+        public List<Meeting> GetHostingMeetingsByUserId(User user)
+        {
+            var meetings = new List<Meeting>();
+            using (var db = new IsOruDbEntities())
+            {
+                meetings.AddRange(db.Meeting.Where(x => x.HostId == user.Id));
+
+            }
+            return meetings;
+        }
+
+        public void AcceptInvitation(User user, Meeting meeting)
+        {
+            using (var db = new IsOruDbEntities())
+            {
+                db.User_Meeting.First(x => x.UserId == user.Id && x.MeetingId == meeting.Id).Accepted = true;
                 db.SaveChanges();
             }
         }

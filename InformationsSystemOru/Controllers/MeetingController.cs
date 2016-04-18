@@ -80,8 +80,6 @@ namespace InformationsSystemOru.Controllers
 
             _meetingRepository.AddMeeting(meeting);
             return RedirectToAction("Calendar");
-
-
         }
 
         [HttpGet]
@@ -100,15 +98,15 @@ namespace InformationsSystemOru.Controllers
             var userMeetings = _userMeetingRepository.GetInvitedUsersByMeetingId(int.Parse(meetingId));
             foreach (var userMeeting in userMeetings)
             {
-                if ((bool) userMeeting.Accepted)
+                if ((bool)userMeeting.Accepted)
                 {
-                    model.AcceptedUsers.Add(_userRepository.GetUserFromId((int) userMeeting.UserId));
+                    model.AcceptedUsers.Add(_userRepository.GetUserFromId((int)userMeeting.UserId));
                 }
                 else
                 {
-                    model.InvitedUsers.Add(_userRepository.GetUserFromId((int) userMeeting.UserId));
+                    model.InvitedUsers.Add(_userRepository.GetUserFromId((int)userMeeting.UserId));
                 }
-                var user = _userRepository.GetUserFromId((int) userMeeting.UserId);
+                var user = _userRepository.GetUserFromId((int)userMeeting.UserId);
                 model.AllNoneInvitedUsers.RemoveAll(x => x.Id == user.Id);
             }
 
@@ -121,7 +119,6 @@ namespace InformationsSystemOru.Controllers
         [HttpPost]
         public ActionResult Invite(MeetingModel model, int meetingId)
         {
-
             var index = model.InvitedUser.LastIndexOf(".");
             var userId = int.Parse(model.InvitedUser.Substring(0, index));
 
@@ -130,7 +127,7 @@ namespace InformationsSystemOru.Controllers
 
             _userMeetingRepository.InviteUser(meeting, invitedUser);
 
-            return RedirectToAction("Meeting", new {@meetingId = meeting.Id});
+            return RedirectToAction("Meeting", new { @meetingId = meeting.Id });
         }
 
         public ActionResult RemoveInvitation(MeetingModel model, int meetingId)
@@ -150,14 +147,38 @@ namespace InformationsSystemOru.Controllers
 
         public ActionResult MyMeetings()
         {
+            var userId = _userRepository.GetIdFromUser(User.Identity.Name);
+            var user = _userRepository.GetUserFromId(userId);
+
             var model = new MyMeetingsModel()
             {
-                InvitedToMeetings = new List<Meeting>(),
-                AttendingToMeetings = new List<Meeting>(),
-                HostToMeetings = new List<Meeting>()
+                InvitedToMeetings = _userMeetingRepository.GetInvitedToMeetingsByUserId(user),
+                AttendingToMeetings = _userMeetingRepository.GetAttendingMeetingsByUserId(user),
+                HostToMeetings = _userMeetingRepository.GetHostingMeetingsByUserId(user)
             };
 
             return View(model);
+        }
+
+        public ActionResult AcceptMeeting(int meetingId)
+        {
+            var userId = _userRepository.GetIdFromUser(User.Identity.Name);
+            var user = _userRepository.GetUserFromId(userId);
+            var meeting = _meetingRepository.GetMeetingById(meetingId);
+
+            _userMeetingRepository.AcceptInvitation(user, meeting);
+
+            return RedirectToAction("MyMeetings");
+        }
+
+        public ActionResult DeclineMeeting(int meetingId)
+        {
+            var userId = _userRepository.GetIdFromUser(User.Identity.Name);
+            var user = _userRepository.GetUserFromId(userId);
+
+            _userMeetingRepository.RemoveInvitation(user, meetingId);
+
+            return RedirectToAction("MyMeetings");
         }
     }
 }

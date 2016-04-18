@@ -13,10 +13,34 @@
         <h3>Invitations:</h3>
         @foreach (var meeting in Model.InvitedToMeetings)
         {
-            <p>meeting</p>
+            <p>Date: @meeting.Date.Value.ToString("D")</p>
+            <p>Host: @meeting.User.Firstname @meeting.User.Lastname</p>
+            <p>Location: @meeting.Location</p>
+            <p>Type: @meeting.Type</p>    
+            @Html.ActionLink("Accept","AcceptMeeting", "Meeting", new {@meetingId = meeting.Id}, new {@class = "btn btn-default"})
+            @Html.ActionLink("Decline","DeclineMeeting", "Meeting", new {@meetingId = meeting.Id}, new {@class = "btn btn-default"})
         }
+        <hr/>
         <h3>Attending:</h3>
+        @foreach (var meeting in Model.AttendingToMeetings)
+        {
+            <p>Date: @meeting.Date.Value.ToString("D")</p>
+            <p>Host: @meeting.User.Firstname @meeting.User.Lastname</p>
+            <p>Location: @meeting.Location</p>
+            <p>Type: @meeting.Type</p>
+            @Html.ActionLink("View", "Meeting", "Meeting", new { @meetingId = meeting.Id}, new { @class = "btn btn-default" })
+        }
+        <hr />
         <h3>Hosting:</h3>
+        @foreach (var meeting in Model.HostToMeetings)
+        {
+            <p>Date: @meeting.Date.Value.ToString("D")</p>
+            <p>Location: @meeting.Location</p>
+            <p>Type: @meeting.Type</p>
+            @Html.ActionLink("View", "Meeting", "Meeting", new { @meetingId = meeting.Id }, new { @class = "btn btn-default" })
+            <br />
+            <br/>
+        }
     </div>
     <div class="col-md-2"></div>
 </div>
