@@ -144,6 +144,34 @@ namespace InformationsSystemOru.Controllers
             return View("ChangeProfilePic", pModel);
         }
 
+/*        public ActionResult VisitingProfile(int visitedUserID)
+        {
+            var posts = postrepository.GetProfileBlogPosts(visitedUserID, postPostType.GetAllPrivatePostIds());
+            List<PostModel> postmodels = null;
+
+            foreach (var x in posts)
+            {
+                var newPost = new PostModel()
+                {
+                    PostId = x.Id,
+                    Category =  x.Category,
+                    Text =  x.Text,
+                    Title = x.Titel,
+                    PostingUserId = x.PostingUserID,
+                    PostingUsersName = accountRep.GetUserNameFromId(visitedUserID),
+
+                };
+                
+                postmodels.Add(newPost);
+            }
+
+            var model = new VisitingUserModel();
+
+            model.VisitedUser = (userRep.GetUserFromId(visitedUserID));
+              
+            return View();
+        } */
+
 
     }
 }

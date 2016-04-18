@@ -152,6 +152,7 @@
     <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\ProfilePictureModel.cs" />
+    <Compile Include="Models\VisitingUserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -381,6 +382,7 @@
     <Content Include="Scripts\tinymce\langs\readme.md" />
     <Content Include="Views\Profile\ChangeProfilePic.cshtml" />
     <Content Include="Views\Meeting\MyMeetings.cshtml" />
+    <Content Include="Views\Profile\VisitingProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj">
