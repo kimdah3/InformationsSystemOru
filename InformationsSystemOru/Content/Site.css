@@ -33,3 +33,14 @@
 .table-user-information > tbody > tr > td {
     border-top: 0;
 }
+
+.navbar {
+    border-radius: 0 !important;
+}
+.btn {
+    border-radius: 0px !important;
+}
+
+.meeting-button {
+    margin: 2px !important;
+}

@@ -1,0 +1,23 @@
+﻿@using InformationsSystemOru.Extensions
+@model InformationsSystemOru.Models.MyMeetingsModel
+
+@{
+    ViewBag.Title = "My meetings";
+    Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
+}
+<div class="row">
+<div class="col-md-1"></div>
+    <div class="col-md-9">
+        <h2>My meetings</h2>
+        <hr/>
+        <h3>Invitations:</h3>
+        @foreach (var meeting in Model.InvitedToMeetings)
+        {
+            <p>meeting</p>
+        }
+        <h3>Attending:</h3>
+        <h3>Hosting:</h3>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
