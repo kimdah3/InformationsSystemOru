@@ -55,9 +55,23 @@ namespace InformationsSystemOru.Controllers
         [Authorize]
         public ActionResult Profile()
         {
-            var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
-            var posts = postrepository.GetProfileBlogPosts(loggedInUser, postPostType.GetAllPrivatePostIds());
-            var model = LoadPosts(posts);
+            var loggedInUser = userRep.GetUserFromId(accountRep.GetIdFromUsername(User.Identity.Name));
+            var posts = postrepository.GetProfileBlogPosts(loggedInUser.Id, postPostType.GetAllPrivatePostIds());
+
+            var model = new ProfileModel
+            {
+                AllPosts = LoadPosts(posts).AllPosts,
+                Email = loggedInUser.Email,
+                Firstname = loggedInUser.Firstname, 
+                Lastname = loggedInUser.Lastname
+
+            };
+
+            if (loggedInUser.ProfilePicture == null)
+                model.ProfilePicture = "";
+            else
+                model.ProfilePicture = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(loggedInUser.ProfilePicture));
+
             return View(model);
         }
 
@@ -69,12 +83,7 @@ namespace InformationsSystemOru.Controllers
             var posts = postrepository.GetProfileBlogPosts(postingUserId, postPostType.GetAllPrivatePostIds());
             string fileName = null;
             string path = null;
-
-            if (!ModelState.IsValid)
-            {
-                model = LoadPosts(posts);
-                return View(model);
-            }
+            
 
             if (model.NewPost.File != null)
             {
@@ -113,7 +122,7 @@ namespace InformationsSystemOru.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangeProfilePic(ProfileModel pModel)
+        public ActionResult ChangeProfilePic(ProfilePictureModel pModel)
         {
             if (pModel.File.ContentLength > 1 * 1024 * 1024)
             {
@@ -129,7 +138,7 @@ namespace InformationsSystemOru.Controllers
                 byte[] data = target.ToArray();
                 var userId = userRep.GetIdFromUser(User.Identity.Name);
                 userRep.UploadPic(data, userId);
-                return RedirectToAction("ChangeProfilePic", "Profile");
+                return RedirectToAction("Profile", "Profile");
             }
             ModelState.AddModelError("File", "Bilden måste vara .jpg, .jpeg, .png eller .gif");
             return View("ChangeProfilePic", pModel);

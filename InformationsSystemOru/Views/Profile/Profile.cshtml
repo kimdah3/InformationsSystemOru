@@ -1,5 +1,5 @@
 ﻿@using InformationsSystemOru.Extensions
-@model InformationsSystemOru.Models.BlogModel
+@model InformationsSystemOru.Models.ProfileModel
 @{
     ViewBag.Title = "Profile";
     Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
@@ -21,13 +21,20 @@
 
     <div class="col-md-3">
 
-        <img src="~/Content/oruInformatikLogga.jpg" alt="..." class="img-thumbnail">
+        @if (Model.ProfilePicture.IsEmpty())
+        {
+            <img src="~/Content/default.jpg" alt="..." class="img-thumbnail"> 
+        }
+        else
+        {
+            <img id="profilbild" src="@Model.ProfilePicture" alt="..." class="img-thumbnail">
+        }
 
         <hr />
 
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Users name</h3>
+                <h3 class="panel-title"> @User.Identity.Name</h3>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -36,12 +43,12 @@
                         <table class="table table-user-information">
                             <tbody>
                                 <tr>
-                                    <td>Name:</td>
-                                    <td>asd</td>
+                                    <td>Name:  </td>
+                                    <td>@Model.Firstname  @Model.Lastname</td>
                                 </tr>
                                 <tr>
-                                    <td>Email</td>
-                                    <td><a href="mailto:info@support.com">info@support.com</a></td>
+                                    <td>Email: </td>
+                                    <td> <a href="#">@Model.Email</a> </td>
                                 </tr>
 
                             </tbody>

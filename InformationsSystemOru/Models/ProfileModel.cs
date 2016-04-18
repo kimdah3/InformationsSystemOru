@@ -11,13 +11,11 @@ namespace InformationsSystemOru.Models
     public class ProfileModel
     {
          
-        [Display(Name = "Profilbild")]
-        [DataType(DataType.Upload)]
-        [FileExtensions()]
-        [Required(ErrorMessage = "Välj en bild.")]
-        public HttpPostedFileBase File { get; set; }
+        public string ProfilePicture { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Email { get; set; }
+        public List<PostModel> AllPosts { get; set; }
+        public PostModel NewPost { get; set; }
     }
 }
