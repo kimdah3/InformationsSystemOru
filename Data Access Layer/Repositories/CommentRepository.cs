@@ -25,6 +25,15 @@ namespace Data_Access_Layer.Repositories
             }
         }
 
+        public void RemoveComment(int commentId)
+        {
+            using(var context = new IsOruDbEntities())
+            {
+                context.Comment.Remove(context.Comment.First(x => x.Id == commentId));
+                context.SaveChanges();
+            }
+        }
+
         public int GetNewId()
         {
             using(var context = new IsOruDbEntities())

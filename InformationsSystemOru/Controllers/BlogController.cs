@@ -78,6 +78,13 @@ namespace InformationsSystemOru.Controllers
             });
         }
 
+        [HttpPost]
+        public void RemoveComment(int postId, int commentId, int authorId)
+        {
+            //userPostCommentRep.RemoveCommentPostRelation(commentId, postId);
+            //commentRep.RemoveComment(commentId);
+        }
+
         // GET: Blog
         [Authorize]
         public ActionResult InformalBlog()
