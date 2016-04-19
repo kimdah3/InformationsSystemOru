@@ -28,3 +28,8 @@
 .meeting-button {
     margin: 2px !important;
 }
+
+.glyphicon-plus-sign-edit {
+    font-size: 3em !important;
+    color: #2c3e50;
+}
