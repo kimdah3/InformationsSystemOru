@@ -16,13 +16,7 @@ namespace Data_Access_Layer.Repositories
             }
         }
 
-        public User GetUserFromAccountId(int id)
-        {
-            using (var context = new IsOruDbEntities())
-            {
-                return context.User.First(x => x.Id == id);
-            }
-        }
+       
 
         public void AddUser(User user)
         {

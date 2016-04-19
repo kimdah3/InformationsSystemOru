@@ -20,7 +20,7 @@ namespace Data_Access_Layer.Repositories
                     meetings.Add(meeting);
                 }
             }
-            return meetings;
+            return meetings.ToList();
         }
 
 

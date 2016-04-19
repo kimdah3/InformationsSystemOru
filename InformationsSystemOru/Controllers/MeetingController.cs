@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using Data_Access_Layer;
 using Data_Access_Layer.Repositories;
 using InformationsSystemOru.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace InformationsSystemOru.Controllers
 {
@@ -38,11 +40,34 @@ namespace InformationsSystemOru.Controllers
                 days.Add(currentDate);
                 currentDate = currentDate.AddDays(1);
             }
+
+            //    string json = @"{
+            //        '2016-04-30': { 'number': 5, 'badgeClass': 'badge-warning', 'url': 'http://w3widgets.com/responsive-calendar' },
+            //        '2016-04-26': { 'number': 1, 'badgeClass': 'badge-warning', 'url': 'http://w3widgets.com' },
+            //        '2016-05-03': { 'number': 1, 'badgeClass': 'badge-error' },
+            //        '2016-06-12': { }
+            //}";
+
+            //    var o = JObject.Parse(json);
             var model = new CalendarModel()
             {
                 UpcomingDays = days,
-                Meetings = _meetingRepository.GetAllMeetings()
+                Meetings = _meetingRepository.GetAllMeetings(),
+                CurrentDate = DateTime.Today,
+                Events = new List<EventHolder>()
             };
+
+
+            foreach (var meeting in model.Meetings)
+            {
+                model.Events.Add(new EventHolder()
+                {
+                    Id = meeting.Id,
+                    Date = meeting.Date.Value.ToString("yyyy-MM-dd"),
+                    Location = meeting.Location,
+                    Type = meeting.Type
+                });
+            }
 
             return View(model);
         }
