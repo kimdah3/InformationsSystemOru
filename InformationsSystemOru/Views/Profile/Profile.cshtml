@@ -23,7 +23,7 @@
 
         @if (Model.ProfilePicture.IsEmpty())
         {
-            <img src="~/Content/default.jpg" alt="..." class="img-thumbnail"> 
+            <img src="~/Content/default.jpg" alt="..." class="img-thumbnail">
         }
         else
         {
@@ -37,24 +37,12 @@
                 <h3 class="panel-title"> @User.Identity.Name</h3>
             </div>
             <div class="panel-body">
-                <div class="row">
+                        <strong>Name</strong>
+                        <p>@Model.Firstname  @Model.Lastname</p>
 
-                    <div class="col-md-9">
-                        <table class="table table-user-information">
-                            <tbody>
-                                <tr>
-                                    <td>Name:  </td>
-                                    <td>@Model.Firstname  @Model.Lastname</td>
-                                </tr>
-                                <tr>
-                                    <td>Email: </td>
-                                    <td> <a href="#">@Model.Email</a> </td>
-                                </tr>
+                        <strong>Email</strong>
+                        <p> <a href="#">@Model.Email</a> </p>
 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
             <div class="panel-footer">
                 <a data-original-title="Broadcast Message" data-toggle="tooltip" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
@@ -94,9 +82,9 @@
                 @Html.TextBoxFor(model => model.NewPost.File, new { @class = "form-control", type = "file" })
 
             </div>
-                <div>
-                    <input type="submit" value="Post" class="btn btn-success" id="btnSend" />
-                </div>
+            <div>
+                <input type="submit" value="Post" class="btn btn-success" id="btnSend" />
+            </div>
         }
 
         <hr />
