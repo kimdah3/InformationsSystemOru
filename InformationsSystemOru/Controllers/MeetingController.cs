@@ -147,7 +147,7 @@ namespace InformationsSystemOru.Controllers
 
         public ActionResult MyMeetings()
         {
-            var userId = _userRepository.GetIdFromUser(User.Identity.Name);
+            var userId = _accountRepository.GetIdFromUsername(User.Identity.Name);
             var user = _userRepository.GetUserFromId(userId);
 
             var model = new MyMeetingsModel()
@@ -162,7 +162,7 @@ namespace InformationsSystemOru.Controllers
 
         public ActionResult AcceptMeeting(int meetingId)
         {
-            var userId = _userRepository.GetIdFromUser(User.Identity.Name);
+            var userId = _accountRepository.GetIdFromUsername(User.Identity.Name);
             var user = _userRepository.GetUserFromId(userId);
             var meeting = _meetingRepository.GetMeetingById(meetingId);
 
@@ -173,7 +173,7 @@ namespace InformationsSystemOru.Controllers
 
         public ActionResult DeclineMeeting(int meetingId)
         {
-            var userId = _userRepository.GetIdFromUser(User.Identity.Name);
+            var userId = _accountRepository.GetIdFromUsername(User.Identity.Name);
             var user = _userRepository.GetUserFromId(userId);
 
             _userMeetingRepository.RemoveInvitation(user, meetingId);
