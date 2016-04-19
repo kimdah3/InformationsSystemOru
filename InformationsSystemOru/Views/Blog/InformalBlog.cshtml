@@ -6,6 +6,18 @@
     Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
 }
 
+<script>
+
+    function RemoveComment() {
+        console.log("hej");
+    }
+
+    $(document).ready(function () {
+        
+
+    });
+</script>
+
 <h1 class="text-center">The Informal blog.</h1>
 <h3 class="text-center">Come hang out, dude</h3>
 <br /><br />
@@ -22,19 +34,20 @@
                         <div class="media">
                             <div class="media-body">
 
-                                <div class="col-md-11 col-sm-11">
-                                    <h4 class="media-heading">@post.Title</h4>
-                                    <p>@Html.Raw(@post.Text)</p>
-                                    @if (post.Filename != null)
-                                    {
-                                        <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
-                                    }
-                                    <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
+                                <h4 class="media-heading">@post.Title</h4>
+                                <p>@Html.Raw(@post.Text)</p>
+                                @if (post.Filename != null)
+                                {
+                                    <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
+                                }
+                                <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
 
-                                    <div class="panel panel-primary">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a data-toggle="collapse" href="#collapse@(post.PostId)">Show comments</a></h4>
+                                    </div>
+                                    <div id="collapse@(post.PostId)" class="panel-collapse collapse">
                                         <div class="panel-body">
-
-
                                             @using (Ajax.BeginForm("PostComment", "Blog", new AjaxOptions
                                             { HttpMethod = "POST", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = post.PostId.ToString() }))
                                             {
@@ -45,6 +58,7 @@
                                                         <button class="btn btn-default" type="submit">Reply</button>
                                                     </span>
                                                 </div>
+                                                <hr />
                                             }
 
                                             <div id="@post.PostId.ToString()">
@@ -52,23 +66,24 @@
                                                 {
                                                     foreach (var c in post.Comments)
                                                     {
-                                                        <span class="label label-primary">@c.User.Firstname @c.User.Lastname</span> @c.Date
-                                                        <p>@c.Text</p>
+                                                        <div id="@c.Id" class="col-md-11">
+                                                            <span class="label label-primary">@c.User.Firstname @c.User.Lastname - @c.Date</span>
+                                                            <p>@c.Text</p>
+                                                        </div>
+
+                                                        <div class="col-md-1">
+                                                            @using (Ajax.BeginForm("RemoveComment", "Blog", new { postId = post.PostId, commentId = c.Id, authorId = c.AuthorId },
+new AjaxOptions { HttpMethod = "POST", OnSuccess = "RemoveComment()" }))
+                                                            {
+                                                                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                                            }
+                                                        </div>
                                                     }
                                                 }
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-md-1 col-sm-1">
-                                    @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "Education" }))
-                                    {
-                                        <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                    }
-                                </div>
-
                             </div>
                         </div>
                     </div>

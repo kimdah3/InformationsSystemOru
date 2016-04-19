@@ -28,5 +28,13 @@ namespace Data_Access_Layer.Repositories
                 context.SaveChanges();
             }
         }
+
+        public void RemoveCommentPostRelation(int commentId, int postId)
+        {
+            using(var context = new IsOruDbEntities())
+            {
+                context.User_Post_Comment.Remove(context.User_Post_Comment.First(x => x.CommentId == commentId && x.PostId == postId));
+            }
+        }
     }
 }

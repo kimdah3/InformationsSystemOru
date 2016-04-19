@@ -63,6 +63,15 @@ namespace Data_Access_Layer.Repositories
             }
         }
 
+        public List<Post> GetAllNewsPosts()
+        {
+            using (var db = new IsOruDbEntities())
+            {
+                var neswpostIDs = db.Post_PostType.Where(x => x.PostTypeId == 4).Select(x => x.PostId);
+                return db.Post.Where(x => neswpostIDs.Contains(x.Id)).OrderByDescending(x => x.Date).ToList();
+            }
+        }
+
         public void DeletePost(int postid)
         {
             using (var context = new IsOruDbEntities())
