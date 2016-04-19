@@ -391,11 +391,8 @@
     <Content Include="Views\Shared\_CommentPartial.cshtml" />
     <Content Include="Views\Meeting\MyMeetings.cshtml" />
     <Content Include="Views\Profile\VisitingProfile.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Meeting\Calendar2.cshtml" />
-=======
     <Content Include="Views\Blog\newsBlog.cshtml" />
->>>>>>> origin/master
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj">
