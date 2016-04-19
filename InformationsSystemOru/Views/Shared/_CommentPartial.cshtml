@@ -1,4 +1,17 @@
 ﻿@model InformationsSystemOru.Models.CommentModel
 
-    <span class="label label-primary">@Model.Authorname - @Model.Date</span>
-    <p>@Model.Text</p>
+
+<div id="@Model.CommentId">
+    <div class="col-md-11">
+        <span class="label label-primary">@Model.Authorname - @Model.Date</span>
+        <p>@Model.Text</p>
+    </div>
+
+    <div class="col-md-1">
+        @using (Ajax.BeginForm("RemoveComment", "Blog", new { postId = Model.PostId, commentId = Model.CommentId, authorId = Model.AuthorId },
+    new AjaxOptions { HttpMethod = "POST", OnSuccess = "RemoveComment(" + @Model.CommentId + ")" }))
+        {
+            <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        }
+    </div>
+</div>

@@ -8,14 +8,14 @@
 
 <script>
 
-    function RemoveComment() {
-        console.log("hej");
+    function RemoveComment(commendId) {
+        $("#" + commendId).remove();
     }
 
-    $(document).ready(function () {
-        
+    function ClearTextbox() {
+        $("#tbComment").val("");
+    }
 
-    });
 </script>
 
 <h1 class="text-center">The Informal blog.</h1>
@@ -49,7 +49,7 @@
                                     <div id="collapse@(post.PostId)" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             @using (Ajax.BeginForm("PostComment", "Blog", new AjaxOptions
-                                            { HttpMethod = "POST", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = post.PostId.ToString() }))
+                                            { HttpMethod = "POST", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "post"+post.PostId, OnSuccess = "ClearTextbox()"}))
                                             {
                                                 <div class="input-group">
                                                     @Html.Hidden("postId", post.PostId)
@@ -61,22 +61,24 @@
                                                 <hr />
                                             }
 
-                                            <div id="@post.PostId.ToString()">
+                                            <div id="post@(post.PostId.ToString())">
                                                 @if (post.Comments != null)
                                                 {
                                                     foreach (var c in post.Comments)
                                                     {
-                                                        <div id="@c.Id" class="col-md-11">
-                                                            <span class="label label-primary">@c.User.Firstname @c.User.Lastname - @c.Date</span>
-                                                            <p>@c.Text</p>
-                                                        </div>
+                                                        <div id="@c.Id">
+                                                            <div class="col-md-11">
+                                                                <span class="label label-primary">@c.User.Firstname @c.User.Lastname - @c.Date</span>
+                                                                <p>@c.Text</p>
+                                                            </div>
 
-                                                        <div class="col-md-1">
-                                                            @using (Ajax.BeginForm("RemoveComment", "Blog", new { postId = post.PostId, commentId = c.Id, authorId = c.AuthorId },
-new AjaxOptions { HttpMethod = "POST", OnSuccess = "RemoveComment()" }))
-                                                            {
-                                                                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                                            }
+                                                            <div class="col-md-1">
+                                                                @using (Ajax.BeginForm("RemoveComment", "Blog", new { postId = post.PostId, commentId = c.Id, authorId = c.AuthorId },
+new AjaxOptions { HttpMethod = "POST", OnSuccess = "RemoveComment(" + @c.Id + ")" }))
+                                                                {
+                                                                    <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                                                }
+                                                            </div>
                                                         </div>
                                                     }
                                                 }

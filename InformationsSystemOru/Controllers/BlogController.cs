@@ -74,7 +74,10 @@ namespace InformationsSystemOru.Controllers
             {
                 Authorname = loggedInUser.Firstname + " " + loggedInUser.Lastname,
                 Date = newComment.Date,
-                Text = newComment.Text
+                Text = newComment.Text,
+                CommentId = newComment.Id,
+                AuthorId = loggedInUser.Id,
+                PostId = postId
             });
         }
 
