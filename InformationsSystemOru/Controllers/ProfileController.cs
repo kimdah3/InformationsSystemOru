@@ -146,31 +146,22 @@ namespace InformationsSystemOru.Controllers
 
         public ActionResult VisitingProfile(int visitedUserID)
         {
+            
             var posts = postrepository.GetProfileBlogPosts(visitedUserID, postPostType.GetAllPrivatePostIds());
-            List<PostModel> postmodels = null;
 
-            foreach (var x in posts)
+            var model = new VisitingUserModel
             {
-                var newPost = new PostModel()
-                {
-                    PostId = x.Id,
-                    Category =  x.Category,
-                    Text =  x.Text,
-                    Title = x.Titel,
-                    PostingUserId = x.PostingUserID,
-                    PostingUsersName = accountRep.GetUserNameFromId(visitedUserID),
-                    
+                UserPosts = LoadPosts(posts).AllPosts,
+                VisitedUser = userRep.GetUserFromId(visitedUserID)
 
-                };
-                
-                postmodels.Add(newPost);
-            }
+            };
 
-            var model = new VisitingUserModel();
+            if (model.VisitedUser.ProfilePicture == null)
+                model.ProfilePicture = "";
+            else
+                model.ProfilePicture = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(model.VisitedUser.ProfilePicture));
 
-            model.VisitedUser = (userRep.GetUserFromId(visitedUserID));
-              
-            return View();
+            return View(model);
         } 
 
 

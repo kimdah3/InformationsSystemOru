@@ -1,7 +1,86 @@
-﻿
+﻿@using InformationsSystemOru.Extensions
+@model InformationsSystemOru.Models.VisitingUserModel
 @{
     ViewBag.Title = "VisitingProfile";
+    Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
 }
 
-<h2>VisitingProfile</h2>
+<script src="~/scripts/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinyMCE.init({
+        mode: "textareas",
+        theme: "modern",
+        plugins: "textcolor colorpicker",
+        toolbar: "formatselect | bold italic underline | forecolor backcolor | bullist numlist",
+        content_css: "~/Content/Site.css"
+    });
+</script>
+
+<div class="row">
+    <h2>Profile</h2>
+    <hr />
+
+    <div class="col-md-3">
+
+        @if (Model.ProfilePicture.IsEmpty())
+        {
+            <img src="~/Content/default.jpg" alt="..." class="img-thumbnail">
+        }
+        else
+        {
+            <img id="profilbild" src="@Model.ProfilePicture" alt="..." class="img-thumbnail">
+        }
+
+        <hr />
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"> @Model.VisitedUser.Firstname</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+
+                    <div class="col-md-9">
+                        <table class="table table-user-information">
+                            <tbody>
+                                <tr>
+                                    <td>Name:  </td>
+                                    <td>@Model.VisitedUser.Firstname  @Model.VisitedUser.Lastname</td>
+                                </tr>
+                                <tr>
+                                    <td>Email: </td>
+                                    <td> <a href="#">@Model.VisitedUser.Email</a> </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <a data-original-title="Broadcast Message" data-toggle="tooltip" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+            </div>
+
+        </div>
+    </div>
+
+    @if (Model.UserPosts != null)
+            {
+                foreach (var post in Model.UserPosts)
+                {
+            <div class="well well-sm">
+                <div class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading">@post.Title</h4>
+                        <p>@Html.Raw(@post.Text)</p>
+                        @if (post.Filename != null)
+                    {
+                            <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
+                        }
+                        <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 
