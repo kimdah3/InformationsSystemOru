@@ -19,10 +19,38 @@ namespace InformationsSystemOru.Controllers
         private UserRepository userRepository = new UserRepository();
         private AccountRepository accountRepository = new AccountRepository();
 
+
         [Authorize]
         public ActionResult Index()
         {
-            return View();
+            var model = new BlogModel();
+            var postRepo = new PostRepository();
+            var commentRepo = new CommentRepository();
+            var accountRepo = new AccountRepository();
+            var newsposts = postRepo.GetAllNewsPosts();
+            model.AllPosts = new List<PostModel>();
+
+            foreach (var x in newsposts)
+            {
+                var postmodel = new PostModel()
+                {
+                    PostId = x.Id,
+                    Text = x.Text,
+                    Category = x.Category,
+                    DatePosted = x.Date,
+                    PostingUserId = x.PostingUserID,
+                    PostingUsersName = accountRepo.GetUserNameFromId(x.PostingUserID),
+                    Title = x.Titel,
+                    Type = 4
+                };
+
+                model.AllPosts.Add(postmodel);
+            }
+            
+
+            
+
+            return View(model);
         }
 
         public ActionResult Login()

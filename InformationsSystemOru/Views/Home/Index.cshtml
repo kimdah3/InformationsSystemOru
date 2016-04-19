@@ -1,4 +1,5 @@
-﻿@using InformationsSystemOru.Extensions
+﻿@model InformationsSystemOru.Models.BlogModel
+@using InformationsSystemOru.Extensions
 @{
     ViewBag.Title = "Home Page";
     Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
@@ -43,5 +44,37 @@
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
+    <div class="col-md-12">
+        <br/>
+        <h3>News</h3>
+        @if (Model.AllPosts != null)
+            {
+                foreach (var post in Model.AllPosts)
+                {
+                <div class="well well-sm">
+                    <div class="media">
+                        <div class="media-body">
+
+                            <div class="col-md-11 col-sm-11">
+                                <h4 class="media-heading">@post.Title</h4>
+                                <p>@Html.Raw(@post.Text)</p>
+                                @if (post.Filename != null)
+                                {
+                                    <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
+                                }
+                                <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+ 
 </div>
+
+
 

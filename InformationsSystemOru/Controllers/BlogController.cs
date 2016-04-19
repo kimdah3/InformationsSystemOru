@@ -96,6 +96,14 @@ namespace InformationsSystemOru.Controllers
 
             return View(model);
         }
+        [Authorize]
+        public ActionResult newsBlog()
+        {
+            var posts = postrepository.GetAllNewsPosts();
+            var model = LoadPosts(posts);
+
+            return View(model);
+        }
 
         [HttpPost]
         public ActionResult ScienceBlog(BlogModel model)
@@ -125,6 +133,35 @@ namespace InformationsSystemOru.Controllers
             postrepository.SavePost(post);
             postPostType.SavePosttype(post.Id, 2);
             return RedirectToAction("Scienceblog");
+        }
+        [HttpPost]
+        public ActionResult NewsBlog(BlogModel model)
+        {
+            var postingUserId = accountRep.GetIdFromUsername(User.Identity.Name);
+            string fileName = null;
+            string path = null;
+
+            if (model.NewPost.File != null)
+            {
+                fileName = model.NewPost.File.FileName;
+                path = Path.Combine(Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName));
+                model.NewPost.File.SaveAs(path);
+            }
+
+            var post = new Post()
+            {
+                Category = model.NewPost.Category,
+                Date = DateTime.Now,
+                Titel = model.NewPost.Title,
+                Text = model.NewPost.Text,
+                PostingUserID = postingUserId,
+                FileURL = path,
+                Filename = fileName
+            };
+
+            postrepository.SavePost(post);
+            postPostType.SavePosttype(post.Id, 4);
+            return RedirectToAction("NewsBlog");
         }
 
         [Authorize]
@@ -205,6 +242,10 @@ namespace InformationsSystemOru.Controllers
             else if (sida == "InformalBlog")
             {
                 return RedirectToAction("InformalBlog");
+            }
+            else if (sida == "News")
+            {
+                return RedirectToAction("newsBlog");
             }
             else
                 return RedirectToAction("ScienceBlog");
