@@ -144,7 +144,7 @@ namespace InformationsSystemOru.Controllers
             return View("ChangeProfilePic", pModel);
         }
 
-/*        public ActionResult VisitingProfile(int visitedUserID)
+        public ActionResult VisitingProfile(int visitedUserID)
         {
             var posts = postrepository.GetProfileBlogPosts(visitedUserID, postPostType.GetAllPrivatePostIds());
             List<PostModel> postmodels = null;
@@ -159,6 +159,7 @@ namespace InformationsSystemOru.Controllers
                     Title = x.Titel,
                     PostingUserId = x.PostingUserID,
                     PostingUsersName = accountRep.GetUserNameFromId(visitedUserID),
+                    
 
                 };
                 
@@ -170,7 +171,7 @@ namespace InformationsSystemOru.Controllers
             model.VisitedUser = (userRep.GetUserFromId(visitedUserID));
               
             return View();
-        } */
+        } 
 
 
     }
