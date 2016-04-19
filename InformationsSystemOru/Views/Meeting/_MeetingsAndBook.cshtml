@@ -6,46 +6,69 @@
         $('#timepicker').timepicker({ 'scrollDefault': 'now' });
     })
 </script>
-<div class="well">
+<div class="col-md-5">
+    <div class="panel panel-default">
 
-    <h2>@Model.Date.Substring(0, 10)</h2> @*Splittar för formateringen är kass, datumet skickas ner från controllern som en string och ej datetime.*@
-    @if (Model.Meetings.Count > 0)
-    {
-        <h3>Meetings</h3>
-    }
-    @foreach (var meeting in Model.Meetings)
-    {
-        <div class="well">
-            <p>Time: @meeting.Date.Value.ToString("HH:mm")</p>
-            <p>Place: @meeting.Location</p>
-            <p>Type: @meeting.Type</p>
-            <p>Host: @meeting.HostId</p>
-            @Html.ActionLink("View meeting", "Meeting", "Meeting", new {@meetingId = meeting.Id}, new { @class = "btn btn-default" })
+        <div class="panel-heading">
+            <h4>@DateTime.Parse(Model.Date.Substring(0, 10)).ToString("M") - Meetings</h4> @*Splittar för formateringen är kass, datumet skickas ner från controllern som en string och ej datetime.*@
         </div>
-    }
+        <div class="panel-body">
+            @if (Model.Meetings.Count > 0)
+            {
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Place</th>
+                            <th>Type</th>
+                            <th>Host</th>
+                            <th>Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var meeting in Model.Meetings)
+                        {
+                            <tr>
+                                <td>@meeting.Date.Value.ToString("HH:mm")</td>
+                                <td>@meeting.Location</td>
+                                <td>@meeting.Type</td>
+                                <td>@meeting.HostId</td>
+                                <td>@Html.ActionLink("View", "Meeting", "Meeting", new { @meetingId = meeting.Id }, new { @class = "" })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+<div class="col-md-5">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Book</h4>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm("Book", "Meeting"))
+            {
+                <div class="form-group">
+                    @Html.HiddenFor(x => x.Date)
+                    @Html.LabelFor(x => x.TimeOfDay)
+                    @Html.TextBoxFor(x => x.TimeOfDay, new { id = "timepicker", @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Location)
+                    @Html.TextBoxFor(x => x.Location, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Type)
+                    @Html.TextBoxFor(x => x.Type, new { @class = "form-control" })
+                    <br />
+                    <input type="submit" class="btn btn-default" value="Add meeting" />
+                </div>
 
-    <h3>Book</h3>
-    @using (Html.BeginForm("Book", "Meeting"))
-    {
-        @Html.HiddenFor(x => x.Date)
-        @Html.LabelFor(x => x.TimeOfDay)
-        <br />
-        @Html.TextBoxFor(x => x.TimeOfDay, new { id = "timepicker" })
-        <br />
-        @Html.LabelFor(x => x.Location)
-        <br />
-        @Html.TextBoxFor(x => x.Location)
-        <br />
+                @*@Html.LabelFor(model => model.Password, "Lösenord", htmlAttributes: new { @class = "control-label col-md-2" })*@
 
-        @Html.LabelFor(x => x.Type)
-        <br />
-        @Html.TextBoxFor(x => x.Type)
-        <br/>
-        <input type="submit" class="btn btn-default" value="Add meeting" />
-        <br />
-
-
-        @*@Html.LabelFor(model => model.Password, "Lösenord", htmlAttributes: new { @class = "control-label col-md-2" })*@
-
-    }
+            }
+        </div>
+    </div>
 </div>

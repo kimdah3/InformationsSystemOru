@@ -7,46 +7,47 @@
 }
 
 <div class="row">
+    <br />
     <div class="col-md-2"></div>
     <div class="col-md-8">
-        <br />
-        <div class="well well-sm">
-            <h1>@Model.Meeting.Date.Value.ToString("D")</h1>
-            <p>Place: @Model.Meeting.Location</p>
-            <p>Type: @Model.Meeting.Type</p>
-            <p>Host: @Model.Host.Firstname @Model.Host.Lastname</p>
-            @using (Html.BeginForm("Invite", "Meeting", new { @meetingId = Model.Meeting.Id }))
-            {
-                @Html.Label("GiveInvite", "Invite to meeting.");
-                @Html.DropDownListFor(model => model.InvitedUser, new SelectList(Model.AllNoneInvitedUsers), "Choose a user", new { @class = "form-control" });
-                <input type="submit" value="Invite" class = "btn btn-default"/>
-            }
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>@Model.Meeting.Date.Value.ToString("D")</h4>
+            </div>
+            <div class="panel-body">
+                <p>Place: @Model.Meeting.Location</p>
+                <p>Type: @Model.Meeting.Type</p>
+                <p>Host: @Model.Host.Firstname @Model.Host.Lastname</p>
+                @using (Html.BeginForm("Invite", "Meeting", new { @meetingId = Model.Meeting.Id }))
+                {
+                    <div class="form-group">
+                        @Html.Label("GiveInvite", "Invite to meeting.")
+                        @Html.DropDownListFor(model => model.InvitedUser, new SelectList(Model.AllNoneInvitedUsers), "Choose a user", new { @class = "form-control" })
+                        <br />
+                        <input type="submit" value="Invite" class="btn btn-default" />
+                    </div>
+                }
 
-            @using (Html.BeginForm("RemoveInvitation", "Meeting", new { @meetingId = Model.Meeting.Id }))
-            {
+                @using (Html.BeginForm("RemoveInvitation", "Meeting", new { @meetingId = Model.Meeting.Id }))
+                {
+                    <div class="form-group">
+                        @Html.Label("WaitInvitation", "Waiting for response")
+                        @Html.ListBoxFor(model => model.RemoveInvitationUser, new SelectList(Model.InvitedUsers), new { @class = "form-control" })
+                        <br />
+                        <input type="submit" value="Remove invitation" class="btn btn-default" />
+                    </div>
+                }
 
-                <br />
-                @Html.Label("WaitInvitation", "Waiting for response")
-                <br />
-                @Html.ListBoxFor(model => model.RemoveInvitationUser, new SelectList(Model.InvitedUsers))
-                <br />
-                <input type="submit" value="Remove invitation" class = "btn btn-default" />
+                <div class="form-group">
+                    @Html.Label("Attending", "Attending")
+                    @Html.ListBoxFor(model => model.AcceptedUsers, new SelectList(Model.AcceptedUsers), new { @class = "form-control" })
 
-            }
+                    <br />
+                </div>
 
-
-
-            <br />
-
-            @Html.Label("Attending", "Attending")
-            <br />
-            @Html.ListBoxFor(model => model.AcceptedUsers, new SelectList(Model.AcceptedUsers))
-
-            <br />
-            <br />
-
-
+            </div>
         </div>
     </div>
+
     <div class="col-md-2"></div>
 </div>

@@ -6,42 +6,105 @@
     Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
 }
 <div class="row">
-<div class="col-md-1"></div>
+    <div class="col-md-1"></div>
     <div class="col-md-9">
         <h2>My meetings</h2>
-        <hr/>
+        <hr />
         <h3>Invitations:</h3>
-        @foreach (var meeting in Model.InvitedToMeetings)
+        @if (Model.InvitedToMeetings.Count > 0)
         {
-            <p>Date: @meeting.Date.Value.ToString("D")</p>
-            <p>Host: @meeting.User.Firstname @meeting.User.Lastname</p>
-            <p>Location: @meeting.Location</p>
-            <p>Type: @meeting.Type</p>    
-            @Html.ActionLink("Accept","AcceptMeeting", "Meeting", new {@meetingId = meeting.Id}, new {@class = "btn btn-default"})
-            @Html.ActionLink("Decline","DeclineMeeting", "Meeting", new {@meetingId = meeting.Id}, new {@class = "btn btn-default"})
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Location</th>
+                        <th>Type</th>
+                        <th>Host</th>
+                        <th>Accept</th>
+                        <th>Decline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var meeting in Model.InvitedToMeetings)
+                {
+                        <tr>
+                            <td>@meeting.Date.Value.ToString("M")</td>
+                            <td>@meeting.Location</td>
+                            <td>@meeting.Type</td>
+                            <td>@meeting.HostId</td>
+                            <td>
+                                @Html.ActionLink("Accept", "AcceptMeeting", "Meeting", new { @meetingId = meeting.Id }, null)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Decline", "DeclineMeeting", "Meeting", new { @meetingId = meeting.Id }, null)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
-        <hr/>
+        <hr />
+
         <h3>Attending:</h3>
-        @foreach (var meeting in Model.AttendingToMeetings)
+        @if (Model.AttendingToMeetings.Count > 0)
         {
-            <p>Date: @meeting.Date.Value.ToString("D")</p>
-            <p>Host: @meeting.User.Firstname @meeting.User.Lastname</p>
-            <p>Location: @meeting.Location</p>
-            <p>Type: @meeting.Type</p>
-            @Html.ActionLink("View", "Meeting", "Meeting", new { @meetingId = meeting.Id}, new { @class = "btn btn-default" })
+
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Location</th>
+                        <th>Type</th>
+                        <th>Host</th>
+                        <th>View</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var meeting in Model.AttendingToMeetings)
+                    {
+                        <tr>
+                            <td>@meeting.Date.Value.ToString("M")</td>
+                            <td>@meeting.Location</td>
+                            <td>@meeting.Type</td>
+                            <td>@meeting.HostId</td>
+                            <td>
+                                @Html.ActionLink("View", "Meeting", "Meeting", new { @meetingId = meeting.Id }, null)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
         <hr />
         <h3>Hosting:</h3>
-        @foreach (var meeting in Model.HostToMeetings)
-        {
-            <p>Date: @meeting.Date.Value.ToString("D")</p>
-            <p>Location: @meeting.Location</p>
-            <p>Type: @meeting.Type</p>
-            @Html.ActionLink("View", "Meeting", "Meeting", new { @meetingId = meeting.Id }, new { @class = "btn btn-default" })
-            <br />
-            <br/>
+        @if (Model.HostToMeetings.Count > 0)
+        { }
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Host</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var meeting in Model.HostToMeetings)
+            {
+                    <tr>
+                        <td>@meeting.Date.Value.ToString("M")</td>
+                        <td>@meeting.Location</td>
+                        <td>@meeting.Type</td>
+                        <td>@meeting.HostId</td>
+                        <td>
+                            @Html.ActionLink("View", "Meeting", "Meeting", new { @meetingId = meeting.Id }, null)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
         }
     </div>
     <div class="col-md-2"></div>
 </div>
-
