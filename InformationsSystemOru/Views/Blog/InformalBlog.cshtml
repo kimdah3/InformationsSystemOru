@@ -24,92 +24,88 @@
 
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-12">
-            @if (Model.AllPosts != null)
+    @if (Model.AllPosts != null)
             {
                 foreach (var post in Model.AllPosts)
                 {
-                    <div class="well well-sm">
-                        <div class="media">
-                            <div class="media-body">
+            <div class="well well-sm">
+                <div class="media">
+                    <div class="media-body">
 
-                                <h4 class="media-heading">@post.Title</h4>
-                                <p>@Html.Raw(@post.Text)</p>
-                                @if (post.Filename != null)
-                                {
-                                    <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
-                                }
-                                <p>Written by <a href="@Url.Action("VisitingProfile", "Profile", new { visitedUserID = post.PostingUserId})">@post.PostingUsersName</a> @post.DatePosted.ToShortDateString() in category @post.Category</p>
+                        <h4 class="media-heading">@post.Title</h4>
+                        <p>@Html.Raw(@post.Text)</p>
+                        @if (post.Filename != null)
+                        {
+                            <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
+                        }
+                        <p>Written by <a href="@Url.Action("VisitingProfile", "Profile", new { visitedUserID = post.PostingUserId})">@post.PostingUsersName</a> @post.DatePosted.ToShortDateString() in category @post.Category</p>
 
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a data-toggle="collapse" href="#collapse@(post.PostId)">Show comments</a></h4>
-                                    </div>
-                                    <div id="collapse@(post.PostId)" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            @using (Ajax.BeginForm("PostComment", "Blog", new AjaxOptions
-                                            { HttpMethod = "POST", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "post" + post.PostId, OnSuccess = "ClearTextbox()" }))
-                                            {
-                                                <div class="input-group">
-                                                    @Html.Hidden("postId", post.PostId)
-                                                    @Html.TextBox("tbComment", "", htmlAttributes: new { @class = "form-control", placeholder = "Write a comment" })
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="submit">Reply</button>
-                                                    </span>
-                                                </div>
-                                                <hr />
-                                            }
-
-                                            <div id="post@(post.PostId.ToString())">
-                                                @if (post.Comments != null)
-                                                {
-                                                    foreach (var c in post.Comments)
-                                                    {
-                                                        <div id="@c.Id">
-                                                            <div class="col-md-11">
-
-                                                                <div class="media">
-                                                                    <div class="media-left">
-                                                                        <a href="@Url.Action("VisitingProfile", "Profile", new { visitedUserID = post.PostingUserId})">
-                                                                            @if (c.User.ProfilePicture == null)
-                                                                            {
-                                                                                <img class="media-object img-rounded" src="~/Content/default.jpg" alt="...">
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <img class="media-object img-rounded" src="@string.Format("data:image/png;base64,{0}", Convert.ToBase64String(c.User.ProfilePicture))" alt="...">
-                                                                            }
-                                                                                
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="media-body">
-                                                                            <h4 class="media-heading"><span class="label label-primary">@c.User.Firstname @c.User.Lastname - @c.Date</span> </h4>
-                                                                            <p>@c.Text</p>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-
-                                                                <div class="col-md-1">
-                                                                    @using (Ajax.BeginForm("RemoveComment", "Blog", new { postId = post.PostId, commentId = c.Id, authorId = c.AuthorId },
-new AjaxOptions { HttpMethod = "POST", OnSuccess = "RemoveComment(" + @c.Id + ")" }))
-                                                                    {
-                                                                        <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                    }
-                                                }
-                                            </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><a data-toggle="collapse" href="#collapse@(post.PostId)">Show comments (@post.CommentCount)</a></h4>
+                            </div>
+                            <div id="collapse@(post.PostId)" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    @using (Ajax.BeginForm("PostComment", "Blog", new AjaxOptions
+                                    { HttpMethod = "POST", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "post" + post.PostId, OnSuccess = "ClearTextbox()" }))
+                                    {
+                                        <div class="input-group">
+                                            @Html.Hidden("postId", post.PostId)
+                                            @Html.TextBox("tbComment", "", htmlAttributes: new { @class = "form-control", placeholder = "Write a comment" })
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="submit">Reply</button>
+                                            </span>
                                         </div>
+                                                <hr />
+                                    }
+
+                                    <div id="post@(post.PostId.ToString())">
+                                        @if (post.Comments != null)
+                                        {
+                                            foreach (var c in post.Comments)
+                                            {
+                                                <div id="@c.Id">
+                                                    <div class="col-md-11">
+
+                                                        <div class="media">
+                                                            <div class="media-left">
+                                                                <a href="@Url.Action("VisitingProfile", "Profile", new { visitedUserID = post.PostingUserId})">
+                                                                    @if (c.User.ProfilePicture == null)
+                                                                    {
+                                                                        <img class="media-object img-rounded" src="~/Content/default.jpg" alt="...">
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img class="media-object img-rounded" src="@string.Format("data:image/png;base64,{0}", Convert.ToBase64String(c.User.ProfilePicture))" alt="...">
+                                                                    }
+
+                                                                </a>
+                                                            </div>
+                                                            <div class="media-body">
+                                                                <h4 class="media-heading"><span class="label label-primary">@c.User.Firstname @c.User.Lastname - @c.Date</span> </h4>
+                                                                <p>@c.Text</p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-md-1">
+                                                        @using (Ajax.BeginForm("RemoveComment", "Blog", new { postId = post.PostId, commentId = c.Id, authorId = c.AuthorId },
+new AjaxOptions { HttpMethod = "POST", OnSuccess = "RemoveComment(" + @c.Id + ")" }))
+                                                        {
+                                                            <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                }
-            }
-        </div>
-    </div>
+                </div>
+            </div>
+        }
+    }
 </div>

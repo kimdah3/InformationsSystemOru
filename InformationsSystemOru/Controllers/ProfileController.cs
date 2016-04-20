@@ -42,7 +42,8 @@ namespace InformationsSystemOru.Controllers
                     Text = post.Text,
                     PostingUserId = post.PostingUserID,
                     PostingUsersName = user.Firstname + " " + user.Lastname,
-                    Title = post.Titel
+                    Title = post.Titel,
+                    CommentCount = comments.Count()
                 });
             }
 

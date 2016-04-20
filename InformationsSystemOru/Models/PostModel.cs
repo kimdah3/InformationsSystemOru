@@ -33,6 +33,7 @@ namespace InformationsSystemOru.Models
         public string FileUrl { get; set; }
         public string Filename { get; set; }
         public List<Comment> Comments { get; set; }
+        public int CommentCount { get; set; }
 
         [DataType(DataType.Upload)]
         public HttpPostedFileBase File { get; set; }
