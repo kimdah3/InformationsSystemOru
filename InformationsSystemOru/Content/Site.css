@@ -54,6 +54,10 @@
     font-size: 1.8em !important;
 }
 
+.media-object{
+    height: 55px;
+    width: 55px;
+}
 .ul-sience {
     font-size: 0.9em !important;
 }

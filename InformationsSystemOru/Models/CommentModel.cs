@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data_Access_Layer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,5 +14,6 @@ namespace InformationsSystemOru.Models
         public DateTime Date { get; set; }
         public int CommentId { get; set; }
         public int PostId { get; set; }
+        public User User { get; set; }
     }
 }

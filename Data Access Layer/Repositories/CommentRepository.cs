@@ -18,7 +18,7 @@ namespace Data_Access_Layer.Repositories
 
         public void SaveComment(Comment comment)
         {
-            using(var context = new IsOruDbEntities())
+            using (var context = new IsOruDbEntities())
             {
                 context.Comment.Add(comment);
                 context.SaveChanges();
@@ -27,7 +27,7 @@ namespace Data_Access_Layer.Repositories
 
         public void RemoveComment(int commentId)
         {
-            using(var context = new IsOruDbEntities())
+            using (var context = new IsOruDbEntities())
             {
                 context.Comment.Remove(context.Comment.First(x => x.Id == commentId));
                 context.SaveChanges();
@@ -36,9 +36,9 @@ namespace Data_Access_Layer.Repositories
 
         public int GetNewId()
         {
-            using(var context = new IsOruDbEntities())
+            using (var context = new IsOruDbEntities())
             {
-                return context.Comment.Select(x => x.Id).Count()+1;
+                return context.Comment.OrderByDescending(x => x.Id).First().Id + 1;
             }
         }
 
@@ -49,7 +49,7 @@ namespace Data_Access_Layer.Repositories
                 return context.Comment.Where(x => x.PostId == postId).ToList();
             }
         }
-        
+
 
     }
 }

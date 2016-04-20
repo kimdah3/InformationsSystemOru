@@ -58,7 +58,8 @@ namespace InformationsSystemOru.Controllers
                 AuthorId = loggedInUser.Id,
                 Date = DateTime.Now,
                 Text = tbComment,
-                Id = commentRep.GetNewId()
+                Id = commentRep.GetNewId(),
+                PostId = postId
             };
 
             commentRep.SaveComment(newComment);
@@ -70,7 +71,8 @@ namespace InformationsSystemOru.Controllers
                 Text = newComment.Text,
                 CommentId = newComment.Id,
                 AuthorId = loggedInUser.Id,
-                PostId = postId
+                PostId = postId,
+                User = loggedInUser
             });
         }
 

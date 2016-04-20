@@ -3,8 +3,27 @@
 
 <div id="@Model.CommentId">
     <div class="col-md-11">
-        <span class="label label-primary">@Model.Authorname - @Model.Date</span>
-        <p>@Model.Text</p>
+        
+        <div class="media">
+            <div class="media-left">
+                <a href="@Url.Action("VisitingProfile", "Profile", new { visitedUserID = Model.AuthorId})">
+                    @if (Model.User.ProfilePicture == null)
+            {
+                        <img class="media-object img-rounded" src="~/Content/default.jpg" alt="...">
+                    }
+                    else
+                    {
+                        <img class="media-object img-rounded" src="@string.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.User.ProfilePicture))" alt="...">
+                    }
+
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading"><span class="label label-primary">@Model.Authorname - @Model.Date</span></h4>
+                <p>@Model.Text</p>
+            </div>
+        </div>
+        
     </div>
 
     <div class="col-md-1">
