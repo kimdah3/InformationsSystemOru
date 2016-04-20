@@ -1,7 +1,8 @@
-﻿@model InformationsSystemOru.Models.ProfilePictureModel
+﻿@using InformationsSystemOru.Extensions
+@model InformationsSystemOru.Models.ProfilePictureModel
 @{
     ViewBag.Title = "ProfilePicture";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
 }
 @using (Html.BeginForm("ChangeProfilePic", "Profile", FormMethod.Post, new { @enctype = "multipart/form-data" }))
 {

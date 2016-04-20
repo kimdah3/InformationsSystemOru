@@ -70,7 +70,7 @@ namespace InformationsSystemOru.Controllers
                 return View(model);
             }
             FormsAuthentication.SetAuthCookie(model.Username, false);
-            return RedirectToAction("Profile", "Profile", new RouteValueDictionary(new { username = model.Username }));
+            return RedirectToAction("Index", "Home", new RouteValueDictionary(new { username = model.Username }));
         }
         
         public ActionResult Logout()
