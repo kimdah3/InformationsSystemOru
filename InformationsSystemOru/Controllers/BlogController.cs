@@ -16,7 +16,6 @@ namespace InformationsSystemOru.Controllers
         private Post_PostTypeRespository postPostType = new Post_PostTypeRespository();
         private PostRepository postrepository = new PostRepository();
         private CommentRepository commentRep = new CommentRepository();
-        private User_Post_CommentRepository userPostCommentRep = new User_Post_CommentRepository();
         private UserRepository userRep = new UserRepository();
 
         public BlogModel LoadPosts(List<Post> postList)
@@ -26,22 +25,17 @@ namespace InformationsSystemOru.Controllers
 
             foreach (var post in postList)
             {
-                var commentIds = userPostCommentRep.GetPostCommentIds(post.Id);
-                var commentList = new List<Comment>();
+                var comments = commentRep.GetPostComments(post.Id);
                 var user = userRep.GetUserFromId(post.PostingUserID);
 
-                foreach (var id in commentIds)
-                {
-                    var comment = commentRep.GetComment(id);
-                    comment.User = userRep.GetUserFromId((int)comment.AuthorId);
-                    commentList.Add(comment);
-                }
+                foreach (var c in comments)
+                    c.User = userRep.GetUserFromId((int)c.AuthorId);
 
                 model.AllPosts.Add(new PostModel
                 {
                     Category = post.Category,
                     DatePosted = post.Date,
-                    Comments = commentList,
+                    Comments = comments,
                     FileUrl = post.FileURL,
                     Filename = post.Filename,
                     PostId = post.Id,
@@ -68,7 +62,6 @@ namespace InformationsSystemOru.Controllers
             };
 
             commentRep.SaveComment(newComment);
-            userPostCommentRep.SaveCommentPostRelation(postId, newComment.Id);
 
             return PartialView("_CommentPartial", new CommentModel
             {
@@ -84,8 +77,7 @@ namespace InformationsSystemOru.Controllers
         [HttpPost]
         public void RemoveComment(int postId, int commentId, int authorId)
         {
-            //userPostCommentRep.RemoveCommentPostRelation(commentId, postId);
-            //commentRep.RemoveComment(commentId);
+            commentRep.RemoveComment(commentId);
         }
 
         // GET: Blog
@@ -179,34 +171,7 @@ namespace InformationsSystemOru.Controllers
         {
             //    var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
             var posts = postrepository.GetAllEducationPosts();
-            var model = new BlogModel();
-            model.AllPosts = new List<PostModel>();
-
-            foreach (var post in posts)
-            {
-                var commentIds = userPostCommentRep.GetPostCommentIds(post.Id);
-                var commentList = new List<Comment>();
-                var user = userRep.GetUserFromId(post.PostingUserID);
-
-                foreach (var id in commentIds)
-                {
-                    commentList.Add(commentRep.GetComment(id));
-                }
-
-                model.AllPosts.Add(new PostModel
-                {
-                    Category = post.Category,
-                    DatePosted = post.Date,
-                    Comments = commentList,
-                    FileUrl = post.FileURL,
-                    Filename = post.Filename,
-                    PostId = post.Id,
-                    Text = post.Text,
-                    PostingUserId = post.PostingUserID,
-                    PostingUsersName = user.Firstname + " " + user.Lastname,
-                    Title = post.Titel
-                });
-            }
+            var model = LoadPosts(posts);
 
             return View(model);
         }

@@ -35,6 +35,5 @@ namespace Data_Access_Layer
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<User_Access> User_Access { get; set; }
         public virtual DbSet<User_Meeting> User_Meeting { get; set; }
-        public virtual DbSet<User_Post_Comment> User_Post_Comment { get; set; }
     }
 }

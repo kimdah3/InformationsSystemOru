@@ -38,8 +38,18 @@ namespace Data_Access_Layer.Repositories
         {
             using(var context = new IsOruDbEntities())
             {
-                return context.User_Post_Comment.Select(x => x.CommentId).Count()+1;
+                return context.Comment.Select(x => x.Id).Count()+1;
             }
         }
+
+        public List<Comment> GetPostComments(int postId)
+        {
+            using (var context = new IsOruDbEntities())
+            {
+                return context.Comment.Where(x => x.PostId == postId).ToList();
+            }
+        }
+        
+
     }
 }

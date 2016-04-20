@@ -16,7 +16,6 @@ namespace InformationsSystemOru.Controllers
         private PostRepository postrepository = new PostRepository();
         private AccountRepository accountRep = new AccountRepository();
         private Post_PostTypeRespository postPostType = new Post_PostTypeRespository();
-        private User_Post_CommentRepository userPostCommentRep = new User_Post_CommentRepository();
         private CommentRepository commentRep = new CommentRepository();
 
         public BlogModel LoadPosts(List<Post> postList)
@@ -26,18 +25,17 @@ namespace InformationsSystemOru.Controllers
 
             foreach (var post in postList)
             {
-                var commentIds = userPostCommentRep.GetPostCommentIds(post.Id);
-                var commentList = new List<Comment>();
+                var comments = commentRep.GetPostComments(post.Id);
                 var user = userRep.GetUserFromId(post.PostingUserID);
 
-                foreach (var id in commentIds)
-                    commentList.Add(commentRep.GetComment(id));
+                foreach (var c in comments)
+                    c.User = userRep.GetUserFromId((int)c.AuthorId);
 
                 model.AllPosts.Add(new PostModel
                 {
                     Category = post.Category,
                     DatePosted = post.Date,
-                    Comments = commentList,
+                    Comments = comments,
                     FileUrl = post.FileURL,
                     Filename = post.Filename,
                     PostId = post.Id,

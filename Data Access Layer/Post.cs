@@ -18,7 +18,6 @@ namespace Data_Access_Layer
         public Post()
         {
             this.Post_PostType = new HashSet<Post_PostType>();
-            this.User_Post_Comment = new HashSet<User_Post_Comment>();
         }
     
         public int Id { get; set; }
@@ -33,7 +32,5 @@ namespace Data_Access_Layer
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post_PostType> Post_PostType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User_Post_Comment> User_Post_Comment { get; set; }
     }
 }
