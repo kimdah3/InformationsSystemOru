@@ -166,6 +166,7 @@
     <Content Include="Content\default.jpg" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\kodapor.jpg" />
+    <Content Include="Content\nova.jpg" />
     <Content Include="Content\oruInformatikLogga.jpg" />
     <Content Include="Content\responsive-calendar.css" />
     <Content Include="favicon.ico" />
