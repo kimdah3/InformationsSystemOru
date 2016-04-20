@@ -1,18 +1,18 @@
 ﻿.carousel .item {
 
     width:100%;
-    height:300px;
+    
+    
 }
 .carousel-inner > .item > img {
 
-  min-width:100%;
-  height:auto;
+ 
 }
 
 
 .carousel {
-    
- max-width:900px;
+
+    max-width: 70%;
   margin:0 auto 60px;
 }
 
