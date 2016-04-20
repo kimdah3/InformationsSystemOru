@@ -1,22 +1,11 @@
 ﻿.carousel .item {
-
     width:100%;
-    
-    
 }
-.carousel-inner > .item > img {
-
- 
-}
-
 
 .carousel {
-
     max-width: 70%;
   margin:0 auto 60px;
 }
-
-
 
 #Login {
     margin-top: 5%;
@@ -40,7 +29,6 @@
 .glyphicon-pushpin-edit {
     color: red;
 }
-
 
 .navbar {
     border-radius: 0 !important;
