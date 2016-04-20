@@ -25,10 +25,15 @@
 .navbar {
     border-radius: 0 !important;
 }
+
 .meeting-button {
     margin: 2px !important;
 }
 
 .glyphicon-plus-sign-edit {
     font-size: 1.8em !important;
+}
+
+.ul-sience {
+    font-size: 0.9em !important;
 }
