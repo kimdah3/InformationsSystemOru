@@ -139,6 +139,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AmountOfMeetingInvitesModel.cs" />
     <Compile Include="Models\BlogModel.cs" />
     <Compile Include="Models\CalendarModel.cs" />
     <Compile Include="Models\CommentModel.cs" />
@@ -395,6 +396,7 @@
     <Content Include="Views\Profile\VisitingProfile.cshtml" />
     <Content Include="Views\Meeting\Calendar2.cshtml" />
     <Content Include="Views\Blog\newsBlog.cshtml" />
+    <Content Include="Views\Account\GetAmountOfMeetings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj">

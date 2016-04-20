@@ -52,14 +52,28 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <button type="button" class="btn btn-success pull-right navbar-btn dropdown-toggle" data-toggle="dropdown" role="button">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> @User.Identity.Name
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> @User.Identity.Name <span class="badge">
+                                @{
+                                    Html.RenderAction("GetAmountOfMeetings", "Account");
+                                }
+                            </span>
                         </button>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Profile", "Profile", "Profile")</li>
-                            <li>@Html.ActionLink("My meetings", "MyMeetings", "Meeting")</li>
+                            <li>
+                                <a href="@Url.Action("MyMeetings", "Meeting")">
+                                    Meetings
+                                    <span class="label label-default label-as-badge">
+                                        @{
+                                            Html.RenderAction("GetAmountOfMeetings", "Account");
+                                        }
+                                    </span>
+                                </a>
+                            </li>
                             <li>@Html.ActionLink("Controlpanel", "Admin", "Admin")</li>
                             <li>@Html.ActionLink("Settings", "ChangeProfilePic", "Profile")</li>
                             <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+
                         </ul>
                     </li>
                 </ul>

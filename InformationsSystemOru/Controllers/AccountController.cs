@@ -3,6 +3,8 @@ using Data_Access_Layer;
 using Data_Access_Layer.Repositories;
 using InformationsSystemOru.Models;
 using InformationsSystemOru.Extensions;
+using Data_Access_Layer;
+using System.Collections.Generic;
 
 namespace InformationsSystemOru.Controllers
 { 
@@ -89,6 +91,20 @@ namespace InformationsSystemOru.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return View(model);
+        }
+
+        public PartialViewResult GetAmountOfMeetings()
+        {
+            var meetingRepo = new User_MeetingRepository();
+            var accountRepo = new AccountRepository();
+            var userRepo = new UserRepository();
+            var userId = accountRepo.GetIdFromUsername(User.Identity.Name);
+            var user = userRepo.GetUserFromId(userId);
+            var model = new AmountOfMeetingInvitesModel();
+            var list = new List<Meeting>();
+            list = meetingRepo.GetInvitedToMeetingsByUserId(user);
+            model.amountOfInvites = list.Count;
+            return PartialView(model);
         }
     }
 }
