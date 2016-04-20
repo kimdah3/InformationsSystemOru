@@ -45,14 +45,37 @@
                 </ul>
             </div>
             <div class="tab-content panel-body">
-                
+
                 <div id="Ehalsa" class="tab-pane fade in active">
                     <div class="panel panel-default">
                         <div class="panel-heading">News</div>
                         <div class="panel-body">
-                            EN NYHET
-                            <br/>
-                            en till
+                            @foreach (var post in Model.AllPosts)
+                            {
+                                if(post.PostId.)
+                                <div class="media">
+                                    <div class="media-body">
+
+                                        <div class="col-md-11 col-sm-11">
+                                            <h4 class="media-heading">Title: @post.Title</h4>
+                                            <p>@Html.Raw(@post.Text)</p>
+                                            @if (post.Filename != null)
+                                            {
+                                                <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
+                                            }
+                                            <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
+                                        </div>
+
+                                        <div class="col-md-1 col-sm-1">
+                                            @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "Education" }))
+                                            {
+                                                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                            }
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
