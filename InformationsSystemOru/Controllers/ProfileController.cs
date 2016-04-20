@@ -142,7 +142,7 @@ namespace InformationsSystemOru.Controllers
             return View("ChangeProfilePic", pModel);
         }
 
-        public ActionResult VisitingProfile(int visitedUserID)
+        public ActionResult VisitingProfile(int visitedUserID )
         {
             
             var posts = postrepository.GetProfileBlogPosts(visitedUserID, postPostType.GetAllPrivatePostIds());
