@@ -394,7 +394,6 @@
     <Content Include="Views\Shared\_CommentPartial.cshtml" />
     <Content Include="Views\Meeting\MyMeetings.cshtml" />
     <Content Include="Views\Profile\VisitingProfile.cshtml" />
-    <Content Include="Views\Meeting\Calendar2.cshtml" />
     <Content Include="Views\Blog\newsBlog.cshtml" />
     <Content Include="Views\Account\GetAmountOfMeetings.cshtml" />
   </ItemGroup>

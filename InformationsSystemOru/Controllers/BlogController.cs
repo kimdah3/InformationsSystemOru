@@ -17,6 +17,8 @@ namespace InformationsSystemOru.Controllers
         private PostRepository postrepository = new PostRepository();
         private CommentRepository commentRep = new CommentRepository();
         private UserRepository userRep = new UserRepository();
+        private PostTypeRepository _postTypeRepository = new PostTypeRepository();
+        private Post_PostTypeRespository _postPostTypeRepository = new Post_PostTypeRespository();
 
         public BlogModel LoadPosts(List<Post> postList)
         {
@@ -45,6 +47,8 @@ namespace InformationsSystemOru.Controllers
                     Title = post.Titel
                 });
             }
+
+            model.PostTypes = _postTypeRepository.GetAllPostTypes();
 
             return model;
         }
@@ -100,14 +104,6 @@ namespace InformationsSystemOru.Controllers
 
             return View(model);
         }
-        [Authorize]
-        public ActionResult newsBlog()
-        {
-            var posts = postrepository.GetAllNewsPosts();
-            var model = LoadPosts(posts);
-
-            return View(model);
-        }
 
         [HttpPost]
         public ActionResult ScienceBlog(BlogModel model)
@@ -138,6 +134,16 @@ namespace InformationsSystemOru.Controllers
             postPostType.SavePosttype(post.Id, 2);
             return RedirectToAction("Scienceblog");
         }
+
+        [Authorize]
+        public ActionResult newsBlog()
+        {
+            var posts = postrepository.GetAllNewsPosts();
+            var model = LoadPosts(posts);
+
+            return View(model);
+        }
+
         [HttpPost]
         public ActionResult NewsBlog(BlogModel model)
         {
@@ -163,8 +169,12 @@ namespace InformationsSystemOru.Controllers
                 Filename = fileName
             };
 
+            var postType =
+                _postTypeRepository.GetPostTypeById(int.Parse(model.NewPost.PostTypeHolder.Substring(0,
+                    model.NewPost.PostTypeHolder.LastIndexOf("."))));
+
             postrepository.SavePost(post);
-            postPostType.SavePosttype(post.Id, 4);
+            postPostType.SavePosttype(post.Id, postType.Id);
             return RedirectToAction("NewsBlog");
         }
 

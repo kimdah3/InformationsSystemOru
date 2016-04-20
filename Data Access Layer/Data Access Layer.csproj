@@ -94,6 +94,7 @@
     <Compile Include="Repositories\CommentRepository.cs" />
     <Compile Include="Repositories\MeetingRepository.cs" />
     <Compile Include="Repositories\PostRepository.cs" />
+    <Compile Include="Repositories\PostTypeRepository.cs" />
     <Compile Include="Repositories\Post_PostTypeRespository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\User_MeetingRepository.cs" />
