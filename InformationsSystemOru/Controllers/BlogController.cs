@@ -102,6 +102,11 @@ namespace InformationsSystemOru.Controllers
             var posts = postrepository.GetAllSciencePosts();
             var model = LoadPosts(posts);
 
+            foreach (var post in model.AllPosts)
+            {
+            }
+
+
             return View(model);
         }
 
@@ -140,6 +145,8 @@ namespace InformationsSystemOru.Controllers
         {
             var posts = postrepository.GetAllNewsPosts();
             var model = LoadPosts(posts);
+
+            // TOO: Lägg till PostType för varje post. 
 
             return View(model);
         }

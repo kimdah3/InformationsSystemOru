@@ -37,10 +37,7 @@ namespace InformationsSystemOru.Models
         [DataType(DataType.Upload)]
         public HttpPostedFileBase File { get; set; }
 
-
-        [Display(Name = "Type")]
-        [Required(ErrorMessage = "Enter a type")]
-        public List<PostType> PostType { get; set; }
+        public PostType PostType { get; set; }
         public string PostTypeHolder { get; set; }
     }
 }
