@@ -84,7 +84,7 @@ namespace Data_Access_Layer.Repositories
             }
         }
 
-        public List<string> CategoryList ()
+        public List<string> CategoryListforEducation ()
         {
             var posttypeRep = new Post_PostTypeRespository();
             var educationIds = posttypeRep.GetAllEducationPostIds();
@@ -95,7 +95,20 @@ namespace Data_Access_Layer.Repositories
             }
 
                 
-        }  
+        }
 
+
+        public List<string> CategoryListforInformal()
+        {
+            var posttypeRep = new Post_PostTypeRespository();
+            var InformalIds = posttypeRep.GetAllPrivatePostIds();
+            using (var context = new IsOruDbEntities())
+            {
+                return context.Post.Where(x => InformalIds.Contains(x.Id)).Select(x => x.Category).Distinct().ToList();
+
+            }
+
+
+        }
     }
 }

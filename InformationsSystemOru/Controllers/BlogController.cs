@@ -100,6 +100,7 @@ namespace InformationsSystemOru.Controllers
         {
             var posts = postrepository.GetAllInformalPosts();
             var model = LoadPosts(posts);
+            model.CategoryList = postrepository.CategoryListforInformal();
 
             return View(model);
         }
@@ -194,7 +195,7 @@ namespace InformationsSystemOru.Controllers
             //    var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
             var posts = postrepository.GetAllEducationPosts();
             var model = LoadPosts(posts);
-            model.CategoryList = postrepository.CategoryList();
+            model.CategoryList = postrepository.CategoryListforEducation();
 
             return View(model);
         }
