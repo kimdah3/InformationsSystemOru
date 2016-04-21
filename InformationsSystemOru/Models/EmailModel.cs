@@ -11,9 +11,10 @@ namespace InformationsSystemOru.Models
         
         public string FromName { get; set; }
         public string FromEmail { get; set; }
-        [Required, Display(Name = "Email to"), EmailAddress]
+     
         public string ToEmail { get; set; }
         [Required]
         public string Message { get; set; }
+        public string ReciverId { get; set; }
     }
 }

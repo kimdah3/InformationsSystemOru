@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <a href="@Url.Action("Contact", "Home")" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                <a href="@Url.Action("Contact", "Home",new {id= Model.VisitedUser.Id})" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
             </div>
 
         </div>
