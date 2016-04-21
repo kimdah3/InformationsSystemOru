@@ -80,10 +80,13 @@ namespace InformationsSystemOru.Controllers
         }
 
         [Authorize]
-        public ActionResult Contact()
+        public ActionResult Contact(string id)
         {
             ViewBag.Message = "Your contact page.";
-            return View();
+            var model = new EmailModel();
+            model.ReciverId = id;
+
+            return View(model);
         }
 
         [HttpPost]
@@ -94,13 +97,29 @@ namespace InformationsSystemOru.Controllers
             var message2 = "Don't reply to this mail";
             if (ModelState.IsValid)
             {
+               
                 var userID = accountRepository.GetIdFromUsername(User.Identity.Name);
                 var emailFrom = userRepository.GetUserFromId(userID);
                 var name = emailFrom.Firstname + " " + emailFrom.Lastname;
+                string emailTO = null;
+                if (model.ReciverId != null)
+                {
+                     emailTO = userRepository.GetUserFromId(Int32.Parse(model.ReciverId)).Email;
+                  
+                }
+                else
+                {
+                     emailTO = model.ToEmail;
+                    
+                }
+                 
+                
+
                 var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>{3}</p>";
                 var message = new MailMessage();
-                message.To.Add(new MailAddress(model.ToEmail)); // replace with valid value 
+                message.To.Add(new MailAddress(emailTO)); // replace with valid value 
                 message.From = new MailAddress("orusystemdeluxe@outlook.com"); // replace with valid value
+                message.To.Add(new MailAddress(emailTO)); // replace with valid value
                 message.Subject = "Your email subject";
                 message.Body = string.Format(body, name, emailFrom.Email, model.Message, message2);
                 message.IsBodyHtml = true;
