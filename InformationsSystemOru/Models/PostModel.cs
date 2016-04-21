@@ -30,6 +30,7 @@ namespace InformationsSystemOru.Models
         public int Type { get; set; }
         public int PostingUserId { get; set; }
         public string PostingUsersName { get; set; }
+        public string PostingUsersProfilePicture { get; set; }
         public string FileUrl { get; set; }
         public string Filename { get; set; }
         public List<Comment> Comments { get; set; }

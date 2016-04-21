@@ -45,8 +45,9 @@ namespace InformationsSystemOru.Controllers
                     PostingUserId = post.PostingUserID,
                     PostingUsersName = user.Firstname + " " + user.Lastname,
                     Title = post.Titel,
-                    CommentCount = comments.Count()
-                });
+                    CommentCount = comments.Count(),
+                    PostingUsersProfilePicture = user.ProfilePicture == null ? "" : string.Format("data:image/png;base64,{0}", Convert.ToBase64String(user.ProfilePicture))
+            });
             }
 
             model.PostTypes = _postTypeRepository.GetAllPostTypes();

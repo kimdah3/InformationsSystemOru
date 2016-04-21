@@ -30,6 +30,21 @@
                 {
             <div class="well well-sm">
                 <div class="media">
+
+                    <div class="media-left">
+                        <a href="@Url.Action("VisitingProfile", "Profile", new { visitedUserID = post.PostingUserId})">
+                            @if (post.PostingUsersProfilePicture.IsEmpty())
+                            {
+                                <img class="media-object img-rounded" src="~/Content/default.jpg" alt="...">
+                            }
+                            else
+                            {
+                                <img class="media-object img-rounded" src="@post.PostingUsersProfilePicture" alt="...">
+                            }
+
+                        </a>
+                    </div>
+
                     <div class="media-body">
 
                         <h4 class="media-heading">@post.Title</h4>
@@ -47,7 +62,12 @@
                             <div id="collapse@(post.PostId)" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     @using (Ajax.BeginForm("PostComment", "Blog", new AjaxOptions
-                                    { HttpMethod = "POST", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "post" + post.PostId, OnSuccess = "ClearTextbox()" }))
+                                    {
+                                        HttpMethod = "POST",
+                                        InsertionMode = InsertionMode.InsertAfter,
+                                        UpdateTargetId = "post" + post.PostId,
+                                        OnSuccess = "ClearTextbox()"
+                                    }))
                                     {
                                         <div class="input-group">
                                             @Html.Hidden("postId", post.PostId)
@@ -106,6 +126,7 @@ new AjaxOptions { HttpMethod = "POST", OnSuccess = "RemoveComment(" + @c.Id + ")
                     </div>
                 </div>
             </div>
+
         }
     }
 </div>
