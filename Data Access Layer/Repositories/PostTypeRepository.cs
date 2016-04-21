@@ -23,5 +23,13 @@ namespace Data_Access_Layer.Repositories
                 return db.PostType.First(x => x.Id == postTypeId);
             }
         }
+
+        public List<PostType> GetAllPostTypesAfterId3()
+        {
+            using (var db = new IsOruDbEntities())
+            {
+                return db.PostType.Where(x => x.Id > 3).ToList();
+            }
+        }
     }
 }
