@@ -15,5 +15,6 @@ namespace InformationsSystemOru.Models
         public List<PostModel> AllPosts { get; set; }
         public PostModel NewPost { get; set; }
         public List<PostType> PostTypes { get; set; }
+        public List<string> CategoryList { get; set; } 
     }
 }

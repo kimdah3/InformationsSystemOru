@@ -193,6 +193,7 @@ namespace InformationsSystemOru.Controllers
             //    var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
             var posts = postrepository.GetAllEducationPosts();
             var model = LoadPosts(posts);
+            model.CategoryList = postrepository.CategoryList();
 
             return View(model);
         }
@@ -247,6 +248,8 @@ namespace InformationsSystemOru.Controllers
                 return RedirectToAction("ScienceBlog");
 
         }
+
+
 
     }
 }

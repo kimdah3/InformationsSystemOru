@@ -83,5 +83,19 @@ namespace Data_Access_Layer.Repositories
                 context.SaveChanges();
             }
         }
+
+        public List<string> CategoryList ()
+        {
+            var posttypeRep = new Post_PostTypeRespository();
+            var educationIds = posttypeRep.GetAllEducationPostIds();
+            using (var context = new IsOruDbEntities())
+            {
+                return context.Post.Where(x => educationIds.Contains(x.Id)).Select(x => x.Category).Distinct().ToList();
+
+            }
+
+                
+        }  
+
     }
 }
