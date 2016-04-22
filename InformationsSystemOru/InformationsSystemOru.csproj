@@ -396,6 +396,7 @@
     <Content Include="Views\Profile\VisitingProfile.cshtml" />
     <Content Include="Views\Blog\newsBlog.cshtml" />
     <Content Include="Views\Account\GetAmountOfMeetings.cshtml" />
+    <Content Include="Views\Shared\_PostsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj">

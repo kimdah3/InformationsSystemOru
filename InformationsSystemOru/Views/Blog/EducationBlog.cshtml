@@ -6,12 +6,28 @@
 }
 <script src="~/scripts/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
+
     tinyMCE.init({
         mode: "textareas",
         theme: "modern",
         plugins: "textcolor colorpicker",
         toolbar: "formatselect | bold italic underline | forecolor backcolor | bullist numlist",
         content_css: "~/Content/Site.css"
+    });
+
+    $(document).ready(function () {
+
+        $('#dropDown').change(function () {
+            $.ajax({
+                url: '@Url.Action("GetPostsFromCategory", "Blog")',
+                type: 'POST',
+                data: { cat: $('#dropDown').val(), department: 'educational' },
+                success: function (data) {
+                    $('#posts').html(data);
+                }
+            });
+        });
+
     });
 
     function RemoveComment(commendId) {
@@ -74,18 +90,16 @@
         </div>
     </div>
 
-    <hr/>
+    <hr />
 
-    
-        <h3 class="text-center">Sort by category: </h3>
+
+    <h3 class="text-center">Sort by category: </h3>
     <div class="checkbox">
-        @Html.DropDownListFor(Model => Model.CategoryList, new SelectList(Model.CategoryList), "Select a category", new { @class = "form-control" })
-        
-
-
+        @Html.DropDownListFor(model => model.CategoryList, new SelectList(Model.CategoryList), "All", new { @class = "form-control", id = "dropDown" })
     </div>
-        
-    <br />
+
+    <br/>
+    <div id="posts">
         @if (Model.AllPosts != null)
             {
                 foreach (var post in Model.AllPosts)
@@ -108,7 +122,7 @@
 
                         <div class="media-body">
 
-                            <h4 class="media-heading">@post.Title</h4>
+                            <h4 class="media-heading"><strong>@post.Title</strong></h4>
                             <p>@Html.Raw(@post.Text)</p>
                             @if (post.Filename != null)
                             {
@@ -167,10 +181,13 @@
                                                         </div>
 
                                                         <div class="col-md-1">
-                                                            @using (Ajax.BeginForm("RemoveComment", "Blog", new { postId = post.PostId, commentId = c.Id, authorId = c.AuthorId },
-new AjaxOptions { HttpMethod = "POST", OnSuccess = "RemoveComment(" + @c.Id + ")" }))
+                                                            @if (c.AuthorId == Model.loggedInUserId)
                                                             {
-                                                                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                                                using (Ajax.BeginForm("RemoveComment", "Blog", new { postId = post.PostId, commentId = c.Id, authorId = c.AuthorId },
+                                new AjaxOptions { HttpMethod = "POST", OnSuccess = "RemoveComment(" + @c.Id + ")" }))
+                                                                {
+                                                                    <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                                                }
                                                             }
                                                         </div>
                                                     </div>
@@ -186,9 +203,28 @@ new AjaxOptions { HttpMethod = "POST", OnSuccess = "RemoveComment(" + @c.Id + ")
                 </div>
             }
         }
+    </div>
 
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

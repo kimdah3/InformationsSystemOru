@@ -25,7 +25,6 @@ namespace InformationsSystemOru.Controllers
         {
             var model = new BlogModel();
             var postRepo = new PostRepository();
-            var commentRepo = new CommentRepository();
             var accountRepo = new AccountRepository();
             var newsposts = postRepo.GetAllNewsPosts();
             model.AllPosts = new List<PostModel>();
@@ -47,9 +46,6 @@ namespace InformationsSystemOru.Controllers
                 model.AllPosts.Add(postmodel);
             }
             
-
-            
-
             return View(model);
         }
 
@@ -105,15 +101,11 @@ namespace InformationsSystemOru.Controllers
                 if (model.ReciverId != null)
                 {
                      emailTO = userRepository.GetUserFromId(Int32.Parse(model.ReciverId)).Email;
-                  
                 }
                 else
                 {
                      emailTO = model.ToEmail;
-                    
                 }
-                 
-                
 
                 var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>{3}</p>";
                 var message = new MailMessage();

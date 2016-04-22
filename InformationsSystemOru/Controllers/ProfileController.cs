@@ -22,6 +22,7 @@ namespace InformationsSystemOru.Controllers
         {
             var model = new BlogModel();
             model.AllPosts = new List<PostModel>();
+            model.loggedInUserId = accountRep.GetIdFromUsername(User.Identity.Name);
 
             foreach (var post in postList)
             {
@@ -64,7 +65,6 @@ namespace InformationsSystemOru.Controllers
                 Email = loggedInUser.Email,
                 Firstname = loggedInUser.Firstname, 
                 Lastname = loggedInUser.Lastname
-
             };
 
             if (loggedInUser.ProfilePicture == null)
@@ -144,7 +144,7 @@ namespace InformationsSystemOru.Controllers
             return View("ChangeProfilePic", pModel);
         }
 
-        public ActionResult VisitingProfile(int visitedUserID )
+        public ActionResult VisitingProfile(int visitedUserID)
         {
             
             var posts = postrepository.GetProfileBlogPosts(visitedUserID, postPostType.GetAllPrivatePostIds());
@@ -152,8 +152,8 @@ namespace InformationsSystemOru.Controllers
             var model = new VisitingUserModel
             {
                 UserPosts = LoadPosts(posts).AllPosts,
-                VisitedUser = userRep.GetUserFromId(visitedUserID)
-
+                VisitedUser = userRep.GetUserFromId(visitedUserID),
+                loggedInUserId = accountRep.GetIdFromUsername(User.Identity.Name)
             };
 
             if (model.VisitedUser.ProfilePicture == null)

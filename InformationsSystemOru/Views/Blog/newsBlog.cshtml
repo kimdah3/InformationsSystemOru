@@ -13,6 +13,15 @@
         toolbar: "formatselect | bold italic underline | forecolor backcolor | bullist numlist",
         content_css: "~/Content/Site.css"
     });
+
+    function RemoveComment(commendId) {
+        $("#" + commendId).remove();
+    }
+
+    function ClearTextbox() {
+        $("#tbComment").val("");
+    }
+
 </script>
 
 <div class="row">
@@ -20,79 +29,161 @@
     <h1 class="text-center">News</h1>
     <br /><br />
 
-
-    <div class="col-md-12">
-
-        <div id="blogg" class="col-md-6">
-            @using (Html.BeginForm("newsBlog", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form-group">
-
-                    @Html.LabelFor(model => model.NewPost.Title, "Title", htmlAttributes: new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.NewPost.Title, "TitleInput", htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.NewPost.Title, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewPost.Category, "Category", htmlAttributes: new {@class = "control-label"})
-                    @Html.TextBoxFor(model => model.NewPost.Category, "Kategori", htmlAttributes: new {@class = "form-control"})
-                    @Html.ValidationMessageFor(model => model.NewPost.Category, "", new {@class = "text-danger"})
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewPost.PostType, "Type", htmlAttributes: new { @class = "control-label" })
-                    @Html.DropDownListFor(model => model.NewPost.PostTypeHolder, new SelectList(Model.PostTypes), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.NewPost.PostType, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewPost.Text, "Text", htmlAttributes: new { @class = "control-label" })
-                    @Html.TextAreaFor(model => model.NewPost.Text, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.NewPost.Text, "", new { @class = "text-danger" })
-                </div>
-
-                <div>
-                    <input type="submit" value="Post" class="btn btn-success" id="btnSend" />
-                </div>
-
-            }
-
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title"><a data-toggle="collapse" href="#collapseExample"><span class="glyphicon glyphicon-pencil"></span>  Write a news post</a></h4>
         </div>
+        <div id="collapseExample" class="panel-collapse collapse">
 
-        <div class="col-md-12">
-            <br />
-            @if (Model.AllPosts != null)
+            <div class="panel-body">
+
+                @using (Html.BeginForm("newsBlog", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                    <div class="form-group">
+
+                        @Html.LabelFor(model => model.NewPost.Title, "Title", htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.NewPost.Title, "TitleInput", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.NewPost.Title, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NewPost.Category, "Category", htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.NewPost.Category, "Kategori", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.NewPost.Category, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NewPost.PostType, "Type", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(model => model.NewPost.PostTypeHolder, new SelectList(Model.PostTypes), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.NewPost.PostType, "", new { @class = "text-danger" })
+                    </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NewPost.Text, "Text", htmlAttributes: new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.NewPost.Text, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NewPost.Text, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div>
+                            <input type="submit" value="Post" class="btn btn-success" id="btnSend" />
+                        </div>
+
+                }
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+
+    @if (Model.AllPosts != null)
             {
                 foreach (var post in Model.AllPosts)
                 {
-                    <div class="well well-sm">
-                        <div class="media">
-                            <div class="media-body">
+            <div class="well well-sm">
+                <div class="media">
 
-                                <div class="col-md-11 col-sm-11">
-                                    <h4 class="media-heading">@post.Title</h4>
-                                    <p>@Html.Raw(@post.Text)</p>
-                                    @if (post.Filename != null)
-                                    {
-                                        <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
-                                    }
-                                    <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
+                    <div class="media-left">
+                        <a href="@Url.Action("VisitingProfile", "Profile", new { visitedUserID = post.PostingUserId})">
+                            @if (post.PostingUsersProfilePicture.IsEmpty())
+                            {
+                                <img class="media-object img-rounded" src="~/Content/default.jpg" alt="...">
+                            }
+                            else
+                            {
+                                <img class="media-object img-rounded" src="@post.PostingUsersProfilePicture" alt="...">
+                            }
+
+                        </a>
+                    </div>
+
+                    <div class="media-body">
+
+                        <div class="col-md-11">
+                            <h4 class="media-heading"><strong>@post.Title</strong></h4>
+                            <p>@Html.Raw(@post.Text)</p>
+                            @if (post.Filename != null)
+                            {
+                                <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
+                            }
+                            <p>Written by <a href="@Url.Action("VisitingProfile", "Profile", new { visitedUserID = post.PostingUserId})">@post.PostingUsersName</a> @post.DatePosted.ToShortDateString() in category @post.Category</p>
+
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a data-toggle="collapse" href="#collapse@(post.PostId)">Show comments (@post.CommentCount)</a></h4>
                                 </div>
+                                <div id="collapse@(post.PostId)" class="panel-collapse collapse">
 
-                                <div class="col-md-1 col-sm-1">
-                                    @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "News" }))
-                                    {
-                                        <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                    }
+                                    <div class="panel-body">
+                                        @using (Ajax.BeginForm("PostComment", "Blog", new AjaxOptions
+                                        { HttpMethod = "POST", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "post" + post.PostId, OnSuccess = "ClearTextbox()" }))
+                                        {
+                                            <div class="input-group">
+                                                @Html.Hidden("postId", post.PostId)
+                                                @Html.TextBox("tbComment", "", htmlAttributes: new { @class = "form-control", placeholder = "Write a comment" })
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="submit">Reply</button>
+                                                </span>
+                                            </div>
+                                                <hr />
+                                        }
+
+                                        <div id="post@(post.PostId.ToString())">
+                                            @if (post.Comments != null)
+                                            {
+                                                foreach (var c in post.Comments)
+                                                {
+                                                    <div id="@c.Id">
+                                                        <div class="col-md-11">
+
+                                                            <div class="media">
+                                                                <div class="media-left">
+                                                                    <a href="@Url.Action("VisitingProfile", "Profile", new { visitedUserID = post.PostingUserId})">
+                                                                        @if (c.User.ProfilePicture == null)
+                                                                        {
+                                                                            <img class="media-object img-rounded" src="~/Content/default.jpg" alt="...">
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <img class="media-object img-rounded" src="@string.Format("data:image/png;base64,{0}", Convert.ToBase64String(c.User.ProfilePicture))" alt="...">
+                                                                        }
+
+                                                                    </a>
+                                                                </div>
+                                                                <div class="media-body">
+                                                                    <h4 class="media-heading"><span class="label label-primary">@c.User.Firstname @c.User.Lastname - @c.Date</span> </h4>
+                                                                    <p>@c.Text</p>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="col-md-1">
+                                                            @using (Ajax.BeginForm("RemoveComment", "Blog", new { postId = post.PostId, commentId = c.Id, authorId = c.AuthorId },
+new AjaxOptions { HttpMethod = "POST", OnSuccess = "RemoveComment(" + @c.Id + ")" }))
+                                                            {
+                                                                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
                         </div>
+                        <div class="col-md-1 col-sm-1">
+                            @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "Education" }))
+                            {
+                                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                            }
+                        </div>
                     </div>
-                }
-            }
-        </div>
-
-    </div>
-
+                </div>
+            </div>
+        }
+    }
 </div>
+

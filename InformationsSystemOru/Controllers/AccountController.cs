@@ -3,7 +3,6 @@ using Data_Access_Layer;
 using Data_Access_Layer.Repositories;
 using InformationsSystemOru.Models;
 using InformationsSystemOru.Extensions;
-using Data_Access_Layer;
 using System.Collections.Generic;
 
 namespace InformationsSystemOru.Controllers
