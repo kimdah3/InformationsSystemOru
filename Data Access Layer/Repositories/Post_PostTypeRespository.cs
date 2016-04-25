@@ -45,7 +45,7 @@ namespace Data_Access_Layer.Repositories
             using (var db = new IsOruDbEntities())
             {
                 var postPostType = db.Post_PostType.First(x => x.PostId == postId);
-                return db.PostType.First(x => x.Id == postPostType.Id);
+                return db.PostType.FirstOrDefault(x => x.Id == postPostType.PostTypeId);
             }
         }
     }

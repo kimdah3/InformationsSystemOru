@@ -56,12 +56,28 @@ namespace Data_Access_Layer.Repositories
 
         public List<Post> GetAllSciencePosts()
         {
-            using(var db = new IsOruDbEntities())
+            using (var db = new IsOruDbEntities())
             {
                 var sciencepostIDs = db.Post_PostType.Where(x => x.PostTypeId == 2).Select(x => x.PostId);
                 return db.Post.Where(x => sciencepostIDs.Contains(x.Id)).OrderByDescending(x => x.Date).ToList();
             }
         }
+
+        public List<Post> GetAllSciencePostsKIM()
+        {
+            var posts = new List<Post>();
+            using (var db = new IsOruDbEntities())
+            {
+                var postPostType = db.Post_PostType.Where(x => x.PostTypeId > 4);
+                foreach (var postPost in postPostType)
+                {
+                    posts.Add(db.Post.First(x => x.Id == postPost.PostId));
+                }
+            }
+            return posts;
+        }
+
+
 
         public List<Post> GetAllNewsPosts()
         {

@@ -52,7 +52,7 @@ namespace InformationsSystemOru.Controllers
 
             model.PostTypes = _postTypeRepository.GetAllPostTypesAfterId3();
 
-
+            // TODO ERROR HERE!
             foreach (var post in model.AllPosts)
             {
                 post.PostType = _postPostTypeRepository.GetPostTypeFromPostId(post.PostId);
@@ -107,7 +107,7 @@ namespace InformationsSystemOru.Controllers
         [Authorize]
         public ActionResult ScienceBlog()
         {
-            var posts = postrepository.GetAllSciencePosts();
+            var posts = postrepository.GetAllSciencePostsKIM();
             var model = LoadPosts(posts);
 
             return View(model);

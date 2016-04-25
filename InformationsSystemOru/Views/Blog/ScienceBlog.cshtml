@@ -23,8 +23,6 @@
     });
 </script>
 
-
-
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
@@ -52,7 +50,7 @@
                         <div class="panel-body">
                             @foreach (var post in Model.AllPosts)
                             {
-                                if (post.PostId != 5)
+                                if (post.PostType.Id != 5)
                                 {
                                     continue;
                                 }
@@ -88,7 +86,7 @@
                         <div class="panel-body">
                             @foreach (var post in Model.AllPosts)
                             {
-                                if (post.PostId != 6)
+                                if (post.PostType.Id != 6)
                                 {
                                     continue;
                                 }
@@ -125,7 +123,7 @@
                         <div class="panel-body">
                             @foreach (var post in Model.AllPosts)
                             {
-                                if (post.PostId != 7)
+                                if (post.PostType.Id != 7)
                                 {
                                     continue;
                                 }
@@ -162,7 +160,7 @@
                         <div class="panel-body">
                             @foreach (var post in Model.AllPosts)
                             {
-                                if (post.PostId != 8)
+                                if (post.PostType.Id != 8)
                                 {
                                     continue;
                                 }
@@ -199,7 +197,7 @@
                         <div class="panel-body">
                             @foreach (var post in Model.AllPosts)
                             {
-                                if (post.PostId != 9)
+                                if (post.PostType.Id != 9)
                                 {
                                     continue;
                                 }
@@ -236,7 +234,7 @@
                         <div class="panel-body">
                             @foreach (var post in Model.AllPosts)
                             {
-                                if (post.PostId != 10)
+                                if (post.PostType.Id != 10)
                                 {
                                     continue;
                                 }
