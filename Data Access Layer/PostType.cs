@@ -25,10 +25,5 @@ namespace Data_Access_Layer
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post_PostType> Post_PostType { get; set; }
-
-        public override string ToString()
-        {
-            return Id + ". " + Name;
-        }
     }
 }

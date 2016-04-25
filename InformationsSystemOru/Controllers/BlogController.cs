@@ -7,6 +7,7 @@ using Data_Access_Layer;
 using InformationsSystemOru.Models;
 using Data_Access_Layer.Repositories;
 using System.IO;
+using InformationsSystemOru.Extensions;
 
 namespace InformationsSystemOru.Controllers
 {
@@ -22,8 +23,11 @@ namespace InformationsSystemOru.Controllers
 
         public BlogModel LoadPosts(List<Post> postList)
         {
-            var model = new BlogModel();
-            model.AllPosts = new List<PostModel>();
+            var model = new BlogModel
+            {
+                AllPosts = new List<PostModel>(),
+                loggedInUserId = accountRep.GetIdFromUsername(User.Identity.Name)
+            };
 
             foreach (var post in postList)
             {
@@ -57,6 +61,11 @@ namespace InformationsSystemOru.Controllers
             {
                 post.PostType = _postPostTypeRepository.GetPostTypeFromPostId(post.PostId);
             }
+            //model.PostTypes = _postTypeRepository.GetAllPostTypesAfterId3();
+
+            //foreach (var post in model.AllPosts)
+            //    post.PostType = _postPostTypeRepository.GetPostTypeFromPostId(post.PostId);
+            
 
             return model;
         }
@@ -100,6 +109,7 @@ namespace InformationsSystemOru.Controllers
         {
             var posts = postrepository.GetAllInformalPosts();
             var model = LoadPosts(posts);
+            model.CategoryList = postrepository.CategoryListforInformal();
 
             return View(model);
         }
@@ -146,6 +156,9 @@ namespace InformationsSystemOru.Controllers
         [Authorize]
         public ActionResult newsBlog()
         {
+            if (!User.Identity.IsAdmin())
+                return RedirectToAction("Index", "Home");
+
             var posts = postrepository.GetAllNewsPosts();
             var model = LoadPosts(posts);
 
@@ -194,7 +207,7 @@ namespace InformationsSystemOru.Controllers
             //    var loggedInUser = accountRep.GetIdFromUsername(User.Identity.Name);
             var posts = postrepository.GetAllEducationPosts();
             var model = LoadPosts(posts);
-            model.CategoryList = postrepository.CategoryList();
+            model.CategoryList = postrepository.CategoryListforEducation();
 
             return View(model);
         }
@@ -250,6 +263,15 @@ namespace InformationsSystemOru.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult GetPostsFromCategory(string cat, string department)
+        {
+            var posts = department == "informal" ? postrepository.GetAllInformalPostsFromCategory(cat) : postrepository.GetAllEducationalPostsFromCategory(cat);
+            var model = LoadPosts(posts);
+            model.loggedInUserId = accountRep.GetIdFromUsername(User.Identity.Name);
+
+            return PartialView("_PostsPartial", model);
+        }
 
 
     }

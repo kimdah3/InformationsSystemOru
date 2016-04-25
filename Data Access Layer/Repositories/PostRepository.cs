@@ -12,19 +12,14 @@ namespace Data_Access_Layer.Repositories
 {
     public class PostRepository
     {
-
-
         public void SavePost(Post post)
         {
-
             using (var db = new IsOruDbEntities())
             {
                 db.Post.Add(post);
                 db.SaveChanges();
             }
-
         }
-
 
         public List<Post> GetProfileBlogPosts(int profileid, List<int> privatePostId)
         {
@@ -40,8 +35,6 @@ namespace Data_Access_Layer.Repositories
             {
                 var educationpostIDs = db.Post_PostType.Where(x => x.PostTypeId == 3).Select(x => x.PostId);
                 return db.Post.Where(x => educationpostIDs.Contains(x.Id)).OrderByDescending(x => x.Date).ToList();
-
-                
             }
         }
 
@@ -100,18 +93,39 @@ namespace Data_Access_Layer.Repositories
             }
         }
 
-        public List<string> CategoryList ()
+        public List<string> CategoryListforEducation ()
         {
             var posttypeRep = new Post_PostTypeRespository();
             var educationIds = posttypeRep.GetAllEducationPostIds();
             using (var context = new IsOruDbEntities())
             {
                 return context.Post.Where(x => educationIds.Contains(x.Id)).Select(x => x.Category).Distinct().ToList();
-
             }
+        }
 
-                
-        }  
+        public List<string> CategoryListforInformal()
+        {
+            var posttypeRep = new Post_PostTypeRespository();
+            var InformalIds = posttypeRep.GetAllPrivatePostIds();
+            using (var context = new IsOruDbEntities())
+            {
+                return context.Post.Where(x => InformalIds.Contains(x.Id)).Select(x => x.Category).Distinct().ToList();
+            }
+        }
+
+        public List<Post> GetAllInformalPostsFromCategory(string cat)
+        {
+            var informalPosts = GetAllInformalPosts();
+            return cat == "" ? informalPosts : informalPosts.Where(x => x.Category.ToLower() == cat.ToLower()).ToList();
+        }
+
+        public List<Post> GetAllEducationalPostsFromCategory(string cat)
+        {
+            var informalPosts = GetAllEducationPosts();
+            return cat == "" ? informalPosts : informalPosts.Where(x => x.Category.ToLower() == cat.ToLower()).ToList();
+        }
 
     }
+
+
 }

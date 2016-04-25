@@ -11,5 +11,6 @@ namespace InformationsSystemOru.Models
         public User VisitedUser { get; set; }
         public List<PostModel> UserPosts { get; set; }
         public string ProfilePicture { get; set; }
+        public int loggedInUserId { get; set; }
     }
 }
