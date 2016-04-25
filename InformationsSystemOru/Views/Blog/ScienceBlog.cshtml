@@ -16,258 +16,79 @@
         toolbar: "formatselect | bold italic underline | forecolor backcolor | bullist numlist",
         content_css: "~/Content/Site.css"
     });
+
     $(function () {
         $(".nav-tabs a").click(function () {
             $(this).tab('show');
         });
     });
+
+    function RemoveComment(commendId) {
+        $("#" + commendId).remove();
+    }
+
+    function ClearTextbox() {
+        $("#tbComment").val("");
+    }
+
 </script>
 
 <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
-        <br />
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <ul class="nav nav-tabs ul-sience">
-                    <li role="presentation" class="active">
-                        <a href="#Ehalsa">
-                            e-Hälsa
-                        </a>
-                    </li>
-                    <li role="presentation"><a href="#ElectronicGoverment">Electronic Government</a></li>
-                    <li role="presentation"><a href="#Ict">ICT for development</a></li>
-                    <li role="presentation"><a href="#Itsakerhet">Informationssäkerhet</a></li>
-                    <li role="presentation"><a href="#Itlarande">IT för lärande</a></li>
-                    <li role="presentation"><a href="#Sysutveckling">Systemutvecklingsmetoder</a></li>
-                </ul>
+
+    <div class="page-header">
+        <h1>Science <small>news and blog posts</small>
+        </h1>
+    </div>
+    <hr />
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <ul class="nav nav-tabs ul-sience">
+                <li role="presentation" class="active">
+                    <a href="#Ehalsa">
+                        e-Hälsa
+                    </a>
+                </li>
+                <li role="presentation"><a href="#ElectronicGoverment">Electronic Government</a></li>
+                <li role="presentation"><a href="#Ict">ICT for development</a></li>
+                <li role="presentation"><a href="#Itsakerhet">Informationssäkerhet</a></li>
+                <li role="presentation"><a href="#Itlarande">IT för lärande</a></li>
+                <li role="presentation"><a href="#Sysutveckling">Systemutvecklingsmetoder</a></li>
+            </ul>
+        </div>
+        <div class="tab-content panel-body">
+
+            <div id="Ehalsa" class="tab-pane fade in active">
+
+                @{ Html.RenderAction("GetPostsPartial", "Blog", new { posts = Model.AllPosts.Where(x => x.PostType.Id == 5).ToList() }); }
+
             </div>
-            <div class="tab-content panel-body">
+            <div id="ElectronicGoverment" class="tab-pane fade">
 
-                <div id="Ehalsa" class="tab-pane fade in active">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">News</div>
-                        <div class="panel-body">
-                            @foreach (var post in Model.AllPosts)
-                            {
-                                if (post.PostType.Id != 5)
-                                {
-                                    continue;
-                                }
-                                <div class="media">
-                                    <div class="media-body">
+                @{ Html.RenderAction("GetPostsPartial", "Blog", new { posts = Model.AllPosts.Where(x => x.PostType.Id == 6).ToList() }); }
 
-                                        <div class="col-md-11 col-sm-11">
-                                            <h4 class="media-heading">Title: @post.Title</h4>
-                                            <p>@Html.Raw(@post.Text)</p>
-                                            @if (post.Filename != null)
-                                            {
-                                                <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
-                                            }
-                                            <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
-                                        </div>
+            </div>
+            <div id="Ict" class="tab-pane fade">
 
-                                        <div class="col-md-1 col-sm-1">
-                                            @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "Education" }))
-                                            {
-                                                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                            }
-                                        </div>
+                @{ Html.RenderAction("GetPostsPartial", "Blog", new { posts = Model.AllPosts.Where(x => x.PostType.Id == 7).ToList() }); }
 
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div id="ElectronicGoverment" class="tab-pane fade">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">News</div>
-                        <div class="panel-body">
-                            @foreach (var post in Model.AllPosts)
-                            {
-                                if (post.PostType.Id != 6)
-                                {
-                                    continue;
-                                }
-                                <div class="media">
-                                    <div class="media-body">
+            </div>
+            <div id="Itsakerhet" class="tab-pane fade">
 
-                                        <div class="col-md-11 col-sm-11">
-                                            <h4 class="media-heading">Title: @post.Title</h4>
-                                            <p>@Html.Raw(@post.Text)</p>
-                                            @if (post.Filename != null)
-                                            {
-                                                <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
-                                            }
-                                            <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
-                                        </div>
+                @{ Html.RenderAction("GetPostsPartial", "Blog", new { posts = Model.AllPosts.Where(x => x.PostType.Id == 8).ToList() }); }
 
-                                        <div class="col-md-1 col-sm-1">
-                                            @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "Education" }))
-                                            {
-                                                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                            }
-                                        </div>
+            </div>
+            <div id="Itlarande" class="tab-pane fade">
 
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
+                @{ Html.RenderAction("GetPostsPartial", "Blog", new { posts = Model.AllPosts.Where(x => x.PostType.Id == 9).ToList() }); }
 
-                </div>
-                <div id="Ict" class="tab-pane fade">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">News</div>
-                        <div class="panel-body">
-                            @foreach (var post in Model.AllPosts)
-                            {
-                                if (post.PostType.Id != 7)
-                                {
-                                    continue;
-                                }
-                                <div class="media">
-                                    <div class="media-body">
+            </div>
+            <div id="Sysutveckling" class="tab-pane fade">
 
-                                        <div class="col-md-11 col-sm-11">
-                                            <h4 class="media-heading">Title: @post.Title</h4>
-                                            <p>@Html.Raw(@post.Text)</p>
-                                            @if (post.Filename != null)
-                                            {
-                                                <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
-                                            }
-                                            <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
-                                        </div>
+                @{ Html.RenderAction("GetPostsPartial", "Blog", new { posts = Model.AllPosts.Where(x => x.PostType.Id == 10).ToList() }); }
 
-                                        <div class="col-md-1 col-sm-1">
-                                            @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "Education" }))
-                                            {
-                                                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                            }
-                                        </div>
-
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-
-                </div>
-                <div id="Itsakerhet" class="tab-pane fade">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">News</div>
-                        <div class="panel-body">
-                            @foreach (var post in Model.AllPosts)
-                            {
-                                if (post.PostType.Id != 8)
-                                {
-                                    continue;
-                                }
-                                <div class="media">
-                                    <div class="media-body">
-
-                                        <div class="col-md-11 col-sm-11">
-                                            <h4 class="media-heading">Title: @post.Title</h4>
-                                            <p>@Html.Raw(@post.Text)</p>
-                                            @if (post.Filename != null)
-                                            {
-                                                <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
-                                            }
-                                            <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
-                                        </div>
-
-                                        <div class="col-md-1 col-sm-1">
-                                            @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "Education" }))
-                                            {
-                                                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                            }
-                                        </div>
-
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-
-                </div>
-                <div id="Itlarande" class="tab-pane fade">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">News</div>
-                        <div class="panel-body">
-                            @foreach (var post in Model.AllPosts)
-                            {
-                                if (post.PostType.Id != 9)
-                                {
-                                    continue;
-                                }
-                                <div class="media">
-                                    <div class="media-body">
-
-                                        <div class="col-md-11 col-sm-11">
-                                            <h4 class="media-heading">Title: @post.Title</h4>
-                                            <p>@Html.Raw(@post.Text)</p>
-                                            @if (post.Filename != null)
-                                            {
-                                                <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
-                                            }
-                                            <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
-                                        </div>
-
-                                        <div class="col-md-1 col-sm-1">
-                                            @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "Education" }))
-                                            {
-                                                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                            }
-                                        </div>
-
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-
-                </div>
-                <div id="Sysutveckling" class="tab-pane fade">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">News</div>
-                        <div class="panel-body">
-                            @foreach (var post in Model.AllPosts)
-                            {
-                                if (post.PostType.Id != 10)
-                                {
-                                    continue;
-                                }
-                                <div class="media">
-                                    <div class="media-body">
-
-                                        <div class="col-md-11 col-sm-11">
-                                            <h4 class="media-heading">Title: @post.Title</h4>
-                                            <p>@Html.Raw(@post.Text)</p>
-                                            @if (post.Filename != null)
-                                            {
-                                                <a href="@Url.Action("GetFile", "Profile", new{ path = post.FileUrl } )">@post.Filename</a>
-                                            }
-                                            <p>@post.Category | @post.DatePosted.ToShortDateString()</p>
-                                        </div>
-
-                                        <div class="col-md-1 col-sm-1">
-                                            @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "Education" }))
-                                            {
-                                                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                            }
-                                        </div>
-
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-
-                </div>
             </div>
         </div>
-        <div class="col-md-1"></div>
     </div>
 </div>
 @*<h1 class="text-center">Science</h1>

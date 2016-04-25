@@ -51,7 +51,7 @@ namespace InformationsSystemOru.Controllers
                     Title = post.Titel,
                     CommentCount = comments.Count(),
                     PostingUsersProfilePicture = user.ProfilePicture == null ? "" : string.Format("data:image/png;base64,{0}", Convert.ToBase64String(user.ProfilePicture))
-            });
+                });
             }
 
             model.PostTypes = _postTypeRepository.GetAllPostTypesAfterId3();
@@ -65,7 +65,7 @@ namespace InformationsSystemOru.Controllers
 
             //foreach (var post in model.AllPosts)
             //    post.PostType = _postPostTypeRepository.GetPostTypeFromPostId(post.PostId);
-            
+
 
             return model;
         }
@@ -112,6 +112,16 @@ namespace InformationsSystemOru.Controllers
             model.CategoryList = postrepository.CategoryListforInformal();
 
             return View(model);
+        }
+
+        public ActionResult GetPostsPartial(List<PostModel> posts)
+        {
+            var model = new BlogModel
+            {
+                AllPosts = posts,
+                loggedInUserId = accountRep.GetIdFromUsername(User.Identity.Name)
+            };
+            return PartialView("_PostsPartial", model);
         }
 
         [Authorize]

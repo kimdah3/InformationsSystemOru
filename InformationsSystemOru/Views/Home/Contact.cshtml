@@ -4,17 +4,17 @@
     ViewBag.Title = "Contact";
     Layout = User.Identity.IsAdmin() ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_LayoutUser.cshtml";
 }
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <h4>Send your comments.</h4>
+    <h4>Send your comments</h4>
     <hr />
 
     if (Model.ReciverId == null)
     {
         <div class="form-group" style="padding-bottom: 3%;">
-            @Html.LabelFor(m => m.ToEmail, new {@class = "col-md-2 control-label"})
+            @Html.Label("Send to email", new {@class = "col-md-2 control-label"})
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.ToEmail, new {@class = "form-control"})
                 @Html.ValidationMessageFor(m => m.ToEmail)
