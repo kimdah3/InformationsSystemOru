@@ -72,20 +72,6 @@
         <div class="well well-sm">
             <div class="media">
 
-                <div class="media-left">
-                    <a href="@Url.Action("VisitingProfile", "Profile", new { visitedUserID = post.PostingUserId })">
-                        @if (post.PostingUsersProfilePicture.IsEmpty())
-                        {
-                            <img class="media-object img-rounded" src="~/Content/default.jpg" alt="...">
-                        }
-                        else
-                        {
-                            <img class="media-object img-rounded" src="@post.PostingUsersProfilePicture" alt="...">
-                        }
-
-                    </a>
-                </div>
-
                 <div class="media-body">
 
                     <h4 class="media-heading">@post.Title</h4>
