@@ -55,18 +55,11 @@ namespace InformationsSystemOru.Controllers
             }
 
             model.PostTypes = _postTypeRepository.GetAllPostTypesAfterId3();
-
-            // TODO ERROR HERE!
+            
             foreach (var post in model.AllPosts)
             {
                 post.PostType = _postPostTypeRepository.GetPostTypeFromPostId(post.PostId);
             }
-            //model.PostTypes = _postTypeRepository.GetAllPostTypesAfterId3();
-
-            //foreach (var post in model.AllPosts)
-            //    post.PostType = _postPostTypeRepository.GetPostTypeFromPostId(post.PostId);
-
-
             return model;
         }
 
@@ -257,17 +250,11 @@ namespace InformationsSystemOru.Controllers
         {
             postrepository.DeletePost(postid);
             if (sida == "Education")
-            {
                 return RedirectToAction("Educationblog");
-            }
-            else if (sida == "InformalBlog")
-            {
-                return RedirectToAction("InformalBlog");
-            }
             else if (sida == "News")
-            {
                 return RedirectToAction("newsBlog");
-            }
+            else if (sida == "Profile")
+                return RedirectToAction("Profile", "Profile");
             else
                 return RedirectToAction("ScienceBlog");
 

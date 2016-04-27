@@ -207,7 +207,7 @@ new AjaxOptions { HttpMethod = "POST", OnSuccess = "RemoveComment(" + @c.Id + ")
                                 </div>
                             </div>
                             <div class="col-md-1 col-sm-1">
-                                @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "Education" }))
+                                @using (Html.BeginForm("DeletePost", "Blog", new { postid = post.PostId, sida = "Profile" }))
                                 {
                                     <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                                 }
